@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSR - Librería</title>
+
+    <link rel="icon" href="img/JSR.ico">
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="partials/footer.css" />
+    <link rel="stylesheet" href="partials/navbar.css" />
+    <link rel="stylesheet" href="partials/headernav.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Iconos de FontAwesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+
+    <!--navbar-->
+    <div id="navbar-placeholder"></div>
+    <!--end-->
+
+    <!--mobile navigation-->
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-header">
+          <h2>Menú</h2>
+          <span class="mobile-nav-close" id="mobileNavClose">&times;</span>
+        </div>
+        <ul class="mobile-nav-list">
+          <li class="mobile-nav-item">
+            <a href="/html/catalogo.html" class="mobile-nav-link">LOS MÁS VENDIDOS</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--end-->
+
+    <!--headernav-->
+    <div id="headernav-placeholder"></div>
+
+    <div class="carousel-container">
+      <div class="carousel">
+        <!--slide 1 (carousel)-->
+        <div class="slide">
+          <a href="/html/catalogo.html">
+            <img
+              src="img/banner/jsr-banner-1.png"
+              alt="El futuro está en tus manos"
+            />
+          </a>
+        </div>
+
+        <!--slide 2 (carousel)-->
+        <div class="slide">
+          <a href="/html/sobrenosotros.html">
+            <img src="img/banner/jsr-banner-2.png" alt="Temporada Escolar" />
+          </a>
+        </div>
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-control prev" title="Imagen anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control next" title="Siguiente imagen">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+      <div class="announcement-bar">
+        <div class="announcement-bar-container">
+          <div class="announcement-bar-inner">
+            <p class="announcement-bar-content">
+              OBTEN UN DESCUENTO ESPECIAL POR TEMPORADA ESCOLAR CON TU BENEFICIO
+              DE JSR CLUB
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-promotions">
+        <header class="section-header">
+          <div class="section-header-stack">
+            <h2 class="section-title-heading-h3">
+              Promociones hasta el 10 de junio!
+            </h2>
+          </div>
+          <a href="/html/catalogo.html" class="section-action-link"
+            >Ver todos los productos <i class="fa-solid fa-arrow-right"></i
+          ></a>
+        </header>
+      </div>
+
+      <div class="container">
+        <div class="product-list" id="promotion-products">
+          <!-- Los productos se cargarán aquí dinámicamente desde products.json -->
+        </div>
+      </div>
+    </div>
+
+    <!--banner promocional-->
+    <div class="banner">
+      <div class="banner-image 1">
+        <a href="/html/catalogo.html" class="item-banner-mid"></a>
+        <img
+          src="img/banner/jsr banner-promotion-1 .png"
+          alt="jsr-promotion-banner"
+        />
+      </div>
+    </div>
+
+    <!--JSR CLUB PROMOTIONAL BANNER-->
+    <div class="jsr-club-promo-banner">
+      <div class="promo-container">
+        <div class="promo-content">
+          <div class="promo-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div class="promo-text">
+            <h2>¡Únete al <span class="gradient-text">JSR CLUB</span>!</h2>
+            <p>Obtén <strong>hasta 30% de descuento</strong>, envío gratis y beneficios exclusivos</p>
+            <div class="promo-features">
+              <span><i class="fas fa-check"></i> Descuentos exclusivos</span>
+              <span><i class="fas fa-check"></i> Envío gratis</span>
+              <span><i class="fas fa-check"></i> Productos premium</span>
+            </div>
+          </div>
+          <div class="promo-cta">
+            <a href="/html/jsrclub.html" class="promo-button">
+              <span>Descubre JSR CLUB</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <p class="promo-trial">7 días de prueba gratuita</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--merchandising section (1) start-->
+    <div class="merchandising-section">
+      <header class="section-header">
+        <div class="section-header-stack">
+          <h2 class="section-title-heading-h3">Diseño & Dibujo</h2>
+        </div>
+        <a href="/html/catalogo.html" class="section-action-link">
+          <span class="link-text">Ver más</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </header>
+
+      
+      <div class="product-list" id="design-drawing-products">
+        <!-- Los productos se cargarán aquí dinámicamente desde products.json -->
+      </div>
+    </div>
+    <!--merchandising section (1) end-->
+
+    <!--merchandising section (2) start-->
+    <div class="merchandising-section">
+      <header class="section-header">
+        <div class="section-header-stack">
+          <h2 class="section-title-heading-h3">Infantil</h2>
+        </div>
+        <a href="/html/catalogo.html" class="section-action-link">
+          <span class="link-text">Ver más</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </header>
+
+      
+      <div class="product-list" id="infantil-products">
+        <!-- Los productos se cargarán aquí dinámicamente desde products.json -->
+      </div>
+    </div>
+    <!--merchandising section (2) end-->
+
+    <!--merchandising section (3) start-->
+    <div class="merchandising-section">
+      <header class="section-header">
+        <div class="section-header-stack">
+          <h2 class="section-title-heading-h3">Papelería</h2>
+        </div>
+        <a href="/html/catalogo.html" class="section-action-link">
+          <span class="link-text">Ver más</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </header>
+
+      
+      <div class="product-list" id="papeleria-products">
+        <!-- Los productos se cargarán aquí dinámicamente desde products.json -->
+      </div>
+    </div>
+    <!--merchandising section (3) end-->
+
+    <!--back to top button-->
+    <button class="back-to-top" aria-label="Volver al inicio">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+    <!--end-->
+
+    <!--floating about us button-->
+    <a href="/html/sobrenosotros.html" class="floating-about-us">
+      <i class="fa-solid fa-users"></i>
+      <span>¿Quiénes somos?</span>
+    </a>
+    <!--end-->
+
+    <!--footer-->
+    <div id="footer-placeholder"></div>
+
+    <!--scripts link-->
+    <script src="js/index.js"></script>
+    <script src="js/load-content.js"></script>
+    <script src="js/merchandising.js"></script>
+    
+  </body>
+</html>

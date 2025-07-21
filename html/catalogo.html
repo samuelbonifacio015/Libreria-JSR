@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Catalogo - JSR</title>
+
+    <link rel="icon" href="/img/JSR.ico">
+
+    <link rel="stylesheet" href="/css/catalogo.css" />
+    <link rel="stylesheet" href="/partials/navbar.css" />
+    <link rel="stylesheet" href="/partials/footer.css" />
+    <link rel="stylesheet" href="/partials/headernav.css" />
+
+     <!-- Iconos de FontAwesome -->
+    <link
+     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+     rel="stylesheet"
+    />
+
+</head>
+
+<body>
+    <!--navbar-->
+    <div id="navbar-placeholder"></div>
+
+    <!--headernav-->
+    <div id="headernav-placeholder"></div>
+
+    <div class="index-page">
+      <h4>Inicio</h4> <i class="fa-solid fa-angle-right"></i></h4> <h4>Objetos</h4>
+    </div>
+
+    <!--catalogo aside start-->
+    <div class="catalogo-container">
+
+      <aside class="catalogo-filter">
+        <h2>Filtros</h2>
+        <div class="filter-group">
+          <h3>Marca <i class="fa-solid fa-angle-down"></i></h3>
+          <ul>
+            <label><input type="checkbox" />ARTESCO</label>
+            <label><input type="checkbox" />ARTI CREATIVO</label>
+            <label><input type="checkbox" />CASIO</label>
+            <label><input type="checkbox" />CATRICE</label>
+            <label><input type="checkbox" />EDICIONES OBELISCO</label>
+            <label><input type="checkbox" />FABER-CASTELL</label>
+            <label><input type="checkbox" />LOGITECH</label>
+            <label><input type="checkbox" />MARVEL</label>
+            <label><input type="checkbox" />MILAN</label>
+            <label><input type="checkbox" />PIGMA-MICRON</label>
+            <label><input type="checkbox" />SONY</label>
+            <label><input type="checkbox" />STICK'N-NOTES</label>
+            <label><input type="checkbox" />VINIFAN</label>
+            <label><input type="checkbox" />XIAOMI</label>
+          </ul>
+
+          <h3>Precio <i class="fa-solid fa-angle-down"></i></h3>
+          <div class="price-filter">
+            <div class="price-range">
+              <div class="price-values">
+                <input type="number" class="min-prince" min="0" max="169" value="0">
+                <input type="number" class="max-prince" min="0" max="169" value="169">
+              </div>
+              <div class="slider-container">
+                <input type="range" class="slider" min="0" max="100" value="100">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+      <!--catalogo aside end-->
+
+      <!--catalogo products start-->
+      <section class="products">
+        <h2>I TODOS LOS PRODUCTOS</h2>
+        <div class="products-header">
+          <div class="products-count">Mostrando 1 - 24 de 24 productos</div>
+          <div class="products-controls">
+            <div class="sort-control">
+              <label>Ordenar por: </label>
+              <select>
+                <option>Más vendidos</option>
+                <option>Precio: menor a mayor</option>
+                <option>Precio: mayor a menor</option>
+                <option>Nombre: A-Z</option>
+                <option>Nombre: Z-A</option>
+              </select>
+            </div>
+
+            <div class="view-control">
+              <span>Ver</span>
+              <button class="grid-view active"><i class="fa-solid fa-grip"></i></button>
+              <button class="list-view"><i class="fa-solid fa-list"></i></button>
+            </div>
+
+          </div>
+        </div>        
+        <div class="products-grid">
+          <!--los archivos aqui seran generados por js-->
+        </div>
+
+        <!-- pagination start -->
+        <div class="pagination">
+          <a href="#" class="pagination-item active">1</a>
+          <a href="#" class="pagination-item">2</a>
+          <a href="#" class="pagination-item">3</a>
+          <div class="pagination-dots">...</div>
+          <a href="#" class="pagination-item">5</a>
+          <a href="#" class="pagination-next">Siguiente <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+
+        <button class="back-to-top" aria-label="Volver al inicio">
+          <i class="fa-solid fa-chevron-up"></i>
+        </button>
+        <!-- pagination end -->
+
+      </section>
+    </div>
+
+    <!--whatsapp contact-->
+    <div class="whatsapp-contact">
+      <a href="https://wa.me/999451887" target="_blank" class="whatsapp-message">
+        Realiza tu pedido aquí 🚀
+      </a>
+      <a href="https://wa.me/999451887" target="_blank" class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+    <!--whatsapp cc end-->
+
+    <!--floating cart start-->
+    <div class="floating-cart" id="floatingCart">
+      <div class="floating-cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="floating-cart-count" id="floatingCartCount">0</span>
+      </div>
+      <div class="floating-cart-preview">
+        <div class="floating-cart-preview-title">Carrito de Compras</div>
+        <div class="floating-cart-items" id="floatingCartItems">
+          <!-- items auto adding -->
+        </div>
+        <div class="floating-cart-total">
+          <span>Total:</span>
+          <span>S/. <span id="floatingCartTotal">0.00</span></span>
+        </div>
+        <div class="floating-cart-actions">
+          <button class="floating-cart-view-cart">Ver Carrito</button>
+          <button class="floating-cart-checkout">Comprar</button>
+        </div>
+      </div>
+    </div>
+    <!--floating cart end-->
+
+    <!--quick-view modal start-->
+    <div class="modal-overlay" id="quickViewModal">
+      <div class="modal-content">
+        <span class="modal-close" id="modalClose">x</span>
+        <div class="modal-left">
+          <img class="main-image" id="modalMainImage" src="" alt="Producto"/>
+          <div class="thumbnail-gallery" id="modalThumbnails">
+            <!--dynamic images-->
+          </div>
+        </div>
+        <div class="modal-right">
+          <div class="product-title" id="modalProductTitle"></div>
+          <div class="discount" id="modalDiscount"></div>
+          <div class="brand" id="modalBrand"></div>
+          <div class="price">
+            <span class="original" id="modalOriginalPrice"></span>
+            <span class="discounted" id="modalDiscountedPrice"></span>
+          </div>
+          <div class="quantity">
+            <span>Cantidad: </span>
+            <button onclick="changeQuantity(-1)">-</button>
+            <input type="number" id="modalQuantity" value="1" min="1">
+            <button onclick="changeQuantity(1)">+</button>
+          </div>
+          <div class="actions">
+            <button class="add-to-cart">Añadir al Carrito</button>
+            <button class="buy-now">Comprar Ahora</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--quick-view modal end-->
+
+    <!--floating about us button-->
+    <a href="/html/sobrenosotros.html" class="floating-about-us">
+      <i class="fa-solid fa-users"></i>
+      <span>¿Quiénes somos?</span>
+    </a>
+    <!--end-->
+
+    <!--footer-->
+    <div id="footer-placeholder"></div>
+
+    <!--scripts-->
+    <script src="../js/load-content.js"></script>
+    <script src="../js/shop.js"></script>
+    <script>
+        // Script para probar el carrito
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('navbarLoaded', function() {
+                setTimeout(function() {
+                    // Añadir funcionalidad para el botón flotante de Sobre Nosotros
+                    const floatingAboutUs = document.querySelector('.floating-about-us');
+                    
+                    if (floatingAboutUs) {
+                        window.addEventListener('scroll', function() {
+                            // Mostrar el botón después de desplazarse 400px
+                            if (window.scrollY > 400) {
+                                floatingAboutUs.style.opacity = '1';
+                                floatingAboutUs.style.visibility = 'visible';
+                            } else {
+                                floatingAboutUs.style.opacity = '0';
+                                floatingAboutUs.style.visibility = 'hidden';
+                            }
+                        });
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+
+    <!-- navbar start -->
+    <nav>
+        <div class="logo">
+          <a href="/index.html">
+            <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="50" />
+            <span>Librería JSR</span>
+          </a>
+        </div>
+  
+        <div class="hamburger-menu" id="hamburgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+  
+        <div class="search-login">
+          <div class="search-bar">
+            <input type="text" placeholder="¿Qué estás buscando?" />
+            <button><i class="fas fa-search"></i></button>
+          </div>
+  
+          <div class="user-icon" id="userIcon">
+            <i class="fas fa-user"></i>
+          </div>
+  
+          <button
+            class="login-button"
+            onclick="window.location.href='/html/login.html'"
+          >
+            Iniciar sesión
+          </button>
+          <button
+            class="register-button"
+            onclick="window.location.href='/html/register.html'"
+          >
+            Registrarse
+          </button>
+  
+          <div class="cart-item">
+            <a href="#" class="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </a>
+  
+            <div class="cart-dropdown" id="cartDropdown">
+              <div class="cart-header">
+                <h3>Carrito</h3>
+                <span class="cart-close">x</span>
+              </div>
+  
+              <div class="cart-items" id="cartItems">
+                <!--items add manually-->
+              </div>
+  
+              <div class="cart-footer">
+                <p>Total: S/. <span id="cartTotal">0.00</span></p>
+                <div class="cart-actions">
+                  <button class="view-cart-btn">Ver carrito</button>
+                  <button class="checkout-btn">Finalizar Compra</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </nav>
+    <!-- navbar end -->
+
+</body>
+</html>
