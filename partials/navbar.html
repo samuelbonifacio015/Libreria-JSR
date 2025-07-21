@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,75 +33,117 @@
     </div>
 
     <!-- navbar start -->
-    <nav>
-      <div class="logo">
-        <a href="/index.html">
-          <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="50" />
-          <span>Librería JSR</span>
-        </a>
-      </div>
+    <nav class="main-navbar">
+      <div class="navbar-container">
+        <!-- Desktop Layout -->
+        <div class="desktop-navbar">
+          <!-- Logo Section -->
+          <div class="navbar-logo">
+            <a href="/index.html">
+              <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="50" />
+              <span>Librería JSR</span>
+            </a>
+          </div>
 
-      <div class="search-login">
-        <div class="search-bar">
-          <input type="text" placeholder="¿Qué estás buscando?" />
-          <button aria-label="Buscar">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
-        <button
-          class="login-button"
-          onclick="window.location.href='/html/login.html'"
-        >
-          <i class="fas fa-sign-in-alt"></i>
-          Iniciar sesión
-        </button>
-        <button
-          class="register-button"
-          onclick="window.location.href='/html/register.html'"
-        >
-          <i class="fas fa-user-plus"></i>
-          Registrarse
-        </button>
-
-        <div class="cart-item">
-          <a href="#" class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-          </a>
-
-          <div class="cart-dropdown" id="cartDropdown">
-            <div class="cart-header">
-              <h3>Carrito</h3>
-              <span class="cart-close">×</span>
+          <!-- Search Section -->
+          <div class="navbar-search">
+            <div class="search-input-container">
+              <input type="text" placeholder="¿Qué estás buscando?" />
+              <button class="search-btn" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+              </button>
             </div>
+          </div>
 
-            <div class="cart-items" id="cartItems">
-              <!--items add manually-->
-            </div>
+          <!-- Actions Section -->
+          <div class="navbar-actions">
+            <button
+              class="action-btn login-btn"
+              onclick="window.location.href='/html/login.html'"
+            >
+              <i class="fas fa-user"></i>
+              <span class="btn-text">Iniciar sesión</span>
+            </button>
 
-            <div class="cart-footer">
-              <p>Total: S/. <span id="cartTotal">0.00</span></p>
-              <div class="cart-actions">
-                <button class="view-cart-btn">Ver carrito</button>
-                <button class="checkout-btn">Finalizar Compra</button>
+            <div class="cart-container">
+              <a href="#" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </a>
+
+              <div class="cart-dropdown" id="cartDropdown">
+                <div class="cart-header">
+                  <h3>Carrito</h3>
+                  <span class="cart-close">×</span>
+                </div>
+
+                <div class="cart-items" id="cartItems">
+                  <!--items add manually-->
+                </div>
+
+                <div class="cart-footer">
+                  <p>Total: S/. <span id="cartTotal">0.00</span></p>
+                  <div class="cart-actions">
+                    <button class="view-cart-btn">Ver carrito</button>
+                    <button class="checkout-btn">Finalizar Compra</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Mobile menu button -->
-      <button
-        class="mobile-menu-btn"
-        id="mobileMenuBtn"
-        aria-label="Abrir menú"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
+        <!-- Mobile Layout -->
+        <div class="mobile-navbar">
+          <!-- Top Row: Hamburger, Logo, User/Cart -->
+          <div class="mobile-top-row">
+            <button
+              class="mobile-menu-btn"
+              id="mobileMenuBtn"
+              aria-label="Abrir menú"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="mobile-logo">
+              <a href="/index.html">
+                <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="40" />
+                <span>Librería JSR</span>
+              </a>
+            </div>
+
+            <div class="mobile-actions">
+              <button
+                class="mobile-user-btn"
+                onclick="window.location.href='/html/login.html'"
+                aria-label="Iniciar sesión"
+              >
+                <i class="fas fa-user"></i>
+              </button>
+
+              <div class="mobile-cart-container">
+                <a href="#" class="mobile-cart-btn" aria-label="Ver carrito">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span class="cart-count">0</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Search -->
+          <div class="mobile-search-row">
+            <div class="mobile-search-container">
+              <input type="text" placeholder="¿Qué estás buscando?" />
+              <button class="mobile-search-btn" aria-label="Buscar">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
 
-    <!-- Mobile Navigation -->
+    <!-- Mobile Navigation Sidebar -->
     <div class="mobile-nav" id="mobileNav">
       <div class="mobile-nav-header">
         <div class="logo">
@@ -114,13 +156,6 @@
           aria-label="Cerrar menú"
         >
           <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="mobile-search">
-        <input type="text" placeholder="¿Qué estás buscando?" />
-        <button aria-label="Buscar">
-          <i class="fas fa-search"></i>
         </button>
       </div>
 
@@ -283,6 +318,61 @@
 
     <!-- Mobile overlay -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- JavaScript para funcionalidad del menú -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileNav = document.getElementById("mobileNav");
+        const mobileNavClose = document.getElementById("mobileNavClose");
+        const mobileOverlay = document.getElementById("mobileOverlay");
+
+        // Abrir menú mobile
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("click", function () {
+            mobileNav.classList.add("active");
+            mobileOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+          });
+        }
+
+        // Cerrar menú mobile
+        function closeMobileMenu() {
+          mobileNav.classList.remove("active");
+          mobileOverlay.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+
+        if (mobileNavClose) {
+          mobileNavClose.addEventListener("click", closeMobileMenu);
+        }
+
+        if (mobileOverlay) {
+          mobileOverlay.addEventListener("click", closeMobileMenu);
+        }
+
+        // Manejar dropdowns en mobile
+        const mobileDropdownBtns = document.querySelectorAll(
+          ".mobile-dropdown-btn"
+        );
+        mobileDropdownBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const dropdown = this.closest(".mobile-dropdown");
+            dropdown.classList.toggle("active");
+          });
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        const mobileLinks = document.querySelectorAll(
+          ".mobile-category-link, .mobile-dropdown-content a"
+        );
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", function () {
+            setTimeout(closeMobileMenu, 100);
+          });
+        });
+      });
+    </script>
 
     <!-- navbar end -->
   </body>

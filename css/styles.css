@@ -135,6 +135,13 @@ body {
   #CAROUSEL
 \*-----------------------------------*/
 
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 0; /* Eliminamos margin bottom */
+}
+
 .carousel {
   display: flex;
   transition: transform 0.8s ease-in-out;
@@ -371,8 +378,14 @@ body {
   #ANNOUNCEMENT-CONTAINER
 \*-----------------------------------*/
 
+.announcement-bar {
+  margin: 0; /* Eliminamos márgenes */
+  padding: 0;
+}
+
 .announcement-bar-container {
   background-color: #1fa9ff;
+  margin: 0; /* Eliminamos márgenes */
 }
 
 .announcement-bar-content {
@@ -386,6 +399,7 @@ body {
   letter-spacing: 1.25px;
   font-weight: 700;
   color: #f8f5f5;
+  margin: 0; /* Eliminamos márgenes */
 }
 
 /* Ocultar announcement-bar original en móvil para evitar duplicación */
@@ -401,24 +415,39 @@ body {
 
 .container-promotions {
   max-width: var(--container-max);
-  margin: var(--spacing-sm) auto;
-  padding: 0 var(--spacing-xl);
+  margin: 0 auto; /* Eliminamos margin top y bottom, solo centrado horizontal */
+  padding: var(--spacing-lg) var(--spacing-xl) 0; /* Solo padding top */
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
 }
 
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto; /* Solo centrado, sin margin vertical */
+  padding: 0 var(--spacing-xl); /* Solo padding horizontal */
+  overflow-x: hidden;
+}
+
 /* Responsive adjustments for container-promotions */
 @media (max-width: 768px) {
   .container-promotions {
+    padding: var(--spacing-md) 1rem 0; /* Reducimos padding superior en mobile */
+    margin: 0 auto;
+  }
+
+  .container {
     padding: 0 1rem;
-    margin: 0.5rem auto;
   }
 }
 
 @media (max-width: 375px) {
   .container-promotions {
+    padding: var(--spacing-sm) 0.75rem 0;
+  }
+
+  .container {
     padding: 0 0.75rem;
   }
 }
@@ -471,7 +500,192 @@ body {
 }
 
 /*-----------------------------------*\
-  #PRODUCT-LIST
+  #MERCHANDISING-SECTION
+\*-----------------------------------*/
+.merchandising-section {
+  max-width: var(--container-max);
+  margin: var(--spacing-xl) auto;
+  padding: 0 var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.merchandising-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  z-index: 2;
+}
+
+/* Product List Container with Scroll */
+.merchandising-section .product-list-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.merchandising-section .product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--spacing-sm);
+  justify-content: center;
+  padding: var(--spacing-lg) 0;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+/* Navigation Arrows */
+.product-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(25, 65, 111, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.product-nav-arrow:hover {
+  background: rgba(25, 65, 111, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.product-nav-arrow.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-nav-arrow.prev {
+  left: 10px;
+}
+
+.product-nav-arrow.next {
+  right: 10px;
+}
+
+/* Responsive Design for Merchandising Sections */
+@media (max-width: 1024px) {
+  .merchandising-section .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .merchandising-section {
+    padding: 0 var(--spacing-lg);
+    margin: var(--spacing-lg) auto;
+  }
+
+  .merchandising-section .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: var(--spacing-sm);
+  }
+
+  .merchandising-section .section-title-heading-h3 {
+    font-size: var(--font-lg);
+  }
+
+  .merchandising-section .section-action-link {
+    font-size: var(--font-sm);
+  }
+
+  /* Enable horizontal scroll on mobile */
+  .merchandising-section .product-list-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 0 10px;
+  }
+
+  .merchandising-section .product-list {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+    width: max-content;
+    justify-content: flex-start;
+  }
+
+  .merchandising-section .product-card {
+    flex: 0 0 160px;
+    min-width: 160px;
+    max-width: 160px;
+  }
+
+  /* Show navigation arrows on mobile/tablet */
+  .product-nav-arrow {
+    opacity: 1;
+    visibility: visible;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .product-nav-arrow.prev {
+    left: 5px;
+  }
+
+  .product-nav-arrow.next {
+    right: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .merchandising-section .section-title-heading-h3 {
+    font-size: var(--font-md);
+  }
+
+  .merchandising-section .product-card {
+    flex: 0 0 140px;
+    min-width: 140px;
+    max-width: 140px;
+  }
+
+  .product-card img {
+    height: 140px;
+  }
+
+  .product-nav-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
+
+/* Hide scrollbar for webkit browsers */
+.merchandising-section .product-list-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.merchandising-section .product-list-container {
+  scrollbar-width: none;
+}
+
+/*-----------------------------------*\
+  #PRODUCT-LIST (General)
 \*-----------------------------------*/
 
 .product-list {
@@ -687,29 +901,6 @@ body {
   .banner-image img {
     height: 150px;
   }
-}
-
-/*-----------------------------------*\
-  #MERCHADISING-SECTION
-\*-----------------------------------*/
-.merchandising-section {
-  max-width: var(--container-max);
-  margin: var(--spacing-sm) auto;
-  padding: 0 var(--spacing-xl);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Las secciones de merchandising ahora usan la misma estructura que container-promotions */
-.merchandising-section .product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: var(--spacing-sm);
-  justify-content: center;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  max-width: var(--container-max);
-  margin: 0 auto;
 }
 
 /*-----------------------------------*\
@@ -1260,5 +1451,269 @@ body {
   .promo-button {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
+  }
+}
+
+/*-----------------------------------*\
+  #GLOBAL RESPONSIVE FIXES
+\*-----------------------------------*/
+
+/* Prevenir overflow horizontal en todos los breakpoints */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+}
+
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Asegurar que todos los contenedores respeten el viewport */
+.main-navbar,
+.navbar-container,
+.desktop-navbar,
+.mobile-navbar,
+.carousel-container,
+.container,
+.container-promotions,
+.merchandising-section {
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/*-----------------------------------*\
+  #DEVICE-SPECIFIC FIXES
+\*-----------------------------------*/
+
+/* iPhone 12 Pro (390px width) Specific Fixes */
+@media (width: 390px) {
+  .navbar-container {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .mobile-top-row {
+    gap: 0.25rem;
+  }
+
+  .mobile-actions {
+    gap: 0.125rem;
+  }
+
+  .mobile-search-container {
+    padding: 1px;
+  }
+
+  .mobile-search-container input {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .mobile-search-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0.25rem;
+  }
+}
+
+/* iPad Mini (768px width) Specific Fixes */
+@media (width: 768px) {
+  .desktop-navbar {
+    display: none;
+  }
+
+  .mobile-navbar {
+    display: flex;
+  }
+
+  .mobile-logo span {
+    display: block;
+    font-size: 0.875rem;
+  }
+
+  .mobile-search-container {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+/* iPad Air (820px width) Specific Fixes */
+@media (width: 820px) {
+  .desktop-navbar {
+    display: none;
+  }
+
+  .mobile-navbar {
+    display: flex;
+  }
+
+  .navbar-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .mobile-logo img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .mobile-logo span {
+    font-size: 1rem;
+  }
+}
+
+/* Laptop Medium (1366px width) Specific Fixes */
+@media (width: 1366px) {
+  .navbar-search {
+    max-width: 450px;
+  }
+
+  .search-input-container {
+    max-width: 450px;
+  }
+}
+
+/*-----------------------------------*\
+  #ADDITIONAL RESPONSIVE IMPROVEMENTS
+\*-----------------------------------*/
+
+/* Mejorar el comportamiento en landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .mobile-promotional-header {
+    padding: 0.5rem;
+  }
+
+  .mobile-promo-content h2 {
+    font-size: 1rem;
+  }
+
+  .mobile-announcement-bar p {
+    font-size: 0.625rem;
+  }
+
+  .navbar-container {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .mobile-nav {
+    width: min(280px, 80vw);
+  }
+}
+
+/* Ajustes para pantallas muy anchas */
+@media (min-width: 1920px) {
+  .navbar-container {
+    max-width: 1400px;
+  }
+
+  .navbar-search {
+    max-width: 800px;
+  }
+}
+
+/* Ajustes específicos para prevenir problemas de flex-wrap */
+.mobile-top-row,
+.mobile-actions,
+.navbar-actions {
+  flex-wrap: nowrap;
+}
+
+/* Asegurar que las imágenes no se distorsionen */
+.mobile-logo img,
+.navbar-logo img {
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Prevenir problemas de z-index */
+.mobile-nav {
+  z-index: 1001;
+}
+
+.mobile-overlay {
+  z-index: 1000;
+}
+
+.main-navbar {
+  z-index: 100;
+}
+
+/* Ajustes para mejorar la accesibilidad táctil en móviles */
+@media (max-width: 768px) {
+  .mobile-menu-btn,
+  .mobile-user-btn,
+  .mobile-cart-btn,
+  .mobile-search-btn {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* Corregir problemas de gap en dispositivos específicos */
+@media (max-width: 480px) {
+  .mobile-top-row {
+    gap: clamp(0.125rem, 2vw, 0.5rem);
+  }
+
+  .mobile-actions {
+    gap: clamp(0.125rem, 1vw, 0.25rem);
+  }
+}
+
+/* Ajustes específicos para el carrusel en responsive */
+@media (max-width: 768px) {
+  .carousel-container {
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .carousel {
+    height: clamp(200px, 35vw, 300px);
+  }
+
+  .slide img {
+    height: clamp(200px, 35vw, 300px);
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+/* Mejoras específicas para el espaciado vertical */
+@media (max-width: 768px) {
+  .container-promotions {
+    padding-top: 1rem;
+    margin-top: 0;
+  }
+
+  .merchandising-section {
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+}
+
+/* Ajustes finales para dispositivos pequeños */
+@media (max-width: 320px) {
+  .mobile-promotional-header {
+    min-height: auto;
+  }
+
+  .mobile-promo-container {
+    gap: 0.5rem;
+  }
+
+  .navbar-container {
+    min-height: auto;
+    padding: 0.25rem;
+  }
+
+  .mobile-top-row {
+    min-height: 36px;
+  }
+
+  .mobile-search-row {
+    padding: 0.25rem 0;
   }
 }

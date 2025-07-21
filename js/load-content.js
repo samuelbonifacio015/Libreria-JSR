@@ -1,24 +1,121 @@
-//Funcion para cargar contenidos de navbar y footer
-fetch('/partials/navbar.html')
-  .then(response => response.text())
-  .then(html => {
-    document.getElementById("navbar-placeholder").innerHTML = html;
-    // Emitir evento de que el navbar está cargado
-    document.dispatchEvent(new CustomEvent('navbarLoaded'));
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar navbar
+    fetch('/partials/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+            
+            // Inicializar funcionalidad del navbar después de cargarlo
+            initializeNavbar();
+        })
+        .catch(error => console.error('Error cargando navbar:', error));
+
+    // Cargar header nav
+    fetch('/partials/headernav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('headernav-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error cargando header nav:', error));
+
+    // Cargar footer
+    fetch('/partials/footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error cargando footer:', error));
 });
 
-fetch('/partials/footer.html')
-  .then(response => response.text())
-  .then(html => {
-    document.getElementById("footer-placeholder").innerHTML = html;
-    // Emitir evento de que el footer está cargado
-    document.dispatchEvent(new CustomEvent('footerLoaded'));
-});
+// Función para inicializar la funcionalidad del navbar
+function initializeNavbar() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileOverlay = document.getElementById('mobileOverlay');
 
-fetch('/partials/headernav.html')
-  .then(response => response.text())
-  .then(html => {
-    document.getElementById("headernav-placeholder").innerHTML = html;
-    // Emitir evento de que el headernav está cargado
-    document.dispatchEvent(new CustomEvent('headernavLoaded'));
-});
+    // Abrir menú mobile
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            if (mobileNav && mobileOverlay) {
+                mobileNav.classList.add('active');
+                mobileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+
+    // Cerrar menú mobile
+    function closeMobileMenu() {
+        if (mobileNav && mobileOverlay) {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+    }
+
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    // Manejar dropdowns en mobile
+    const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+    mobileDropdownBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const dropdown = this.closest('.mobile-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    const mobileLinks = document.querySelectorAll('.mobile-category-link, .mobile-dropdown-content a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            setTimeout(closeMobileMenu, 100);
+        });
+    });
+
+    // Manejar dropdown del carrito
+    const cartBtn = document.querySelector('.cart-btn, .mobile-cart-btn');
+    const cartDropdown = document.getElementById('cartDropdown');
+    const cartClose = document.querySelector('.cart-close');
+
+    if (cartBtn && cartDropdown) {
+        cartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    }
+
+    if (cartClose && cartDropdown) {
+        cartClose.addEventListener('click', function() {
+            cartDropdown.style.display = 'none';
+        });
+    }
+
+    // Cerrar dropdown del carrito al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (cartDropdown && !e.target.closest('.cart-container') && !e.target.closest('.mobile-cart-container')) {
+            cartDropdown.style.display = 'none';
+        }
+    });
+
+    // Manejar resize de ventana para responsive
+    window.addEventListener('resize', function() {
+        // Cerrar menú mobile si se cambia a desktop
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+        
+        // Ocultar dropdown del carrito en resize
+        if (cartDropdown) {
+            cartDropdown.style.display = 'none';
+        }
+    });
+}
