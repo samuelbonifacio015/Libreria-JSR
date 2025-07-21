@@ -1,77 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-</head>
-<body>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Mobile Promotional Header - Solo visible en móvil -->
+    <div class="mobile-promotional-header">
+      <div class="mobile-promo-container">
+        <div class="mobile-promo-logo">
+          <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="40" />
+          <span>Librería JSR</span>
+        </div>
+        <div class="mobile-promo-content">
+          <h2>BACK TO THE SCHOOL</h2>
+          <p>Promociones especiales • Tel: (01) 234-5678</p>
+          <div class="mobile-promo-badge">¡Ofertas exclusivas!</div>
+        </div>
+      </div>
+      <div class="mobile-announcement-bar">
+        <p>
+          OBTÉN UN DESCUENTO ESPECIAL POR TEMPORADA ESCOLAR CON TU BENEFICIO DE
+          JSR CLUB
+        </p>
+      </div>
+    </div>
 
     <!-- navbar start -->
     <nav>
-        <div class="logo">
-          <a href="/index.html">
-            <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="50" />
-            <span>Librería JSR</span>
+      <div class="logo">
+        <a href="/index.html">
+          <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="50" />
+          <span>Librería JSR</span>
+        </a>
+      </div>
+
+      <div class="search-login">
+        <div class="search-bar">
+          <input type="text" placeholder="¿Qué estás buscando?" />
+          <button aria-label="Buscar">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <button
+          class="login-button"
+          onclick="window.location.href='/html/login.html'"
+        >
+          <i class="fas fa-sign-in-alt"></i>
+          Iniciar sesión
+        </button>
+        <button
+          class="register-button"
+          onclick="window.location.href='/html/register.html'"
+        >
+          <i class="fas fa-user-plus"></i>
+          Registrarse
+        </button>
+
+        <div class="cart-item">
+          <a href="#" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
           </a>
-        </div>
-  
-        <div class="hamburger-menu" id="hamburgerMenu">
-          <i class="fas fa-bars"></i>
-        </div>
-  
-        <div class="search-login">
-          <div class="search-bar">
-            <input type="text" placeholder="¿Qué estás buscando?" />
-            <button><i class="fas fa-search"></i></button>
-          </div>
-  
-          <div class="user-icon" id="userIcon">
-            <i class="fas fa-user"></i>
-          </div>
-  
-          <button
-            class="login-button"
-            onclick="window.location.href='/html/login.html'"
-          >
-            Iniciar sesión
-          </button>
-          <button
-            class="register-button"
-            onclick="window.location.href='/html/register.html'"
-          >
-            Registrarse
-          </button>
-  
-          <div class="cart-item">
-            <a href="#" class="cart-icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="cart-count">0</span>
-            </a>
-  
-            <div class="cart-dropdown" id="cartDropdown">
-              <div class="cart-header">
-                <h3>Carrito</h3>
-                <span class="cart-close">x</span>
-              </div>
-  
-              <div class="cart-items" id="cartItems">
-                <!--items add manually-->
-              </div>
-  
-              <div class="cart-footer">
-                <p>Total: S/. <span id="cartTotal">0.00</span></p>
-                <div class="cart-actions">
-                  <button class="view-cart-btn">Ver carrito</button>
-                  <button class="checkout-btn">Finalizar Compra</button>
-                </div>
+
+          <div class="cart-dropdown" id="cartDropdown">
+            <div class="cart-header">
+              <h3>Carrito</h3>
+              <span class="cart-close">×</span>
+            </div>
+
+            <div class="cart-items" id="cartItems">
+              <!--items add manually-->
+            </div>
+
+            <div class="cart-footer">
+              <p>Total: S/. <span id="cartTotal">0.00</span></p>
+              <div class="cart-actions">
+                <button class="view-cart-btn">Ver carrito</button>
+                <button class="checkout-btn">Finalizar Compra</button>
               </div>
             </div>
           </div>
         </div>
-    </nav>
-    <!-- navbar end -->
+      </div>
 
-</body>
+      <!-- Mobile menu button -->
+      <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Abrir menú"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav-header">
+        <div class="logo">
+          <img src="/img/JSR.jpg" alt="Librería JSR Logo" width="30" />
+          <span>Librería JSR</span>
+        </div>
+        <button
+          class="mobile-nav-close"
+          id="mobileNavClose"
+          aria-label="Cerrar menú"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="mobile-search">
+        <input type="text" placeholder="¿Qué estás buscando?" />
+        <button aria-label="Buscar">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <div class="mobile-nav-content">
+        <button
+          class="mobile-login-btn"
+          onclick="window.location.href='/html/login.html'"
+        >
+          <i class="fas fa-sign-in-alt"></i>
+          Iniciar sesión
+        </button>
+        <button
+          class="mobile-register-btn"
+          onclick="window.location.href='/html/register.html'"
+        >
+          <i class="fas fa-user-plus"></i>
+          Registrarse
+        </button>
+      </div>
+
+      <!-- Mobile Header Nav -->
+      <div class="mobile-header-nav">
+        <div class="mobile-nav-categories">
+          <h3>Categorías</h3>
+
+          <div class="mobile-category">
+            <a href="/html/catalogo.html" class="mobile-category-link"
+              >LOS MÁS VENDIDOS</a
+            >
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              UTILES <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">ESCOLAR</a>
+              <a href="#">OFICINA</a>
+              <a href="#">UNIVERSITARIO</a>
+              <a href="#">ZONA DE LECTURA</a>
+              <a href="#">ARTE Y DISEÑO</a>
+              <a href="#">BORRADORES</a>
+              <a href="#">CORRECTORES</a>
+              <a href="#">CRAYONES Y ÓLEOS</a>
+              <a href="#">LÁPICES</a>
+              <a href="#">MARCADORES</a>
+              <a href="#">PLUMONES INDELEBLES</a>
+              <a href="#">PLUMONES PARA PIZARRA</a>
+              <a href="#">REGLAS</a>
+              <a href="#">TIJERAS</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              ESCRITORIO <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">ARCHIVADORES</a>
+              <a href="#">DISPENSADORES</a>
+              <a href="#">POSITS</a>
+              <a href="#">CLIPS Y CHINCHES</a>
+              <a href="#">PERFORADORAS</a>
+              <a href="#">ENGRAPADORAS Y GRAPAS</a>
+              <a href="#">CINTAS ADHESIVAS</a>
+              <a href="#">ORGANIZADORES DE ESCRITORIO</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              MOCHILAS Y ACCESORIOS
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">MOCHILAS</a>
+              <a href="#">CARTUCHERAS</a>
+              <a href="#">LONCHERAS</a>
+              <a href="#">MALETAS</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              PAPELERIA <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">CARTONES</a>
+              <a href="#">CARTULINAS</a>
+              <a href="#">PAPEL CELOFAN</a>
+              <a href="#">PAPEL FOTOCOPIA</a>
+              <a href="#">PAPEL FOTOGRAFICO</a>
+              <a href="#">PAPELES ADHESIVOS</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              ARCHIVO <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">CARPETAS Y ARCHIVADORES</a>
+              <a href="#">FOLDERES ESCOLARES</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              TECNOLOGIA <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">CALCULADORAS</a>
+              <a href="#">ACCESORIOS PARA COMPUTADORA</a>
+              <a href="#">MOUSE Y TECLADOS</a>
+              <a href="#">CARGADORES</a>
+              <a href="#">MEMORIAS USB</a>
+              <a href="#">AUDIFONOS Y PARLANTES</a>
+              <a href="#">ACCESORIOS VARIOS</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              BELLEZA <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">PERFUMES</a>
+              <a href="#">MAQUILLAJE</a>
+              <a href="#">TINTES</a>
+              <a href="#">ESPEJOS</a>
+              <a href="#">CUIDADO PERSONAL</a>
+            </div>
+          </div>
+
+          <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn">
+              LECTURA <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="#">BIBLIAS</a>
+              <a href="#">LIBROS ESCOLARES</a>
+              <a href="#">PLAN LECTOR</a>
+              <a href="#">TEXTOS ESCOLARES</a>
+              <a href="#">DE CULTO</a>
+            </div>
+          </div>
+
+          <div class="mobile-category jsr-club">
+            <a
+              href="/html/jsrclub.html"
+              class="mobile-category-link jsr-club-link"
+            >
+              <i class="fas fa-crown"></i>
+              JSR CLUB
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- navbar end -->
+  </body>
 </html>

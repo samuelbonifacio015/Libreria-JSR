@@ -105,12 +105,68 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-//Funcion para dar la funcionalidad al menu (FUNCIONALIDAD PENDIENTE)
-document.getElementById('hamburgerMenu').addEventListener('click', function () {
-    document.getElementById('mobileNav').classList.add('active');
-  });
-  
-  document.getElementById('mobileNavClose').addEventListener('click', function () {
-    document.getElementById('mobileNav').classList.remove('active');
-  });
+//Funcion para dar la funcionalidad al menu móvil
+document.addEventListener('navbarLoaded', function() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    // Abrir menú móvil
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function () {
+            mobileNav.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+        });
+    }
+
+    // Cerrar menú móvil con botón de cerrar
+    if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', function () {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restaurar scroll del body
+        });
+    }
+
+    // Cerrar menú móvil al hacer click en el overlay
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', function () {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restaurar scroll del body
+        });
+    }
+
+    // Cerrar menú al redimensionar la ventana (si se vuelve a desktop)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Funcionalidad de dropdowns móviles
+    const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+    
+    mobileDropdownBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdown = this.parentElement;
+            const isActive = dropdown.classList.contains('active');
+            
+            // Cerrar todos los dropdowns
+            mobileDropdownBtns.forEach(otherBtn => {
+                otherBtn.parentElement.classList.remove('active');
+            });
+            
+            // Abrir el dropdown clickeado si no estaba activo
+            if (!isActive) {
+                dropdown.classList.add('active');
+            }
+        });
+    });
+});
   
