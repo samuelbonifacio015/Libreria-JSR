@@ -139,7 +139,7 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-bottom: 0; /* Eliminamos margin bottom */
+  margin-bottom: 0;
 }
 
 .carousel {
@@ -205,7 +205,6 @@ body {
   #RESPONSIVE CAROUSEL
 \*-----------------------------------*/
 
-/* Large desktops */
 @media (min-width: 1440px) {
   .carousel {
     height: 600px;
@@ -217,7 +216,6 @@ body {
   }
 }
 
-/* Laptops and large tablets */
 @media (max-width: 1200px) {
   .carousel {
     height: 500px;
@@ -236,7 +234,6 @@ body {
   }
 }
 
-/* Standard tablets (iPad, iPad Air) */
 @media (max-width: 1024px) {
   .carousel {
     height: clamp(400px, 50vw, 500px);
@@ -255,7 +252,6 @@ body {
   }
 }
 
-/* Small tablets (iPad Mini) */
 @media (max-width: 834px) {
   .carousel {
     height: clamp(350px, 45vw, 400px);
@@ -274,7 +270,6 @@ body {
   }
 }
 
-/* Mobile landscape and portrait */
 @media (max-width: 768px) {
   .carousel-container {
     position: relative;
@@ -320,7 +315,6 @@ body {
   }
 }
 
-/* iPhone 12 Pro and similar */
 @media (max-width: 428px) {
   .carousel {
     height: clamp(200px, 35vw, 280px);
@@ -338,7 +332,6 @@ body {
   }
 }
 
-/* iPhone 12 Mini and smaller */
 @media (max-width: 375px) {
   .carousel {
     height: clamp(180px, 30vw, 250px);
@@ -356,7 +349,6 @@ body {
   }
 }
 
-/* Very small phones */
 @media (max-width: 320px) {
   .carousel {
     height: clamp(160px, 25vw, 220px);
@@ -379,13 +371,13 @@ body {
 \*-----------------------------------*/
 
 .announcement-bar {
-  margin: 0; /* Eliminamos márgenes */
+  margin: 0; 
   padding: 0;
 }
 
 .announcement-bar-container {
   background-color: #1fa9ff;
-  margin: 0; /* Eliminamos márgenes */
+  margin: 0; 
 }
 
 .announcement-bar-content {
@@ -399,10 +391,10 @@ body {
   letter-spacing: 1.25px;
   font-weight: 700;
   color: #f8f5f5;
-  margin: 0; /* Eliminamos márgenes */
+  margin: 0; 
 }
 
-/* Ocultar announcement-bar original en móvil para evitar duplicación */
+/* En mobile, la barra de anuncios se oculta */
 @media (max-width: 768px) {
   .announcement-bar {
     display: none;
@@ -415,8 +407,8 @@ body {
 
 .container-promotions {
   max-width: var(--container-max);
-  margin: 0 auto; /* Eliminamos margin top y bottom, solo centrado horizontal */
-  padding: var(--spacing-lg) var(--spacing-xl) 0; /* Solo padding top */
+  margin: 0 auto; 
+  padding: var(--spacing-lg) var(--spacing-xl) 0; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -425,31 +417,9 @@ body {
 
 .container {
   max-width: var(--container-max);
-  margin: 0 auto; /* Solo centrado, sin margin vertical */
-  padding: 0 var(--spacing-xl); /* Solo padding horizontal */
+  margin: 0 auto; 
+  padding: 0 var(--spacing-xl); 
   overflow-x: hidden;
-}
-
-/* Responsive adjustments for container-promotions */
-@media (max-width: 768px) {
-  .container-promotions {
-    padding: var(--spacing-md) 1rem 0; /* Reducimos padding superior en mobile */
-    margin: 0 auto;
-  }
-
-  .container {
-    padding: 0 1rem;
-  }
-}
-
-@media (max-width: 375px) {
-  .container-promotions {
-    padding: var(--spacing-sm) 0.75rem 0;
-  }
-
-  .container {
-    padding: 0 0.75rem;
-  }
 }
 
 .section-header {
@@ -500,6 +470,33 @@ body {
 }
 
 /*-----------------------------------*\
+  #RESPONSIVE CONTAINER-PROMOTIONS
+\*-----------------------------------*/
+
+
+@media (max-width: 768px) {
+  .container-promotions {
+    padding: var(--spacing-md) 1rem 0; 
+    margin: 0 auto;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .container-promotions {
+    padding: var(--spacing-sm) 0.75rem 0;
+  }
+
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
+
+/*-----------------------------------*\
   #MERCHANDISING-SECTION
 \*-----------------------------------*/
 .merchandising-section {
@@ -522,7 +519,6 @@ body {
   z-index: 2;
 }
 
-/* Product List Container with Scroll */
 .merchandising-section .product-list-container {
   position: relative;
   width: 100%;
@@ -540,7 +536,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* Navigation Arrows */
 .product-nav-arrow {
   position: absolute;
   top: 50%;
@@ -581,7 +576,10 @@ body {
   right: 10px;
 }
 
-/* Responsive Design for Merchandising Sections */
+/*-----------------------------------*\
+  #RESPONSIVE MERCHANDISING-SECTION
+\*-----------------------------------*/
+
 @media (max-width: 1024px) {
   .merchandising-section .product-list {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -610,7 +608,6 @@ body {
     font-size: var(--font-sm);
   }
 
-  /* Enable horizontal scroll on mobile */
   .merchandising-section .product-list-container {
     overflow-x: auto;
     overflow-y: hidden;
@@ -634,7 +631,6 @@ body {
     max-width: 160px;
   }
 
-  /* Show navigation arrows on mobile/tablet */
   .product-nav-arrow {
     opacity: 1;
     visibility: visible;
@@ -674,18 +670,8 @@ body {
   }
 }
 
-/* Hide scrollbar for webkit browsers */
-.merchandising-section .product-list-container::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for Firefox */
-.merchandising-section .product-list-container {
-  scrollbar-width: none;
-}
-
 /*-----------------------------------*\
-  #PRODUCT-LIST (General)
+  #PRODUCT-LIST
 \*-----------------------------------*/
 
 .product-list {
@@ -881,6 +867,10 @@ body {
   object-fit: cover;
 }
 
+/*-----------------------------------*\
+  #RESPONSIVE BANNER
+\*-----------------------------------*/
+
 @media (max-width: 768px) {
   .banner {
     padding: 10px;
@@ -945,10 +935,8 @@ body {
 }
 
 /*-----------------------------------*\
-  #RESPONSIVES
+  #RESPONSIVE SERVICE-LIST
 \*-----------------------------------*/
-
-/*responsive para los items de servicios*/
 
 @media (max-width: 768px) {
   .service-list {
@@ -961,7 +949,9 @@ body {
   }
 }
 
-/*responsive para el logo, search bar y sidebar*/
+/*-----------------------------------*\
+  #RESPONSIVE LOGO, SEARCH BAR AND SIDEBAR
+\*-----------------------------------*/
 
 @media screen and (max-width: 800px) {
   .logo h1 {
@@ -1009,7 +999,9 @@ body {
   }
 }
 
-/*responsive para la lista de productos*/
+/*-----------------------------------*\
+  #RESPONSIVE PRODUCT-LIST
+\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .product-list {
@@ -1018,7 +1010,6 @@ body {
     padding: var(--spacing-lg) var(--spacing-lg);
   }
 
-  /* Aplicar mismo grid responsive que product-list normal */
   .merchandising-section .product-list {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
   }
@@ -1055,7 +1046,9 @@ body {
   }
 }
 
-/*card responsives*/
+/*-----------------------------------*\
+  #RESPONSIVE PRODUCT-CARD
+\*-----------------------------------*/
 
 @media (max-width: 480px) {
   .product-card {
@@ -1080,7 +1073,9 @@ body {
   }
 }
 
-/*responsive para merchandising y productos*/
+/*-----------------------------------*\
+  #RESPONSIVE MERCHANDISING-SECTION AND PRODUCT-LIST
+\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .merchandising-section {
@@ -1111,9 +1106,10 @@ body {
   }
 }
 
-/*responsive para merchandising en mobile*/
+/*-----------------------------------*\
+  #RESPONSIVE MERCHANDISING-SECTION AND PRODUCT-LIST
+\*-----------------------------------*/
 
-/* Prevent horizontal overflow on all elements */
 @media (max-width: 768px) {
   * {
     max-width: 100%;
@@ -1143,7 +1139,9 @@ body {
   }
 }
 
-/*responsive para el anuncio*/
+/*-----------------------------------*\
+  #RESPONSIVE ANNOUNCEMENT-BAR
+\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .announcement-bar-content {
@@ -1158,7 +1156,9 @@ body {
   }
 }
 
-/*oculta las flechas en mobile*/
+/*-----------------------------------*\
+  #RESPONSIVE CAROUSEL-CONTROLS
+\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .carousel-controls {
@@ -1517,6 +1517,35 @@ body {
     height: 30px;
     padding: 0.25rem;
   }
+
+  .mobile-announcement-bar p {
+    font-size: 0.625rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+}
+
+/* iPhone SE (375px width) Specific Fixes */
+@media (width: 375px) {
+  .mobile-announcement-bar {
+    padding: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .mobile-announcement-bar p {
+    font-size: 0.55rem;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 }
 
 /* iPad Mini (768px width) Specific Fixes */
@@ -1591,6 +1620,12 @@ body {
 
   .mobile-announcement-bar p {
     font-size: 0.625rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 
   .navbar-container {
@@ -1640,7 +1675,10 @@ body {
   z-index: 100;
 }
 
-/* Ajustes para mejorar la accesibilidad táctil en móviles */
+/*-----------------------------------*\
+  #RESPONSIVE MOBILE-NAV
+\*-----------------------------------*/
+
 @media (max-width: 768px) {
   .mobile-menu-btn,
   .mobile-user-btn,
@@ -1652,7 +1690,7 @@ body {
   }
 }
 
-/* Corregir problemas de gap en dispositivos específicos */
+
 @media (max-width: 480px) {
   .mobile-top-row {
     gap: clamp(0.125rem, 2vw, 0.5rem);
@@ -1663,7 +1701,7 @@ body {
   }
 }
 
-/* Ajustes específicos para el carrusel en responsive */
+
 @media (max-width: 768px) {
   .carousel-container {
     margin-bottom: 0;
@@ -1681,7 +1719,10 @@ body {
   }
 }
 
-/* Mejoras específicas para el espaciado vertical */
+/*-----------------------------------*\
+  #RESPONSIVE CONTAINER-PROMOTIONS
+\*-----------------------------------*/
+
 @media (max-width: 768px) {
   .container-promotions {
     padding-top: 1rem;
@@ -1694,7 +1735,10 @@ body {
   }
 }
 
-/* Ajustes finales para dispositivos pequeños */
+/*-----------------------------------*\
+  #RESPONSIVE MOBILE-NAV
+\*-----------------------------------*/
+
 @media (max-width: 320px) {
   .mobile-promotional-header {
     min-height: auto;
