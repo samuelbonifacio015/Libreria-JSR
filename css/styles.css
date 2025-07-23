@@ -654,9 +654,9 @@ body {
   }
 
   .merchandising-section .product-card {
-    flex: 0 0 140px;
-    min-width: 140px;
-    max-width: 140px;
+    flex: 0 0 300px;
+    min-width: 100px;
+    max-width: 300px;
   }
 
   .product-card img {
