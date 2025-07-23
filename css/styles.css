@@ -166,8 +166,8 @@ body {
 .slide img {
   width: 100%;
   height: auto;
-  max-height: 800px;
-  object-fit: cover;
+  max-height: none;
+  object-fit: contain;
   display: block;
 }
 
@@ -207,23 +207,23 @@ body {
 
 @media (min-width: 1440px) {
   .carousel {
-    height: 600px;
+    height: auto;
   }
 
   .slide img {
-    max-height: 600px;
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 }
 
 @media (max-width: 1200px) {
   .carousel {
-    height: 500px;
+    height: auto;
   }
 
   .slide img {
-    max-height: 500px;
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -236,12 +236,12 @@ body {
 
 @media (max-width: 1024px) {
   .carousel {
-    height: clamp(400px, 50vw, 500px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(400px, 50vw, 500px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -254,12 +254,12 @@ body {
 
 @media (max-width: 834px) {
   .carousel {
-    height: clamp(350px, 45vw, 400px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(350px, 45vw, 400px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -278,12 +278,12 @@ body {
   }
 
   .carousel {
-    height: clamp(250px, 40vw, 350px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(250px, 40vw, 350px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
     width: 100%;
   }
 
@@ -317,12 +317,12 @@ body {
 
 @media (max-width: 428px) {
   .carousel {
-    height: clamp(200px, 35vw, 280px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(200px, 35vw, 280px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -334,12 +334,12 @@ body {
 
 @media (max-width: 375px) {
   .carousel {
-    height: clamp(180px, 30vw, 250px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(180px, 30vw, 250px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -351,12 +351,12 @@ body {
 
 @media (max-width: 320px) {
   .carousel {
-    height: clamp(160px, 25vw, 220px);
+    height: auto;
   }
 
   .slide img {
-    max-height: clamp(160px, 25vw, 220px);
-    object-fit: cover;
+    max-height: none;
+    object-fit: contain;
   }
 
   .carousel-control {
@@ -961,12 +961,12 @@ body {
   }
 
   .carousel {
-    height: 350px;
+    height: auto;
   }
 
   .slide img {
-    height: 350px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
   }
 
   .section-header {
@@ -1010,12 +1010,12 @@ body {
   }
 
   .carousel {
-    height: 250px;
+    height: auto;
   }
 
   .slide img {
-    height: 250px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
   }
 }
 
@@ -1629,16 +1629,15 @@ body {
   }
 
   .carousel {
-    height: clamp(200px, 35vw, 300px);
+    height: auto;
   }
 
   .slide img {
-    height: clamp(200px, 35vw, 300px);
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     width: 100%;
   }
 }
-
 
 @media (max-width: 768px) {
   .container-promotions {
@@ -1651,7 +1650,6 @@ body {
     padding: 0 1rem;
   }
 }
-
 
 @media (max-width: 320px) {
   .mobile-promotional-header {
