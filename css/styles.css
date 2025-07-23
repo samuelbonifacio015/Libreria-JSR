@@ -1404,7 +1404,6 @@ body {
   #GLOBAL RESPONSIVE FIXES
 \*-----------------------------------*/
 
-/* Prevenir overflow horizontal en todos los breakpoints */
 html,
 body {
   overflow-x: hidden;
@@ -1417,7 +1416,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Asegurar que todos los contenedores respeten el viewport */
 .main-navbar,
 .navbar-container,
 .desktop-navbar,
@@ -1431,11 +1429,6 @@ body {
   box-sizing: border-box;
 }
 
-/*-----------------------------------*\
-  #DEVICE-SPECIFIC FIXES
-\*-----------------------------------*/
-
-/* iPhone 12 Pro (390px width) Specific Fixes */
 @media (width: 390px) {
   .navbar-container {
     padding: 0.25rem 0.5rem;
@@ -1475,7 +1468,6 @@ body {
   }
 }
 
-/* iPhone SE (375px width) Specific Fixes */
 @media (width: 375px) {
   .mobile-announcement-bar {
     padding: 0.4rem;
@@ -1494,7 +1486,6 @@ body {
   }
 }
 
-/* iPad Mini (768px width) Specific Fixes */
 @media (width: 768px) {
   .desktop-navbar {
     display: none;
@@ -1515,7 +1506,6 @@ body {
   }
 }
 
-/* iPad Air (820px width) Specific Fixes */
 @media (width: 820px) {
   .desktop-navbar {
     display: none;
@@ -1539,7 +1529,6 @@ body {
   }
 }
 
-/* Laptop Medium (1366px width) Specific Fixes */
 @media (width: 1366px) {
   .navbar-search {
     max-width: 450px;
@@ -1550,11 +1539,6 @@ body {
   }
 }
 
-/*-----------------------------------*\
-  #ADDITIONAL RESPONSIVE IMPROVEMENTS
-\*-----------------------------------*/
-
-/* Mejorar el comportamiento en landscape mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .mobile-promotional-header {
     padding: 0.5rem;
@@ -1583,7 +1567,6 @@ body {
   }
 }
 
-/* Ajustes para pantallas muy anchas */
 @media (min-width: 1920px) {
   .navbar-container {
     max-width: 1400px;
@@ -1594,21 +1577,18 @@ body {
   }
 }
 
-/* Ajustes específicos para prevenir problemas de flex-wrap */
 .mobile-top-row,
 .mobile-actions,
 .navbar-actions {
   flex-wrap: nowrap;
 }
 
-/* Asegurar que las imágenes no se distorsionen */
 .mobile-logo img,
 .navbar-logo img {
   object-fit: cover;
   flex-shrink: 0;
 }
 
-/* Prevenir problemas de z-index */
 .mobile-nav {
   z-index: 1001;
 }
@@ -1620,10 +1600,6 @@ body {
 .main-navbar {
   z-index: 100;
 }
-
-/*-----------------------------------*\
-  #RESPONSIVE MOBILE-NAV
-\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .mobile-menu-btn,
@@ -1663,9 +1639,6 @@ body {
   }
 }
 
-/*-----------------------------------*\
-  #RESPONSIVE CONTAINER-PROMOTIONS
-\*-----------------------------------*/
 
 @media (max-width: 768px) {
   .container-promotions {
@@ -1679,9 +1652,6 @@ body {
   }
 }
 
-/*-----------------------------------*\
-  #RESPONSIVE MOBILE-NAV
-\*-----------------------------------*/
 
 @media (max-width: 320px) {
   .mobile-promotional-header {

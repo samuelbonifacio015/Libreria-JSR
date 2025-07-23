@@ -169,4 +169,3 @@ document.addEventListener('navbarLoaded', function() {
         });
     });
 });
-  

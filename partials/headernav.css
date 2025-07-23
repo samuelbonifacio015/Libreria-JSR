@@ -66,6 +66,18 @@ body {
   text-align: center;
 }
 
+/* Position fixed para header-nav solo en desktop (no responsive) */
+@media (min-width: 1025px) {
+  .header-nav {
+    position: fixed;
+    top: 70px; /* Debajo del navbar que tiene aproximadamente 70px de altura */
+    left: 0;
+    right: 0;
+    z-index: 999;
+    width: 100%;
+  }
+}
+
 .nav-list {
   list-style: none;
   padding: 0;
@@ -125,7 +137,7 @@ body {
   background-color: var(--bg-white);
   min-width: 200px;
   box-shadow: var(--shadow-md);
-  z-index: 1;
+  z-index: 1002; /* Aumentar z-index para que aparezca encima de elementos fijos */
   border-radius: var(--border-radius-md);
   border: 1px solid var(--border-color);
   top: 100%;

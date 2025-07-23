@@ -55,6 +55,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Agregar padding-top para compensar navbar y header-nav fijos en desktop */
+@media (min-width: 1025px) {
+  body {
+    padding-top: 120px; /* Aproximadamente navbar (70px) + header-nav (50px) */
+  }
+}
+
 /*-----------------------------------*\
   #MOBILE PROMOTIONAL HEADER
 \*-----------------------------------*/
@@ -198,6 +205,17 @@ body {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+/* Position fixed para navbar solo en desktop (no responsive) */
+@media (min-width: 1025px) {
+  .main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 }
 
 .navbar-container {
@@ -345,6 +363,19 @@ body {
 
 .cart-container {
   position: relative;
+}
+
+/* Asegurar que el dropdown del carrito funcione correctamente con navbar fijo */
+@media (min-width: 1025px) {
+  .cart-container {
+    position: static; /* Cambiar a static para position fixed */
+  }
+
+  .cart-dropdown {
+    position: fixed; /* Cambiar a fixed para mejor posicionamiento */
+    top: 70px; /* Debajo del navbar */
+    right: 20px; /* Margen desde el borde derecho */
+  }
 }
 
 .cart-btn {
@@ -550,7 +581,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
-  z-index: 1000;
+  z-index: 1001; /* Aumentar z-index para que aparezca encima del navbar fijo */
   animation: slideDown var(--transition-normal);
   margin-top: var(--spacing-xs);
 }
@@ -1195,7 +1226,6 @@ body {
     max-width: 100%;
     overflow-wrap: break-word;
   }
-  
 }
 
 @media (max-width: 319px) {
@@ -1259,5 +1289,4 @@ body {
   .navbar-logo span {
     font-size: 1rem;
   }
-
 }
