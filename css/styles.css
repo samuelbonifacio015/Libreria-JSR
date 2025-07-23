@@ -531,17 +531,6 @@ body {
   overflow: hidden;
 }
 
-.merchandising-section .product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: var(--spacing-sm);
-  justify-content: center;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  max-width: var(--container-max);
-  margin: 0 auto;
-  transition: transform 0.3s ease;
-  width: 100%;
-}
 
 /*-----------------------------------*\
   #RESPONSIVE MERCHANDISING-SECTION
@@ -622,7 +611,6 @@ body {
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: var(--spacing-sm);
   justify-content: center;
   padding: var(--spacing-lg) var(--spacing-xl);
   max-width: var(--container-max);
@@ -636,7 +624,6 @@ body {
   background-color: var(--bg-white);
   padding: var(--spacing-md);
   border: 1px solid #cccccc;
-  border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition-normal);
   min-height: 450px;
