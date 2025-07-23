@@ -371,13 +371,13 @@ body {
 \*-----------------------------------*/
 
 .announcement-bar {
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 
 .announcement-bar-container {
   background-color: #1fa9ff;
-  margin: 0; 
+  margin: 0;
 }
 
 .announcement-bar-content {
@@ -391,7 +391,7 @@ body {
   letter-spacing: 1.25px;
   font-weight: 700;
   color: #f8f5f5;
-  margin: 0; 
+  margin: 0;
 }
 
 /* En mobile, la barra de anuncios se oculta */
@@ -407,8 +407,8 @@ body {
 
 .container-promotions {
   max-width: var(--container-max);
-  margin: 0 auto; 
-  padding: var(--spacing-lg) var(--spacing-xl) 0; 
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-xl) 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -417,8 +417,8 @@ body {
 
 .container {
   max-width: var(--container-max);
-  margin: 0 auto; 
-  padding: 0 var(--spacing-xl); 
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
   overflow-x: hidden;
 }
 
@@ -428,6 +428,10 @@ body {
   align-items: center;
   width: 100%;
   margin-bottom: var(--spacing-lg);
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--spacing-xl);
 }
 
 .section-header-stack {
@@ -473,10 +477,9 @@ body {
   #RESPONSIVE CONTAINER-PROMOTIONS
 \*-----------------------------------*/
 
-
 @media (max-width: 768px) {
   .container-promotions {
-    padding: var(--spacing-md) 1rem 0; 
+    padding: var(--spacing-md) 1rem 0;
     margin: 0 auto;
   }
 
@@ -495,12 +498,11 @@ body {
   }
 }
 
-
 /*-----------------------------------*\
   #MERCHANDISING-SECTION
 \*-----------------------------------*/
 .merchandising-section {
-  max-width: var(--container-max);
+  max-width: 92.5rem;
   margin: var(--spacing-xl) auto;
   padding: 0 var(--spacing-xl);
   display: flex;
@@ -517,6 +519,10 @@ body {
   margin-bottom: var(--spacing-lg);
   position: relative;
   z-index: 2;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--spacing-xl);
 }
 
 .merchandising-section .product-list-container {
@@ -530,10 +536,11 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: var(--spacing-sm);
   justify-content: center;
-  padding: var(--spacing-lg) 0;
+  padding: var(--spacing-lg) var(--spacing-xl);
   max-width: var(--container-max);
   margin: 0 auto;
   transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .product-nav-arrow {
@@ -682,6 +689,7 @@ body {
   padding: var(--spacing-lg) var(--spacing-xl);
   max-width: var(--container-max);
   margin: 0 auto;
+  width: 100%;
 }
 
 .product-card {
@@ -1690,7 +1698,6 @@ body {
   }
 }
 
-
 @media (max-width: 480px) {
   .mobile-top-row {
     gap: clamp(0.125rem, 2vw, 0.5rem);
@@ -1700,7 +1707,6 @@ body {
     gap: clamp(0.125rem, 1vw, 0.25rem);
   }
 }
-
 
 @media (max-width: 768px) {
   .carousel-container {
