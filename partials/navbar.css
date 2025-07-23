@@ -55,10 +55,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Agregar padding-top para compensar navbar y header-nav fijos en desktop */
 @media (min-width: 1025px) {
   body {
-    padding-top: 120px; /* Aproximadamente navbar (70px) + header-nav (50px) */
+    padding-top: 120px; 
   }
 }
 
@@ -207,7 +206,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Position fixed para navbar solo en desktop (no responsive) */
 @media (min-width: 1025px) {
   .main-navbar {
     position: fixed;
@@ -365,16 +363,9 @@ body {
   position: relative;
 }
 
-/* Asegurar que el dropdown del carrito funcione correctamente con navbar fijo */
 @media (min-width: 1025px) {
   .cart-container {
-    position: static; /* Cambiar a static para position fixed */
-  }
-
-  .cart-dropdown {
-    position: fixed; /* Cambiar a fixed para mejor posicionamiento */
-    top: 70px; /* Debajo del navbar */
-    right: 20px; /* Margen desde el borde derecho */
+    position: static; 
   }
 }
 
@@ -581,7 +572,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
-  z-index: 1001; /* Aumentar z-index para que aparezca encima del navbar fijo */
+  z-index: 1001; 
   animation: slideDown var(--transition-normal);
   margin-top: var(--spacing-xs);
 }
@@ -743,7 +734,6 @@ body {
   color: var(--text-white);
 }
 
-/* Mobile Nav Content */
 .mobile-nav-content {
   padding: var(--spacing-lg);
   display: flex;
@@ -791,7 +781,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Mobile Categories */
 .mobile-header-nav {
   padding: var(--spacing-lg);
 }
@@ -840,7 +829,6 @@ body {
   background-color: var(--secondary-hover);
 }
 
-/* Mobile Dropdown Categories */
 .mobile-dropdown {
   margin-bottom: var(--spacing-sm);
 }
@@ -913,7 +901,6 @@ body {
   padding-left: var(--spacing-2xl);
 }
 
-/* Mobile Overlay */
 .mobile-overlay {
   position: fixed;
   top: 0;

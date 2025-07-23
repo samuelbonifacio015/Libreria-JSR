@@ -61,16 +61,15 @@ body {
 
 .header-nav {
   background-color: var(--bg-white);
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: var(--spacing-xl) 0 var(--spacing-sm);
   border-bottom: 1px solid var(--border-color);
   text-align: center;
 }
 
-/* Position fixed para header-nav solo en desktop (no responsive) */
 @media (min-width: 1025px) {
   .header-nav {
     position: fixed;
-    top: 70px; /* Debajo del navbar que tiene aproximadamente 70px de altura */
+    top: 70px; 
     left: 0;
     right: 0;
     z-index: 999;
@@ -137,7 +136,7 @@ body {
   background-color: var(--bg-white);
   min-width: 200px;
   box-shadow: var(--shadow-md);
-  z-index: 1002; /* Aumentar z-index para que aparezca encima de elementos fijos */
+  z-index: 1002; 
   border-radius: var(--border-radius-md);
   border: 1px solid var(--border-color);
   top: 100%;
@@ -254,17 +253,15 @@ body {
 }
 
 /*-----------------------------------*\
-  #RESPONSIVE - OCULTAR EN MÓVIL
+  #RESPONSIVE
 \*-----------------------------------*/
 
-/* Ocultar header nav en móvil porque está encapsulado en el menú hamburguesa */
 @media (max-width: 768px) {
   .header-nav {
     display: none;
   }
 }
 
-/* Responsive adjustments para JSR Club cuando está visible*/
 @media (max-width: 768px) and (min-width: 769px) {
   .jsr-club-link {
     padding: var(--spacing-xs) var(--spacing-md) !important;
