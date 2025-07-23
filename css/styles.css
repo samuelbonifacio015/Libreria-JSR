@@ -362,7 +362,6 @@ body {
   .carousel-control {
     width: 30px;
     height: 30px;
-    font-size: 11px;
   }
 }
 
@@ -408,7 +407,7 @@ body {
 .container-promotions {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--spacing-lg) var(--spacing-xl) 0;
+  padding: var(--spacing-xl) var(--spacing-xl) 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -444,6 +443,7 @@ body {
   font-weight: 600;
   color: var(--text-color);
   margin: 0;
+  text-transform: uppercase;
 }
 
 .section-action-link {
@@ -543,46 +543,6 @@ body {
   width: 100%;
 }
 
-.product-nav-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(25, 65, 111, 0.9);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  visibility: hidden;
-}
-
-.product-nav-arrow:hover {
-  background: rgba(25, 65, 111, 1);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.product-nav-arrow.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.product-nav-arrow.prev {
-  left: 10px;
-}
-
-.product-nav-arrow.next {
-  right: 10px;
-}
-
 /*-----------------------------------*\
   #RESPONSIVE MERCHANDISING-SECTION
 \*-----------------------------------*/
@@ -637,22 +597,6 @@ body {
     min-width: 160px;
     max-width: 160px;
   }
-
-  .product-nav-arrow {
-    opacity: 1;
-    visibility: visible;
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .product-nav-arrow.prev {
-    left: 5px;
-  }
-
-  .product-nav-arrow.next {
-    right: 5px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -668,12 +612,6 @@ body {
 
   .product-card img {
     height: 140px;
-  }
-
-  .product-nav-arrow {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
   }
 }
 
