@@ -1605,7 +1605,6 @@ body {
   }
 }
 
-/* Estilos adicionales para asegurar la funcionalidad del menú móvil */
 @media (max-width: 768px) {
   .mobile-nav {
     display: block;
@@ -1615,7 +1614,6 @@ body {
     display: none;
   }
 
-  /* Asegurar que el menú sea visible por encima de todo */
   .mobile-nav.active {
     display: block;
   }
@@ -1624,7 +1622,6 @@ body {
     display: block;
   }
 
-  /* Prevenir scroll del body cuando el menú está abierto */
   body.menu-open {
     overflow: hidden !important;
   }
