@@ -273,3 +273,13 @@ body {
     padding: 1px 4px;
   }
 }
+
+/*-----------------------------------*\
+  #RESPONSIVE 768px - 1445px
+\*-----------------------------------*/
+
+@media (min-width: 769px) and (max-width: 1445px) {
+  .header-nav {
+    display: none;
+  }
+}
