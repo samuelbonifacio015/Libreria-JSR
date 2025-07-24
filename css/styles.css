@@ -531,7 +531,6 @@ body {
   overflow: hidden;
 }
 
-
 /*-----------------------------------*\
   #RESPONSIVE MERCHANDISING-SECTION
 \*-----------------------------------*/
@@ -539,7 +538,6 @@ body {
 @media (max-width: 1024px) {
   .merchandising-section .product-list {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-sm);
   }
 }
 
@@ -575,7 +573,6 @@ body {
   .merchandising-section .product-list {
     display: flex;
     grid-template-columns: none;
-    gap: var(--spacing-md);
     padding: var(--spacing-md) 0;
     width: max-content;
     justify-content: flex-start;
@@ -939,7 +936,6 @@ body {
 @media (max-width: 768px) {
   .product-list {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: var(--spacing-sm);
     padding: var(--spacing-lg) var(--spacing-lg);
   }
 
