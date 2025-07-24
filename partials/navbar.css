@@ -713,14 +713,15 @@ body {
 }
 
 .mobile-nav-header .logo img {
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius-round);
 }
 
 .mobile-nav-header .logo span {
-  font-size: 1rem;
+  font-size: 1.5rem;
   white-space: nowrap;
-  color: var(--primary-color);
+  color: var(--accent-color);
   font-weight: 600;
 }
 
