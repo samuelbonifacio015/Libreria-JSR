@@ -1666,7 +1666,6 @@ body {
 \*-----------------------------------*/
 
 @media (min-width: 769px) and (max-width: 1445px) {
-  /* Ajustar el body para que no tenga padding-top en este rango */
   body {
     padding-top: 0;
   }
@@ -1675,13 +1674,11 @@ body {
     display: none;
   }
 
-  /* Asegurar que el navbar mobile se comporte correctamente */
   .main-navbar {
     position: relative;
     z-index: 1000;
   }
 
-  /* Asegurar que el mobile promotional header se muestre correctamente */
   .mobile-promotional-header {
     display: block;
     position: relative;
@@ -1699,14 +1696,12 @@ body {
     overflow: hidden;
   }
 
-  /* Ajustes para el contenido principal */
   .container {
     max-width: var(--container-narrow);
     margin: 0 auto;
     padding: var(--spacing-lg) var(--spacing-xl);
   }
 
-  /* Ajustes para el carousel */
   .carousel {
     height: 400px;
   }
@@ -1716,7 +1711,6 @@ body {
     object-fit: cover;
   }
 
-  /* Ajustes para las promociones */
   .container-promotions {
     padding: var(--spacing-xl) var(--spacing-2xl);
   }
@@ -1730,7 +1724,6 @@ body {
     gap: var(--spacing-lg);
   }
 
-  /* Ajustes para el banner promocional */
   .jsr-club-promo-banner {
     margin: var(--spacing-xl) 0;
   }
@@ -1747,14 +1740,12 @@ body {
     font-size: clamp(0.875rem, 2.5vw, 1.125rem);
   }
 
-  /* Ajustes para el botón flotante */
   .floating-about-us {
     width: 60px;
     height: 60px;
     font-size: var(--font-lg);
   }
 
-  /* Ajustes para el botón back-to-top */
   .back-to-top {
     width: 50px;
     height: 50px;
