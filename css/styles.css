@@ -1660,3 +1660,110 @@ body {
     padding: 0.25rem 0;
   }
 }
+
+/*-----------------------------------*\
+  #RESPONSIVE 768px - 1445px
+\*-----------------------------------*/
+
+@media (min-width: 769px) and (max-width: 1445px) {
+  /* Ajustar el body para que no tenga padding-top en este rango */
+  body {
+    padding-top: 0;
+  }
+
+  .announcement-bar-container {
+    display: none;
+  }
+
+  /* Asegurar que el navbar mobile se comporte correctamente */
+  .main-navbar {
+    position: relative;
+    z-index: 1000;
+  }
+
+  /* Asegurar que el mobile promotional header se muestre correctamente */
+  .mobile-promotional-header {
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    background: linear-gradient(
+      135deg,
+      var(--primary-color) 0%,
+      var(--secondary-color) 100%
+    );
+    color: var(--text-white);
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Ajustes para el contenido principal */
+  .container {
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  /* Ajustes para el carousel */
+  .carousel {
+    height: 400px;
+  }
+
+  .slide img {
+    height: 400px;
+    object-fit: cover;
+  }
+
+  /* Ajustes para las promociones */
+  .container-promotions {
+    padding: var(--spacing-xl) var(--spacing-2xl);
+  }
+
+  .merchandising-section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .merchandising-section .product-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  /* Ajustes para el banner promocional */
+  .jsr-club-promo-banner {
+    margin: var(--spacing-xl) 0;
+  }
+
+  .promo-content {
+    padding: var(--spacing-xl) var(--spacing-2xl);
+  }
+
+  .promo-text h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .promo-text p {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+  }
+
+  /* Ajustes para el botón flotante */
+  .floating-about-us {
+    width: 60px;
+    height: 60px;
+    font-size: var(--font-lg);
+  }
+
+  /* Ajustes para el botón back-to-top */
+  .back-to-top {
+    width: 50px;
+    height: 50px;
+    font-size: var(--font-md);
+  }
+}
+
+@media (min-width: 1025px) {
+  .mobile-promotional-header {
+    display: none !important;
+  }
+}
