@@ -107,35 +107,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //Funcion para dar la funcionalidad al menu móvil
 document.addEventListener('navbarLoaded', function() {
+    console.log('🔄 Navbar loaded, initializing mobile menu...');
+    
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileNav = document.getElementById('mobileNav');
     const mobileNavClose = document.getElementById('mobileNavClose');
     const mobileOverlay = document.getElementById('mobileOverlay');
 
+    console.log('📱 Mobile menu elements:', {
+        mobileMenuBtn: !!mobileMenuBtn,
+        mobileNav: !!mobileNav,
+        mobileNavClose: !!mobileNavClose,
+        mobileOverlay: !!mobileOverlay
+    });
+
     // Abrir menú móvil
-    if (mobileMenuBtn) {
+    if (mobileMenuBtn && mobileNav && mobileOverlay) {
         mobileMenuBtn.addEventListener('click', function () {
+            console.log('🍔 Opening mobile menu...');
             mobileNav.classList.add('active');
             mobileOverlay.classList.add('active');
             document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+            console.log('✅ Mobile menu opened');
         });
+    } else {
+        console.error('❌ Missing mobile menu elements');
     }
 
     // Cerrar menú móvil con botón de cerrar
-    if (mobileNavClose) {
+    if (mobileNavClose && mobileNav && mobileOverlay) {
         mobileNavClose.addEventListener('click', function () {
+            console.log('❌ Closing mobile menu (close button)...');
             mobileNav.classList.remove('active');
             mobileOverlay.classList.remove('active');
             document.body.style.overflow = ''; // Restaurar scroll del body
+            console.log('✅ Mobile menu closed');
         });
     }
 
     // Cerrar menú móvil al hacer click en el overlay
-    if (mobileOverlay) {
+    if (mobileOverlay && mobileNav) {
         mobileOverlay.addEventListener('click', function () {
+            console.log('❌ Closing mobile menu (overlay click)...');
             mobileNav.classList.remove('active');
             mobileOverlay.classList.remove('active');
             document.body.style.overflow = ''; // Restaurar scroll del body
+            console.log('✅ Mobile menu closed');
         });
     }
 
