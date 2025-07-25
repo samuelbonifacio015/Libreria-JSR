@@ -954,7 +954,6 @@ body {
 @media (max-width: 768px) {
   .product-list {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    padding: var(--spacing-lg) var(--spacing-lg);
   }
 
   .merchandising-section .product-list {
@@ -1753,7 +1752,6 @@ body {
 
   .merchandising-section .product-list {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
   }
 
   .jsr-club-promo-banner {
@@ -1788,5 +1786,185 @@ body {
 @media (min-width: 1025px) {
   .mobile-promotional-header {
     display: none !important;
+  }
+}
+
+/*-----------------------------------*\
+  #PROMOTION-PRODUCT-LIST (igual a PRODUCT-LIST)
+\*-----------------------------------*/
+.promotion-product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.promotion-product-card {
+  position: relative;
+  text-align: center;
+  background-color: var(--bg-white);
+  padding: var(--spacing-md);
+  border: 1px solid #cccccc;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.promotion-product-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.promotion-product-card .discount {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background-color: var(--error-color);
+  color: var(--text-white);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-round);
+  font-size: var(--font-xs);
+}
+
+.promotion-product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: var(--spacing-md);
+}
+
+.promotion-product-card .brand {
+  font-size: var(--font-xs);
+  color: #000;
+  transition: color var(--transition-slow);
+}
+
+.promotion-product-card .brand:hover {
+  color: var(--secondary-color);
+}
+
+.promotion-product-card .product-name {
+  font-size: var(--font-md);
+  font-weight: 500;
+  color: #000;
+  transition: color var(--transition-slow);
+}
+
+.promotion-product-card .product-name:hover {
+  color: var(--secondary-color);
+}
+
+.promotion-product-card .price {
+  margin: var(--spacing-md) 0;
+}
+
+.promotion-product-card .price .original {
+  text-decoration: line-through;
+  color: var(--text-light);
+  font-size: var(--font-md);
+  display: block;
+}
+
+.promotion-product-card .price .discounted {
+  font-size: var(--font-lg);
+  font-weight: bold;
+  color: #000000;
+}
+
+.promotion-product-card .availability {
+  color: var(--success-color);
+  font-size: var(--font-sm);
+}
+
+.promotion-product-card .reviews {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.promotion-product-card .reviews span {
+  font-size: var(--font-xs);
+  color: #000;
+  transition: color var(--transition-slow);
+}
+
+.promotion-product-card .reviews span:hover {
+  font-size: var(--font-xs);
+  color: var(--secondary-color);
+}
+
+.promotion-product-card .reviews i {
+  color: #999999;
+  font-size: var(--font-xs);
+}
+
+.promotion-product-card .add-to-cart {
+  background-color: var(--secondary-color);
+  color: var(--text-white);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+  cursor: pointer;
+  width: 100%;
+  font-size: var(--font-sm);
+  font-weight: 550;
+  border-radius: var(--border-radius-md);
+  transition: background-color var(--transition-slow);
+}
+
+.promotion-product-card .add-to-cart:hover {
+  background-color: var(--secondary-hover);
+}
+
+.promotion-product-card .quick-view {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-md);
+  margin-top: var(--spacing-xs);
+  cursor: pointer;
+  width: 100%;
+  font-size: var(--font-sm);
+  font-weight: 550;
+  transition: color var(--transition-slow);
+}
+
+.promotion-product-card .quick-view:hover {
+  color: #000000;
+}
+
+/* Responsive para promotion-product-list */
+@media (max-width: 768px) {
+  .promotion-product-list {
+    display: flex;
+    grid-template-columns: none;
+    padding: var(--spacing-md) 0;
+    width: max-content;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  .promotion-product-card {
+    flex: 0 0 160px;
+    min-width: 160px;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .promotion-product-card {
+    flex: 0 0 300px;
+    min-width: 100px;
+    max-width: 300px;
+  }
+  .promotion-product-card img {
+    height: 140px;
   }
 }

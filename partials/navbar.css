@@ -57,7 +57,7 @@ body {
 
 @media (min-width: 1025px) {
   body {
-    padding-top: 120px; 
+    padding-top: 120px;
   }
 }
 
@@ -372,7 +372,7 @@ body {
 
 @media (min-width: 1025px) {
   .cart-container {
-    position: static; 
+    position: static;
   }
 }
 
@@ -579,7 +579,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
-  z-index: 1001; 
+  z-index: 1001;
   animation: slideDown var(--transition-normal);
   margin-top: var(--spacing-xs);
 }
@@ -685,7 +685,6 @@ body {
 .mobile-nav {
   position: fixed;
   top: 0;
-  left: -100%;
   width: min(320px, 85vw);
   height: 100vh;
   background-color: var(--bg-white);
@@ -743,10 +742,10 @@ body {
 }
 
 .mobile-nav-content {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl) var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -756,7 +755,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   border: none;
   border-radius: var(--border-radius-md);
   cursor: pointer;
@@ -764,7 +763,7 @@ body {
   font-weight: 600;
   transition: all var(--transition-normal);
   width: 100%;
-  min-height: 48px;
+  min-height: 44px;
 }
 
 .mobile-login-btn {
@@ -790,7 +789,7 @@ body {
 }
 
 .mobile-header-nav {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
 }
 
 .mobile-nav-categories h3 {
@@ -1399,18 +1398,18 @@ body {
   }
 
   .mobile-nav-content {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-sm);
   }
 
   .mobile-login-btn,
   .mobile-register-btn {
-    padding: var(--spacing-lg) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
     font-size: var(--font-md);
-    min-height: 52px;
+    min-height: 48px;
   }
 
   .mobile-header-nav {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-sm);
   }
 
   .mobile-nav-categories h3 {
@@ -1462,4 +1461,3 @@ body {
     min-width: 140px;
   }
 }
-
