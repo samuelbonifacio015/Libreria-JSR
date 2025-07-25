@@ -15,8 +15,11 @@ function loadMerchandisingProducts() {
                 product.brand === 'LOGITECH' ||
                 product.brand === 'PIGMA-MICRON' ||
                 product.brand === 'XIAOMI' ||
-                product.brand === 'CATRICE'
-            ).slice(0, 6); // Limitamos a 6 productos
+                product.brand === 'CATRICE' ||
+                product.brand === 'STICK\'N-NOTES' ||
+                product.brand === 'SONY' ||
+                product.brand === 'MARVEL'
+            ).slice(0, 9); 
 
             // Productos para la sección "Diseño & Dibujo"
             const designDrawingProducts = data.filter(product => 

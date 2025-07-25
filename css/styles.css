@@ -527,7 +527,6 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
-  
 }
 
 .merchandising-section .section-header {
@@ -545,6 +544,7 @@ body {
 }
 
 .merchandising-section .product-list-container {
+  margin-left: 13rem;
   position: relative;
   width: 100%;
   overflow: hidden;
