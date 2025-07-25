@@ -625,13 +625,16 @@ body {
 \*-----------------------------------*/
 
 .product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  justify-content: center;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  max-width: var(--container-max);
-  margin: 0 auto;
-  width: 100%;
+  display: flex;
+  grid-template-columns: none;
+  justify-content: flex-start;
+  justify-content: flex-start;
+  width: max-content;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding: 0 10px;
 }
 
 .product-card {
@@ -646,6 +649,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 0 0 230px;
+  min-width: 230px;
+  max-width: 230px;
 }
 
 .product-card:hover {
