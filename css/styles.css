@@ -545,8 +545,8 @@ body {
 
 .merchandising-section .product-list-container {
   position: relative;
-  width: calc(5 * 250px); /* Mostrar solo 5 productos inicialmente */
-  max-width: calc(100vw - 13rem - 2rem); /* Evitar desbordamiento */
+  width: calc(6 * 250px);
+  max-width: calc(100vw - 13rem - 2rem);
   overflow: hidden;
 }
 
@@ -597,7 +597,6 @@ body {
   font-size: 16px;
 }
 
-/* Mostrar flecha derecha por defecto cuando hay más contenido */
 .merchandising-section .product-list-container:hover .product-nav-arrow.next {
   opacity: 0.8;
   visibility: visible;
@@ -664,7 +663,6 @@ body {
     max-width: 160px;
   }
 
-  /* Ocultar flechas de navegación en móvil */
   .product-nav-arrow {
     display: none;
   }
@@ -2038,7 +2036,6 @@ body {
   color: #000000;
 }
 
-/* Responsive para promotion-product-list */
 @media (max-width: 768px) {
   .promotion-product-list {
     display: flex;
