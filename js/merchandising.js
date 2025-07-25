@@ -124,57 +124,86 @@ function renderProducts(containerId, products) {
     });
 }
 
-// Funciones para navegación horizontal
+// Variables para posiciones de scroll
+let currentPositions = {
+    promotion: 0,
+    'design-drawing': 0,
+    infantil: 0,
+    papeleria: 0
+};
+
+function getScrollAmount() {
+    if (window.innerWidth <= 480) {
+        return 120; // Scroll parcial en móvil
+    } else if (window.innerWidth <= 768) {
+        return 160; // Tarjeta completa en tablet
+    }
+    return 230; // Tarjeta completa en desktop
+}
+
 function initializeProductNavigation() {
     const navButtons = document.querySelectorAll('.product-nav-arrow');
     
     navButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             const section = this.getAttribute('data-section');
             const direction = this.classList.contains('prev') ? -1 : 1;
             scrollProducts(section, direction);
         });
     });
 
-    // Agregar eventos de scroll para actualizar visibilidad de flechas
     const containers = document.querySelectorAll('.merchandising-section .product-list-container');
     containers.forEach(container => {
-        container.addEventListener('scroll', function() {
+        container.addEventListener('mouseenter', function() {
             updateNavigationVisibility();
         });
     });
 
-    // Actualizar visibilidad inicial
-    window.addEventListener('resize', updateNavigationVisibility);
+    window.addEventListener('resize', () => {
+        Object.keys(currentPositions).forEach(section => {
+            currentPositions[section] = 0;
+            const container = document.querySelector(`#${section}-products`);
+            if (container) {
+                container.style.transform = 'translateX(0px)';
+            }
+        });
+        updateNavigationVisibility();
+    });
 }
 
 function scrollProducts(section, direction) {
-    const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
-    const productList = container.querySelector('.product-list');
-    
-    if (!container || !productList) return;
+    const productList = document.querySelector(`#${section}-products`);
+    if (!productList) return;
 
-    // Obtener el ancho de desplazamiento basado en el tamaño de la pantalla
-    let scrollAmount;
+    const container = productList.closest('.product-list-container');
+    if (!container) return;
+
+    const containerWidth = container.offsetWidth;
     
+    // Calcular el ancho total basado en productos reales y tamaño de pantalla
+    const productCards = productList.querySelectorAll('.product-card');
+    let cardWidth = 230;
     if (window.innerWidth <= 480) {
-        scrollAmount = 150; // Ancho de producto móvil + gap
+        cardWidth = 150;
     } else if (window.innerWidth <= 768) {
-        scrollAmount = 180; // Ancho de producto tablet + gap
-    } else {
-        scrollAmount = 250; // Ancho de producto desktop + gap
+        cardWidth = 160;
     }
+    const totalWidth = productCards.length * cardWidth; // Solo el ancho de la tarjeta
+    
+    const maxScroll = Math.max(0, totalWidth - containerWidth);
 
-    const currentScroll = container.scrollLeft;
-    const targetScroll = currentScroll + (scrollAmount * direction);
+    currentPositions[section] += getScrollAmount() * direction;
+    currentPositions[section] = Math.max(
+        0,
+        Math.min(currentPositions[section], maxScroll)
+    );
 
-    // Scroll suave
-    container.scrollTo({
-        left: targetScroll,
-        behavior: 'smooth'
-    });
+    productList.style.transform = `translateX(-${currentPositions[section]}px)`;
+    productList.style.transition = 'transform 0.3s ease';
 
-    // Actualizar visibilidad de flechas después del scroll
     setTimeout(() => {
         updateNavigationVisibility();
     }, 300);
@@ -184,93 +213,83 @@ function updateNavigationVisibility() {
     const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
     
     sections.forEach(section => {
-        const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
+        const productList = document.querySelector(`#${section}-products`);
+        if (!productList) return;
+
+        const container = productList.closest('.product-list-container');
         if (!container) return;
 
-        const productList = container.querySelector('.product-list');
         const prevBtn = container.querySelector('.product-nav-arrow.prev');
         const nextBtn = container.querySelector('.product-nav-arrow.next');
 
-        if (!productList || !prevBtn || !nextBtn) return;
+        if (!prevBtn || !nextBtn) return;
 
-        const scrollLeft = container.scrollLeft;
-        const scrollWidth = container.scrollWidth;
-        const clientWidth = container.clientWidth;
-        const maxScroll = scrollWidth - clientWidth;
+        const containerWidth = container.offsetWidth;
+        
+        // Usar la misma lógica de cálculo responsive
+        const productCards = productList.querySelectorAll('.product-card');
+        let cardWidth = 230;
+        if (window.innerWidth <= 480) {
+            cardWidth = 150;
+        } else if (window.innerWidth <= 768) {
+            cardWidth = 160;
+        }
+        const totalWidth = productCards.length * cardWidth;
+        const maxScroll = Math.max(0, totalWidth - containerWidth);
 
-        // Mostrar/ocultar flecha izquierda
-        if (scrollLeft > 5) {
+        if (maxScroll <= 0) {
+            prevBtn.classList.remove('visible');
+            nextBtn.classList.remove('visible');
+            return;
+        }
+
+        // Mostrar flecha izquierda si no estamos al inicio
+        if (currentPositions[section] > 10) {
             prevBtn.classList.add('visible');
         } else {
             prevBtn.classList.remove('visible');
         }
 
-        // Mostrar/ocultar flecha derecha
-        if (scrollLeft < maxScroll - 5) {
+        // Mostrar flecha derecha si no estamos al final
+        if (currentPositions[section] < maxScroll - 10) {
             nextBtn.classList.add('visible');
         } else {
             nextBtn.classList.remove('visible');
         }
-
-        // En desktop, ocultar flechas si no hay scroll necesario
-        if (window.innerWidth > 768 && maxScroll <= 0) {
-            prevBtn.classList.remove('visible');
-            nextBtn.classList.remove('visible');
-        }
     });
 }
 
-// Touch/swipe support para móviles
-let touchStartX = 0;
-let touchEndX = 0;
 
-document.addEventListener('touchstart', function(e) {
-    const container = e.target.closest('.product-list-container');
-    if (container) {
-        touchStartX = e.changedTouches[0].screenX;
-    }
-});
 
-document.addEventListener('touchend', function(e) {
-    const container = e.target.closest('.product-list-container');
-    if (container) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(container);
-    }
-});
-
-function handleSwipe(container) {
-    const swipeThreshold = 50;
-    const swipeDistance = touchStartX - touchEndX;
-    
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-        const section = container.querySelector('.product-list').id.replace('-products', '');
-        const direction = swipeDistance > 0 ? 1 : -1;
-        scrollProducts(section, direction);
-    }
-}
-
-// Función para mostrar las flechas iniciales cuando hay contenido disponible
 function showInitialNavigation() {
-    const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
-    
-    sections.forEach(section => {
-        const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
-        if (!container) return;
-
-        const productList = container.querySelector('.product-list');
-        const nextBtn = container.querySelector('.product-nav-arrow.next');
-
-        if (!productList || !nextBtn) return;
-
-        const scrollWidth = container.scrollWidth;
-        const clientWidth = container.clientWidth;
-
-        // Si hay más contenido que el visible, mostrar la flecha derecha
-        if (scrollWidth > clientWidth) {
-            nextBtn.classList.add('visible');
-        }
-    });
+    setTimeout(() => {
+        updateNavigationVisibility();
+        
+        // Mostrar flechas "next" iniciales
+        Object.keys(currentPositions).forEach(section => {
+            const productList = document.querySelector(`#${section}-products`);
+            if (productList) {
+                const productCards = productList.querySelectorAll('.product-card');
+                const container = productList.closest('.product-list-container');
+                const nextBtn = container?.querySelector('.product-nav-arrow.next');
+                
+                if (productCards.length > 0 && nextBtn) {
+                    const containerWidth = container.offsetWidth;
+                    let cardWidth = 230;
+                    if (window.innerWidth <= 480) {
+                        cardWidth = 150;
+                    } else if (window.innerWidth <= 768) {
+                        cardWidth = 160;
+                    }
+                    const totalWidth = productCards.length * cardWidth;
+                    
+                    if (totalWidth > containerWidth) {
+                        nextBtn.classList.add('visible');
+                    }
+                }
+            }
+        });
+    }, 200);
 }
 
  
