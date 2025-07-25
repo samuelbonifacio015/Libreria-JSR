@@ -78,6 +78,8 @@ function loadMerchandisingProducts() {
             // Inicializar navegación después de cargar los productos
             setTimeout(() => {
                 updateNavigationVisibility();
+                // Mostrar flecha derecha por defecto cuando hay productos
+                showInitialNavigation();
             }, 100);
             
         })
@@ -179,7 +181,7 @@ function scrollProducts(section, direction) {
 }
 
 function updateNavigationVisibility() {
-    const sections = ['design-drawing', 'infantil', 'papeleria'];
+    const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
     
     sections.forEach(section => {
         const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
@@ -246,6 +248,29 @@ function handleSwipe(container) {
         const direction = swipeDistance > 0 ? 1 : -1;
         scrollProducts(section, direction);
     }
+}
+
+// Función para mostrar las flechas iniciales cuando hay contenido disponible
+function showInitialNavigation() {
+    const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
+    
+    sections.forEach(section => {
+        const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
+        if (!container) return;
+
+        const productList = container.querySelector('.product-list');
+        const nextBtn = container.querySelector('.product-nav-arrow.next');
+
+        if (!productList || !nextBtn) return;
+
+        const scrollWidth = container.scrollWidth;
+        const clientWidth = container.clientWidth;
+
+        // Si hay más contenido que el visible, mostrar la flecha derecha
+        if (scrollWidth > clientWidth) {
+            nextBtn.classList.add('visible');
+        }
+    });
 }
 
  
