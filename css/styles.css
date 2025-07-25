@@ -527,6 +527,7 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
+  
 }
 
 .merchandising-section .section-header {
@@ -1601,6 +1602,32 @@ body {
     min-height: 44px;
     min-width: 44px;
     touch-action: manipulation;
+  }
+}
+
+/*-----------------------------------*\
+  #SIDEBAR HAMBURGER RESPONSIVE 768px - 1445px
+\*-----------------------------------*/
+
+@media (max-width: 1445px) {
+  .mobile-nav {
+    display: block;
+  }
+
+  .mobile-overlay {
+    display: none;
+  }
+
+  .mobile-nav.active {
+    display: block;
+  }
+
+  .mobile-overlay.active {
+    display: block;
+  }
+
+  body.menu-open {
+    overflow: hidden !important;
   }
 }
 
