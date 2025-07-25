@@ -1,5 +1,6 @@
 [
   {
+    "id": "audifonos",
     "discount": "Ahorra 10%",
     "img": "/img/products/audifonos-casco-sony.jpg",
     "alt": "Audífonos",
@@ -11,6 +12,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "funkos",
     "discount": "Ahorra 15%",
     "img": "/img/products/funko-moonknight.jpg",
     "alt": "Funkos",
@@ -22,6 +24,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "cuaderno",
     "discount": "Ahorra 5%",
     "img": "/img/products/bitacora-block-canson.jpg",
     "alt": "Cuaderno",
@@ -33,6 +36,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "plastilina",
     "discount": "Ahorra 20%",
     "img": "/img/products/plastilina-artesco.jpg",
     "alt": "Plastilina",
@@ -44,6 +48,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "funkos",
     "discount": "Ahorra 10%",
     "img": "/img/products/wolverine-funko.jpg",
     "alt": "Funkos",
@@ -55,6 +60,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "libros",
     "discount": "Ahorra 12%",
     "img": "/img/products/señor-de-los-anillos.jpg",
     "alt": "Libros",
@@ -66,6 +72,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "lapices",
     "discount": "Ahorra 8%",
     "img": "/img/products/lapices-color-vinifan.jpg",
     "alt": "Lapices",
@@ -77,6 +84,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "acuarelas",
     "discount": "Ahorra 15%",
     "img": "/img/products/acuarelas.jpg",
     "alt": "Acuarelas",
@@ -88,6 +96,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "marcadores",
     "discount": "Ahorra 16%",
     "img": "/img/products/marcador.png",
     "alt": "Marcadores",
@@ -99,6 +108,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "calculadora",
     "discount": "Ahorra 10%",
     "img": "/img/products/calculadora.jpg",
     "alt": "Calculadora",
@@ -110,6 +120,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "mouse",
     "discount": "Ahorra 15%",
     "img": "/img/products/mouse-inalambrico.jpg",
     "alt": "Mouse",
@@ -121,6 +132,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "marcadores",
     "discount": "Ahorra 13%",
     "img": "/img/products/marcadores-micron.jpg",
     "alt": "Marcadores",
@@ -132,6 +144,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "cargador",
     "discount": "Ahorra 20%",
     "img": "/img/products/cargador-portatil.png",
     "alt": "Cargador",
@@ -143,6 +156,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "corrector",
     "discount": "Ahorra 25%",
     "img": "/img/products/corrector-liquido-precision.jpg",
     "alt": "Corrector",
@@ -154,6 +168,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "portaminas",
     "discount": "Ahorra 17%",
     "img": "/img/products/portaminas-tk9400.jpg",
     "alt": "Portaminas",
@@ -165,7 +180,8 @@
     "reviews": "0 reseñas"
   },
   {
-    "discount": "Ahorra 21%",
+    "id": "cinta adhesiva",
+    "discount": "Ahorra 18%",
     "img": "/img/products/cinta-adhesiva-decorativa.jpg",
     "alt": "Cinta Adhesiva",
     "brand": "STICK'N-NOTES",
@@ -176,6 +192,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "crayones",
     "discount": "Ahorra 18%",
     "img": "/img/products/crayones-jumbo-artesco.jpg",
     "alt": "Crayones",
@@ -187,6 +204,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "cuadernos",
     "discount": "Ahorra 25%",
     "img": "/img/products/cuaderno-anillado-minerva.jpg",
     "alt": "Cuadernos",
@@ -198,6 +216,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "plastilina",
     "discount": "Ahorra 25%",
     "img": "/img/products/plastilina-jumbo-layconsa.jpg",
     "alt": "Plastilina",
@@ -209,6 +228,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "resaltadores",
     "discount": "Ahorra 15%",
     "img": "/img/products/resaltadores-stabilo-15.jpg",
     "alt": "Resaltadores",
@@ -220,6 +240,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "folders",
     "discount": "Ahorra 17%",
     "img": "/img/products/folder-a4-vinifan.jpg",
     "alt": "Folders",
@@ -231,6 +252,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "peluches",
     "discount": "Ahorra 15%",
     "img": "/img/products/peluche-capibara.jpg",
     "alt": "Peluches",
@@ -242,6 +264,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "libros",
     "discount": "Ahorra 14%",
     "img": "/img/products/El-arte-de-la-guerra-resumen.jpg",
     "alt": "Libros",
@@ -253,6 +276,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "audifonos",
     "discount": "Ahorra 13%",
     "img": "/img/products/audifonos-inalambricos-xiaomi.jpg",
     "alt": "Audifonos",
@@ -264,6 +288,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "crayones",
     "discount": "Ahorra 22%",
     "img": "/img/products/crayones-jumbo.png",
     "alt": "Crayones",
@@ -275,6 +300,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "plumones",
     "discount": "Ahorra 18%",
     "img": "/img/products/plumones-artesco.jpg",
     "alt": "Plumones",
@@ -286,6 +312,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "papel",
     "discount": "Ahorra 20%",
     "img": "/img/products/papel.jpg",
     "alt": "Papel",
@@ -297,6 +324,7 @@
     "reviews": "0 reseñas"
   },
   {
+    "id": "papel colores",
     "discount": "Ahorra 16%",
     "img": "/img/products/papel-colores.jpg",
     "alt": "Papel Colores",
