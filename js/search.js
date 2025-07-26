@@ -1,4 +1,4 @@
-// search.js - Funcionalidad de búsqueda de productos
+//search.js - Funcionalidad de búsqueda de productos
 
 class ProductSearch {
     constructor() {
@@ -14,10 +14,10 @@ class ProductSearch {
 
     async loadProducts() {
         try {
-            // Determinar la ruta correcta basada en la ubicación actual
+            // Ruta de productos.json
             let jsonPath = '/partials/products.json';
             
-            // Si estamos en una subcarpeta (como html/), usar ruta relativa
+            // Si estamos en una subcarpeta (como html/), usar ruta relativa a la carpeta html
             if (window.location.pathname.includes('/html/')) {
                 jsonPath = '../partials/products.json';
             }
@@ -49,76 +49,98 @@ class ProductSearch {
     }
 
     initializeSearchEvents() {
-        console.log('Inicializando eventos de búsqueda...');
+        console.log('Inicializando eventos de búsqueda con overlay...');
         
-        // Búsqueda desktop
+        // Elementos del navbar
         const desktopSearchInput = document.querySelector('.search-input-container input');
         const desktopSearchBtn = document.querySelector('.search-btn');
-
-        // Búsqueda mobile
         const mobileSearchInput = document.querySelector('.mobile-search-container input');
         const mobileSearchBtn = document.querySelector('.mobile-search-btn');
+
+        // Elementos del overlay
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchOverlayInput = document.getElementById('searchOverlayInput');
+        const searchOverlayClose = document.getElementById('searchOverlayClose');
+        const searchSuggestionsOverlay = document.getElementById('searchSuggestionsOverlay');
 
         console.log('Elementos encontrados:', {
             desktopSearchInput: !!desktopSearchInput,
             desktopSearchBtn: !!desktopSearchBtn,
             mobileSearchInput: !!mobileSearchInput,
-            mobileSearchBtn: !!mobileSearchBtn
+            mobileSearchBtn: !!mobileSearchBtn,
+            searchOverlay: !!searchOverlay,
+            searchOverlayInput: !!searchOverlayInput
         });
 
+        // Abrir overlay al hacer clic en las barras de búsqueda
         if (desktopSearchInput) {
-            desktopSearchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.performSearch(e.target.value);
-                }
-            });
-
-            desktopSearchInput.addEventListener('input', (e) => {
-                if (e.target.value.length >= 2) {
-                    this.showSearchSuggestions(e.target.value, e.target);
-                } else {
-                    this.hideSuggestions();
-                }
-            });
-        }
-
-        if (desktopSearchBtn) {
-            desktopSearchBtn.addEventListener('click', () => {
-                const searchTerm = desktopSearchInput.value;
-                this.performSearch(searchTerm);
-            });
+            desktopSearchInput.addEventListener('focus', () => this.openSearchOverlay());
+            desktopSearchInput.addEventListener('click', () => this.openSearchOverlay());
         }
 
         if (mobileSearchInput) {
-            mobileSearchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.performSearch(e.target.value);
-                }
-            });
+            mobileSearchInput.addEventListener('focus', () => this.openSearchOverlay());
+            mobileSearchInput.addEventListener('click', () => this.openSearchOverlay());
+        }
 
-            mobileSearchInput.addEventListener('input', (e) => {
-                if (e.target.value.length >= 2) {
-                    this.showSearchSuggestions(e.target.value, e.target);
+        // Abrir overlay al hacer clic en los botones de búsqueda
+        if (desktopSearchBtn) {
+            desktopSearchBtn.addEventListener('click', () => {
+                const searchTerm = desktopSearchInput ? desktopSearchInput.value : '';
+                if (searchTerm.trim()) {
+                    this.performSearch(searchTerm);
                 } else {
-                    this.hideSuggestions();
+                    this.openSearchOverlay();
                 }
             });
         }
 
         if (mobileSearchBtn) {
             mobileSearchBtn.addEventListener('click', () => {
-                const searchTerm = mobileSearchInput.value;
-                this.performSearch(searchTerm);
+                const searchTerm = mobileSearchInput ? mobileSearchInput.value : '';
+                if (searchTerm.trim()) {
+                    this.performSearch(searchTerm);
+                } else {
+                    this.openSearchOverlay();
+                }
             });
         }
 
-        // Cerrar sugerencias al hacer click fuera
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-input-container') && 
-                !e.target.closest('.mobile-search-container')) {
-                this.hideSuggestions();
+        // Eventos del overlay
+        if (searchOverlayInput) {
+            searchOverlayInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.performSearch(e.target.value);
+                }
+            });
+
+            searchOverlayInput.addEventListener('input', (e) => {
+                if (e.target.value.length >= 1) {
+                    this.showSearchSuggestions(e.target.value);
+                } else {
+                    this.hideSuggestions();
+                }
+            });
+        }
+
+        // Cerrar overlay
+        if (searchOverlayClose) {
+            searchOverlayClose.addEventListener('click', () => this.closeSearchOverlay());
+        }
+
+        if (searchOverlay) {
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    this.closeSearchOverlay();
+                }
+            });
+        }
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay && searchOverlay.classList.contains('active')) {
+                this.closeSearchOverlay();
             }
         });
     }
@@ -178,6 +200,7 @@ class ProductSearch {
         }
 
         this.hideSuggestions();
+        this.closeSearchOverlay();
     }
 
     displaySearchResults(searchTerm) {
@@ -259,33 +282,78 @@ class ProductSearch {
         }
     }
 
-    showSearchSuggestions(searchTerm, inputElement) {
+    openSearchOverlay() {
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchOverlayInput = document.getElementById('searchOverlayInput');
+        
+        if (searchOverlay) {
+            searchOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Copiar valor existente si hay uno
+            const existingValue = document.querySelector('.search-input-container input')?.value || 
+                                document.querySelector('.mobile-search-container input')?.value || '';
+            
+            if (searchOverlayInput) {
+                searchOverlayInput.value = existingValue;
+                setTimeout(() => {
+                    searchOverlayInput.focus();
+                    if (existingValue) {
+                        this.showSearchSuggestions(existingValue);
+                    }
+                }, 100);
+            }
+        }
+    }
+
+    closeSearchOverlay() {
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchOverlayInput = document.getElementById('searchOverlayInput');
+        
+        if (searchOverlay) {
+            searchOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Actualizar inputs del navbar con el valor del overlay
+            if (searchOverlayInput && searchOverlayInput.value) {
+                const desktopInput = document.querySelector('.search-input-container input');
+                const mobileInput = document.querySelector('.mobile-search-container input');
+                
+                if (desktopInput) desktopInput.value = searchOverlayInput.value;
+                if (mobileInput) mobileInput.value = searchOverlayInput.value;
+            }
+            
+            this.hideSuggestions();
+        }
+    }
+
+    showSearchSuggestions(searchTerm) {
         const suggestions = this.getSearchSuggestions(searchTerm);
+        const suggestionsContainer = document.getElementById('searchSuggestionsOverlay');
+        
+        if (!suggestionsContainer) return;
         
         if (suggestions.length === 0) {
             this.hideSuggestions();
             return;
         }
 
-        let suggestionsContainer = document.querySelector('.search-suggestions');
-        
-        if (!suggestionsContainer) {
-            suggestionsContainer = document.createElement('div');
-            suggestionsContainer.className = 'search-suggestions';
-            
-            // Posicionar relative al input
-            const searchContainer = inputElement.closest('.search-input-container') || 
-                                  inputElement.closest('.mobile-search-container');
-            searchContainer.style.position = 'relative';
-            searchContainer.appendChild(suggestionsContainer);
-        }
-
         suggestionsContainer.innerHTML = '';
         
-        suggestions.slice(0, 5).forEach(suggestion => {
+        suggestions.slice(0, 6).forEach(suggestion => {
             const suggestionItem = document.createElement('div');
             suggestionItem.className = 'suggestion-item';
+            
+            // Determinar ícono basado en categoría
+            let iconClass = 'fas fa-search';
+            if (suggestion.category === 'Marca') iconClass = 'fas fa-tags';
+            else if (suggestion.category === 'Producto') iconClass = 'fas fa-box';
+            else if (suggestion.category === 'Categoría') iconClass = 'fas fa-th-large';
+            
             suggestionItem.innerHTML = `
+                <div class="suggestion-icon">
+                    <i class="${iconClass}"></i>
+                </div>
                 <div class="suggestion-content">
                     <span class="suggestion-text">${suggestion.text}</span>
                     <span class="suggestion-category">${suggestion.category}</span>
@@ -293,14 +361,13 @@ class ProductSearch {
             `;
             
             suggestionItem.addEventListener('click', () => {
-                inputElement.value = suggestion.text;
                 this.performSearch(suggestion.text);
             });
             
             suggestionsContainer.appendChild(suggestionItem);
         });
 
-        suggestionsContainer.style.display = 'block';
+        suggestionsContainer.classList.add('show');
     }
 
     getSearchSuggestions(searchTerm) {
@@ -344,9 +411,9 @@ class ProductSearch {
     }
 
     hideSuggestions() {
-        const suggestionsContainer = document.querySelector('.search-suggestions');
+        const suggestionsContainer = document.getElementById('searchSuggestionsOverlay');
         if (suggestionsContainer) {
-            suggestionsContainer.style.display = 'none';
+            suggestionsContainer.classList.remove('show');
         }
     }
 
