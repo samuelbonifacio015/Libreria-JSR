@@ -1,45 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('../partials/products.json')
-        .then(response => response.json())
-        .then(data => {
-            const productsContainer = document.querySelector('.products-grid');  
-            if (productsContainer) {
-                
-                data.forEach(product => {
-                    // Determinar si el producto está disponible
-                    const isAvailable = product.availability.toLowerCase().includes('disponible');
-                    const availabilityClass = isAvailable ? '' : 'out-of-stock';
+    // Verificar si hay parámetros de búsqueda en la URL o términos guardados
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTerm = urlParams.get('search');
+    const savedSearchTerm = sessionStorage.getItem('searchTerm');
+    
+    // Si hay términos de búsqueda, no cargar todos los productos (lo manejará search.js)
+    if (!searchTerm && !savedSearchTerm) {
+        fetch('../partials/products.json')
+            .then(response => response.json())
+            .then(data => {
+                const productsContainer = document.querySelector('.products-grid');  
+                if (productsContainer) {
                     
-                    const productCard = `
-                    <div class="product-card">
-                        <span class="discount">${product.discount}</span>
-                        <img src="${product.img}" alt="${product.alt}" />
-                        <div class="brand">${product.brand}</div>
-                        <div class="product-name">${product.productName}</div>
-                        <div class="reviews">
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <span>${product.reviews}</span>
-                        </div>
-                        <p class="price">
-                          <span class="original">${product.priceOriginal}</span>  
-                          <span class="discounted">${product.priceDiscounted}</span>
-                        </p>
-                        <p class="availability ${availabilityClass}">${product.availability}</p>
-                        <button class="add-to-cart">Añadir al carrito</button>
-                        <button class="quick-view">Vista rápida</button>  
-                    </div>  
-                    `;
-                    productsContainer.innerHTML += productCard;  
-                });
-                
-                setupEventListeners();
-            }
-        })
-        .catch(error => console.error('Error', error));
+                    data.forEach(product => {
+                        // Determinar si el producto está disponible
+                        const isAvailable = product.availability.toLowerCase().includes('disponible');
+                        const availabilityClass = isAvailable ? '' : 'out-of-stock';
+                        
+                        const productCard = `
+                        <div class="product-card">
+                            <span class="discount">${product.discount}</span>
+                            <img src="${product.img}" alt="${product.alt}" />
+                            <div class="brand">${product.brand}</div>
+                            <div class="product-name">${product.productName}</div>
+                            <div class="reviews">
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <i class="fa-solid fa-star"></i>
+                              <span>${product.reviews}</span>
+                            </div>
+                            <p class="price">
+                              <span class="original">${product.priceOriginal}</span>  
+                              <span class="discounted">${product.priceDiscounted}</span>
+                            </p>
+                            <p class="availability ${availabilityClass}">${product.availability}</p>
+                            <button class="add-to-cart">Añadir al carrito</button>
+                            <button class="quick-view">Vista rápida</button>  
+                        </div>  
+                        `;
+                        productsContainer.innerHTML += productCard;  
+                    });
+                    
+                    setupEventListeners();
+                }
+            })
+            .catch(error => console.error('Error', error));
+    } else {
+        // Si hay búsqueda, solo configurar los event listeners después de que search.js cargue los resultados
+        setTimeout(() => {
+            setupEventListeners();
+        }, 200);
+    }
     
     // Inicializar componentes que no dependen del navbar
     window.setupQuickView();
