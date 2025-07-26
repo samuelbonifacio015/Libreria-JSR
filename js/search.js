@@ -164,7 +164,8 @@ class ProductSearch {
                 product.priceOriginal,
                 product.priceDiscounted,
                 product.availability,
-                product.reviews
+                product.reviews,
+                product.category
             ];
 
             return searchFields.some(field => 

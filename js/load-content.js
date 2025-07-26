@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('headernav-placeholder').innerHTML = data;
+            
+            // Disparar evento personalizado para notificar que el headernav está listo
+            setTimeout(() => {
+                const headernavLoadedEvent = new CustomEvent('headernavLoaded');
+                document.dispatchEvent(headernavLoadedEvent);
+                console.log('Headernav cargado y evento disparado');
+            }, 100);
         })
         .catch(error => console.error('Error cargando header nav:', error));
 

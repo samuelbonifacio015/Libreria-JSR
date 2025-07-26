@@ -26,6 +26,13 @@ class DropdownNavigation {
         const dropdownItems = document.querySelectorAll('.dropdown-content a');
         
         console.log('Elementos del dropdown encontrados:', dropdownItems.length);
+        console.log('Elementos del dropdown:', dropdownItems);
+
+        if (dropdownItems.length === 0) {
+            console.warn('No se encontraron elementos del dropdown. Reintentando en 500ms...');
+            setTimeout(() => this.setupDropdownEvents(), 500);
+            return;
+        }
 
         dropdownItems.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -41,6 +48,8 @@ class DropdownNavigation {
 
         // También manejar clics en los botones principales del dropdown
         const dropdownButtons = document.querySelectorAll('.dropbtn');
+        console.log('Botones del dropdown encontrados:', dropdownButtons.length);
+        
         dropdownButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 // Solo prevenir el comportamiento por defecto si no hay subcategorías
@@ -56,26 +65,23 @@ class DropdownNavigation {
     }
 
     navigateToCategory(category) {
-        console.log('Navegando a categoría:', category);
+        console.log('=== NAVEGANDO A CATEGORÍA ===');
+        console.log('Categoría original:', category);
         
         // Mapear categorías del dropdown a términos de búsqueda
         const categoryMapping = this.getCategoryMapping(category);
+        console.log('Categoría mapeada:', categoryMapping);
         
-        if (categoryMapping) {
-            // Usar la funcionalidad de búsqueda existente
-            if (window.productSearch) {
-                window.productSearch.performSearch(categoryMapping);
-            } else {
-                // Si no está disponible, redirigir directamente
-                this.redirectToCatalog(categoryMapping);
-            }
+        const searchTerm = categoryMapping || category;
+        console.log('Término de búsqueda final:', searchTerm);
+        console.log('window.productSearch disponible:', !!window.productSearch);
+        
+        if (window.productSearch) {
+            console.log('Usando productSearch.performSearch con:', searchTerm);
+            window.productSearch.performSearch(searchTerm);
         } else {
-            // Si no hay mapeo específico, usar la categoría tal como está
-            if (window.productSearch) {
-                window.productSearch.performSearch(category);
-            } else {
-                this.redirectToCatalog(category);
-            }
+            console.log('productSearch no disponible, usando redirectToCatalog con:', searchTerm);
+            this.redirectToCatalog(searchTerm);
         }
     }
 
@@ -206,6 +212,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 });
+
+// Función de debugging global
+window.debugDropdown = function() {
+    console.log('=== DEBUG DROPDOWN ===');
+    console.log('window.dropdownNavigation:', window.dropdownNavigation);
+    console.log('Elementos dropdown encontrados:', document.querySelectorAll('.dropdown-content a').length);
+    console.log('Botones dropdown encontrados:', document.querySelectorAll('.dropbtn').length);
+    console.log('Headernav cargado:', document.getElementById('headernav-placeholder')?.innerHTML?.length > 0);
+    console.log('window.productSearch disponible:', !!window.productSearch);
+    
+    if (window.dropdownNavigation) {
+        console.log('Reinicializando eventos del dropdown...');
+        window.dropdownNavigation.reinitialize();
+    }
+    
+    return {
+        dropdownNavigation: window.dropdownNavigation,
+        dropdownItems: document.querySelectorAll('.dropdown-content a').length,
+        dropdownButtons: document.querySelectorAll('.dropbtn').length,
+        productSearch: !!window.productSearch
+    };
+};
+
+console.log('Función de debugging disponible: window.debugDropdown()');
 
 // Exportar para uso en otros módulos
 if (typeof module !== 'undefined' && module.exports) {
