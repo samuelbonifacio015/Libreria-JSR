@@ -1,4 +1,4 @@
-// dropdown.js - Funcionalidad de navegación del dropdown
+// dropdown-navigation.js - Funcionalidad de navegación del dropdown
 
 class DropdownNavigation {
     constructor() {
@@ -80,74 +80,74 @@ class DropdownNavigation {
     }
 
     getCategoryMapping(category) {
-        // Mapeo de categorías del dropdown a las categorías exactas en products.json
+        // Mapeo de categorías del dropdown a términos de búsqueda más específicos
         const mappings = {
             // UTILES
-            'ESCOLAR': 'UTILES',
-            'OFICINA': 'UTILES',
-            'UNIVERSITARIO': 'UTILES',
-            'ZONA DE LECTURA': 'UTILES',
-            'ARTE Y DISEÑO': 'ARTE Y DISEÑO',
-            'BORRADORES': 'UTILES',
-            'CORRECTORES': 'CORRECTORES',
-            'CRAYONES Y ÓLEOS': 'CRAYONES Y ÓLEOS',
-            'LÁPICES': 'LÁPICES',
-            'MARCADORES': 'MARCADORES',
-            'PLUMONES INDELEBLES': 'PLUMONES INDELEBLES',
-            'PLUMONES PARA PIZARRA': 'PLUMONES INDELEBLES',
-            'REGLAS': 'UTILES',
-            'TIJERAS': 'UTILES',
+            'ESCOLAR': 'útiles escolares',
+            'OFICINA': 'útiles oficina',
+            'UNIVERSITARIO': 'útiles universitarios',
+            'ZONA DE LECTURA': 'útiles lectura',
+            'ARTE Y DISEÑO': 'arte diseño',
+            'BORRADORES': 'borradores',
+            'CORRECTORES': 'correctores',
+            'CRAYONES Y ÓLEOS': 'crayones óleos',
+            'LÁPICES': 'lápices',
+            'MARCADORES': 'marcadores',
+            'PLUMONES INDELEBLES': 'plumones indelebles',
+            'PLUMONES PARA PIZARRA': 'plumones pizarra',
+            'REGLAS': 'reglas',
+            'TIJERAS': 'tijeras',
             
             // ESCRITORIO
-            'ARCHIVADORES': 'UTILES',
-            'DISPENSADORES': 'UTILES',
-            'POSITS': 'UTILES',
-            'CLIPS Y CHINCHES': 'UTILES',
-            'PERFORADORAS': 'UTILES',
-            'ENGRAPADORAS Y GRAPAS': 'UTILES',
-            'CINTAS ADHESIVAS': 'CINTAS ADHESIVAS',
-            'ORGANIZADORES DE ESCRITORIO': 'UTILES',
+            'ARCHIVADORES': 'archivadores',
+            'DISPENSADORES': 'dispensadores',
+            'POSITS': 'posits',
+            'CLIPS Y CHINCHES': 'clips chinches',
+            'PERFORADORAS': 'perforadoras',
+            'ENGRAPADORAS Y GRAPAS': 'engrapadoras grapas',
+            'CINTAS ADHESIVAS': 'cintas adhesivas',
+            'ORGANIZADORES DE ESCRITORIO': 'organizadores escritorio',
             
             // MOCHILAS
-            'MOCHILAS': 'UTILES',
-            'CARTUCHERAS': 'UTILES',
-            'LONCHERAS': 'UTILES',
-            'MALETAS': 'UTILES',
+            'MOCHILAS': 'mochilas',
+            'CARTUCHERAS': 'cartucheras',
+            'LONCHERAS': 'loncheras',
+            'MALETAS': 'maletas',
             
             // PAPELERIA
-            'CARTONES': 'UTILES',
-            'CARTULINAS': 'UTILES',
-            'PAPEL CELOFAN': 'PAPELES ADHESIVOS',
-            'PAPEL FOTOCOPIA': 'PAPEL FOTOCOPIA',
-            'PAPEL FOTOGRAFICO': 'PAPEL FOTOCOPIA',
-            'PAPELES ADHESIVOS': 'PAPELES ADHESIVOS',
+            'CARTONES': 'cartones',
+            'CARTULINAS': 'cartulinas',
+            'PAPEL CELOFAN': 'papel celofán',
+            'PAPEL FOTOCOPIA': 'papel fotocopia',
+            'PAPEL FOTOGRAFICO': 'papel fotográfico',
+            'PAPELES ADHESIVOS': 'papeles adhesivos',
             
             // ARCHIVO
-            'CARPETAS Y ARCHIVADORES': 'UTILES',
-            'FOLDERES ESCOLARES': 'FOLDERES ESCOLARES',
+            'CARPETAS Y ARCHIVADORES': 'carpetas archivadores',
+            'FOLDERES ESCOLARES': 'folders escolares',
             
             // TECNOLOGIA
-            'CALCULADORAS': 'CALCULADORAS',
-            'ACCESORIOS PARA COMPUTADORA': 'TECNOLOGIA',
-            'MOUSE Y TECLADOS': 'MOUSE Y TECLADOS',
-            'CARGADORES': 'CARGADORES',
-            'MEMORIAS USB': 'TECNOLOGIA',
-            'AUDIFONOS Y PARLANTES': 'AUDIFONOS Y PARLANTES',
-            'ACCESORIOS VARIOS': 'ACCESORIOS VARIOS',
+            'CALCULADORAS': 'calculadoras',
+            'ACCESORIOS PARA COMPUTADORA': 'accesorios computadora',
+            'MOUSE Y TECLADOS': 'mouse teclados',
+            'CARGADORES': 'cargadores',
+            'MEMORIAS USB': 'memorias usb',
+            'AUDIFONOS Y PARLANTES': 'audífonos parlantes',
+            'ACCESORIOS VARIOS': 'accesorios varios',
             
             // BELLEZA
-            'PERFUMES': 'ACCESORIOS VARIOS',
-            'MAQUILLAJE': 'ACCESORIOS VARIOS',
-            'TINTES': 'ACCESORIOS VARIOS',
-            'ESPEJOS': 'ACCESORIOS VARIOS',
-            'CUIDADO PERSONAL': 'ACCESORIOS VARIOS',
+            'PERFUMES': 'perfumes',
+            'MAQUILLAJE': 'maquillaje',
+            'TINTES': 'tintes',
+            'ESPEJOS': 'espejos',
+            'CUIDADO PERSONAL': 'cuidado personal',
             
             // LECTURA
-            'BIBLIAS': 'LECTURA',
-            'LIBROS ESCOLARES': 'LECTURA',
-            'PLAN LECTOR': 'LECTURA',
-            'TEXTOS ESCOLARES': 'LECTURA',
-            'DE CULTO': 'LECTURA'
+            'BIBLIAS': 'biblias',
+            'LIBROS ESCOLARES': 'libros escolares',
+            'PLAN LECTOR': 'plan lector',
+            'TEXTOS ESCOLARES': 'textos escolares',
+            'DE CULTO': 'libros culto'
         };
 
         return mappings[category] || category;
