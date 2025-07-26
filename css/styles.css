@@ -1682,6 +1682,7 @@ body {
 @media (max-width: 1445px) {
   .mobile-nav {
     display: block;
+    left: -100%;
   }
 
   .mobile-overlay {
@@ -1690,6 +1691,7 @@ body {
 
   .mobile-nav.active {
     display: block;
+    left: 0;
   }
 
   .mobile-overlay.active {
@@ -1704,6 +1706,7 @@ body {
 @media (max-width: 768px) {
   .mobile-nav {
     display: block;
+    left: -100%;
   }
 
   .mobile-overlay {
@@ -1712,6 +1715,7 @@ body {
 
   .mobile-nav.active {
     display: block;
+    left: 0;
   }
 
   .mobile-overlay.active {

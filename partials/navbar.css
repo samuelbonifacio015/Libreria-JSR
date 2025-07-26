@@ -697,6 +697,7 @@ body {
 .mobile-nav {
   position: fixed;
   top: 0;
+  left: -100%;
   width: min(320px, 85vw);
   height: 100vh;
   background-color: var(--bg-white);
