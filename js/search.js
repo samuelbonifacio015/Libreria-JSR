@@ -182,38 +182,39 @@ class ProductSearch {
         });
     }
 
-    performSearch(searchTerm) {
-        console.log('Realizando búsqueda para:', searchTerm);
+    performSearch(searchTerm, exactIdMatch = false) {
+        console.log('Realizando búsqueda para:', searchTerm, 'exactIdMatch:', exactIdMatch);
         
         if (!searchTerm || searchTerm.trim().length === 0) {
             alert('Por favor ingresa un término de búsqueda');
             return;
         }
 
-        const results = this.searchProducts(searchTerm);
+        const results = this.searchProducts(searchTerm, exactIdMatch);
         console.log('Resultados encontrados:', results.length);
 
         // Guardar término de búsqueda en sessionStorage
         sessionStorage.setItem('searchTerm', searchTerm.trim());
         sessionStorage.setItem('searchResults', JSON.stringify(results));
+        sessionStorage.setItem('exactIdMatch', exactIdMatch.toString());
 
         // Redirigir a página de catálogo con resultados
         if (window.location.pathname.includes('catalogo.html')) {
             // Si ya estamos en catálogo, recargar con resultados
             console.log('Mostrando resultados en catálogo actual');
-            this.displaySearchResults(searchTerm);
+            this.displaySearchResults(searchTerm, exactIdMatch);
         } else {
             // Redirigir a catálogo
             console.log('Redirigiendo al catálogo con resultados');
-            window.location.href = '/html/catalogo.html?search=' + encodeURIComponent(searchTerm);
+            window.location.href = '/html/catalogo.html?search=' + encodeURIComponent(searchTerm) + '&exact=' + exactIdMatch;
         }
 
         this.hideSuggestions();
         this.closeSearchOverlay();
     }
 
-    displaySearchResults(searchTerm) {
-        const results = this.searchProducts(searchTerm);
+    displaySearchResults(searchTerm, exactIdMatch = false) {
+        const results = this.searchProducts(searchTerm, exactIdMatch);
         const productsContainer = document.querySelector('.products-grid');
         const productsHeader = document.querySelector('.products h2');
         const productsCount = document.querySelector('.products-count');
@@ -436,6 +437,7 @@ class ProductSearch {
     initializeFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         const searchTerm = urlParams.get('search');
+        const exactMatch = urlParams.get('exact') === 'true';
         
         if (searchTerm) {
             // Llenar el campo de búsqueda
@@ -445,15 +447,17 @@ class ProductSearch {
             });
             
             // Mostrar resultados
-            this.displaySearchResults(searchTerm);
+            this.displaySearchResults(searchTerm, exactMatch);
         } else {
             // Verificar si hay resultados en sessionStorage
             const savedSearchTerm = sessionStorage.getItem('searchTerm');
+            const savedExactMatch = sessionStorage.getItem('exactIdMatch') === 'true';
             if (savedSearchTerm && window.location.pathname.includes('catalogo.html')) {
-                this.displaySearchResults(savedSearchTerm);
+                this.displaySearchResults(savedSearchTerm, savedExactMatch);
                 // Limpiar sessionStorage después de usar
                 sessionStorage.removeItem('searchTerm');
                 sessionStorage.removeItem('searchResults');
+                sessionStorage.removeItem('exactIdMatch');
             }
         }
     }
@@ -478,18 +482,20 @@ document.addEventListener('DOMContentLoaded', function() {
         window.productSearch = productSearch;
         
         // Función de prueba global
-        window.testSearch = function(term) {
+        window.testSearch = function(term, exactIdMatch = false) {
             console.log('=== PRUEBA DE BÚSQUEDA ===');
             console.log('Término:', term);
+            console.log('Búsqueda exacta por ID:', exactIdMatch);
             console.log('Productos cargados:', productSearch.products.length);
-            const results = productSearch.searchProducts(term);
+            const results = productSearch.searchProducts(term, exactIdMatch);
             console.log('Resultados:', results.length);
             console.log('Productos encontrados:', results);
             return results;
         };
         
         console.log('Funciones de debugging disponibles:');
-        console.log('- window.testSearch("término") - Probar búsqueda');
+        console.log('- window.testSearch("término", false) - Búsqueda general');
+        console.log('- window.testSearch("id", true) - Búsqueda exacta por ID');
         console.log('- window.productSearch - Acceso directo al objeto de búsqueda');
     }
     

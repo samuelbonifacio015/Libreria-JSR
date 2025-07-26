@@ -77,8 +77,8 @@ class DropdownNavigation {
         console.log('window.productSearch disponible:', !!window.productSearch);
         
         if (window.productSearch) {
-            console.log('Usando productSearch.performSearch con:', searchTerm);
-            window.productSearch.performSearch(searchTerm);
+            console.log('Usando productSearch.performSearch con:', searchTerm, '(búsqueda exacta por ID)');
+            window.productSearch.performSearch(searchTerm, true); // true = búsqueda exacta por ID
         } else {
             console.log('productSearch no disponible, usando redirectToCatalog con:', searchTerm);
             this.redirectToCatalog(searchTerm);
@@ -163,13 +163,14 @@ class DropdownNavigation {
     }
 
     redirectToCatalog(searchTerm) {
-        console.log('Redirigiendo al catálogo con término:', searchTerm);
+        console.log('Redirigiendo al catálogo con término:', searchTerm, '(búsqueda exacta por ID)');
         
         // Guardar término de búsqueda en sessionStorage
         sessionStorage.setItem('searchTerm', searchTerm);
+        sessionStorage.setItem('exactIdMatch', 'true');
         
-        // Redirigir a la página de catálogo
-        const catalogUrl = '/html/catalogo.html?search=' + encodeURIComponent(searchTerm);
+        // Redirigir a la página de catálogo con búsqueda exacta
+        const catalogUrl = '/html/catalogo.html?search=' + encodeURIComponent(searchTerm) + '&exact=true';
         window.location.href = catalogUrl;
     }
 
@@ -246,14 +247,14 @@ window.testDropdownMapping = function(category) {
     }
     
     const mapping = window.dropdownNavigation.getCategoryMapping(category);
-    console.log(`=== PROBANDO MAPEO ===`);
+    console.log(`=== PROBANDO MAPEO (BÚSQUEDA EXACTA POR ID) ===`);
     console.log(`Categoría: "${category}"`);
-    console.log(`Mapeo: "${mapping}"`);
+    console.log(`Mapeo a ID: "${mapping}"`);
     
     if (window.productSearch && window.productSearch.products) {
-        const results = window.productSearch.searchProducts(mapping);
-        console.log(`Productos encontrados: ${results.length}`);
-        results.forEach(p => console.log(`- ${p.productName} (${p.category})`));
+        const results = window.productSearch.searchProducts(mapping, true); // true = búsqueda exacta por ID
+        console.log(`Productos encontrados con ID exacto "${mapping}": ${results.length}`);
+        results.forEach(p => console.log(`- ${p.productName} (ID: ${p.id})`));
     }
     
     return mapping;
