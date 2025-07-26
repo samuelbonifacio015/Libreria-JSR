@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('navbar-placeholder').innerHTML = data;
             
             // Inicializar funcionalidad del navbar después de cargarlo
-            setTimeout(initializeNavbar, 100); // Añadir un pequeño delay para asegurar que el DOM esté listo
+            setTimeout(() => {
+                initializeNavbar();
+                
+                // Disparar evento personalizado para notificar que el navbar está listo
+                const navbarLoadedEvent = new CustomEvent('navbarLoaded');
+                document.dispatchEvent(navbarLoadedEvent);
+                console.log('Navbar cargado y evento disparado');
+            }, 100); // Añadir un pequeño delay para asegurar que el DOM esté listo
         })
         .catch(error => console.error('Error cargando navbar:', error));
 
