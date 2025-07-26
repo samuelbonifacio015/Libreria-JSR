@@ -86,77 +86,80 @@ class DropdownNavigation {
     }
 
     getCategoryMapping(category) {
-        // Mapeo de categorías del dropdown a las categorías exactas en products.json
+        // Mapeo de categorías del dropdown a IDs exactos que existen en products.json
+        // IMPORTANTE: Busca por ID exacto, si no existe, retorna el término tal como está
         const mappings = {
-            // UTILES
-            'ESCOLAR': 'UTILES',
-            'OFICINA': 'UTILES',
-            'UNIVERSITARIO': 'UTILES',
-            'ZONA DE LECTURA': 'UTILES',
-            'ARTE Y DISEÑO': 'ARTE Y DISEÑO',
-            'BORRADORES': 'UTILES',
-            'CORRECTORES': 'CORRECTORES',
-            'CRAYONES Y ÓLEOS': 'CRAYONES Y ÓLEOS',
-            'LÁPICES': 'LÁPICES',
-            'MARCADORES': 'MARCADORES',
-            'PLUMONES INDELEBLES': 'PLUMONES INDELEBLES',
-            'PLUMONES PARA PIZARRA': 'PLUMONES INDELEBLES',
-            'REGLAS': 'UTILES',
-            'TIJERAS': 'UTILES',
+            // MAPEO A IDs EXACTOS DE PRODUCTS.JSON
+            'ESCOLAR': 'cuaderno',
+            'OFICINA': 'folders', 
+            'UNIVERSITARIO': 'cuadernos',
+            'ZONA DE LECTURA': 'libros',
+            
+            // ARTE Y DISEÑO
+            'ARTE Y DISEÑO': 'acuarelas',
+            'BORRADORES': 'corrector',
+            'CORRECTORES': 'corrector',
+            'CRAYONES Y ÓLEOS': 'crayones',
+            'LÁPICES': 'lapices',
+            'MARCADORES': 'marcadores',
+            'PLUMONES INDELEBLES': 'plumones',
+            'PLUMONES PARA PIZARRA': 'plumones',
+            'REGLAS': 'portaminas',
+            'TIJERAS': 'tijeras', // No existe, mostrará sin resultados
             
             // ESCRITORIO
-            'ARCHIVADORES': 'UTILES',
-            'DISPENSADORES': 'UTILES',
-            'POSITS': 'UTILES',
-            'CLIPS Y CHINCHES': 'UTILES',
-            'PERFORADORAS': 'UTILES',
-            'ENGRAPADORAS Y GRAPAS': 'UTILES',
-            'CINTAS ADHESIVAS': 'CINTAS ADHESIVAS',
-            'ORGANIZADORES DE ESCRITORIO': 'UTILES',
+            'ARCHIVADORES': 'folders',
+            'DISPENSADORES': 'dispensadores', // No existe
+            'POSITS': 'posits', // No existe
+            'CLIPS Y CHINCHES': 'clips', // No existe
+            'PERFORADORAS': 'perforadoras', // No existe
+            'ENGRAPADORAS Y GRAPAS': 'engrapadoras', // No existe
+            'CINTAS ADHESIVAS': 'cinta adhesiva',
+            'ORGANIZADORES DE ESCRITORIO': 'organizadores', // No existe
             
-            // MOCHILAS
-            'MOCHILAS': 'UTILES',
-            'CARTUCHERAS': 'UTILES',
-            'LONCHERAS': 'UTILES',
-            'MALETAS': 'UTILES',
+            // MOCHILAS - Buscar por ID exacto (no existen)
+            'MOCHILAS': 'mochilas',
+            'CARTUCHERAS': 'cartucheras',
+            'LONCHERAS': 'loncheras',
+            'MALETAS': 'maletas',
             
             // PAPELERIA
-            'CARTONES': 'UTILES',
-            'CARTULINAS': 'UTILES',
-            'PAPEL CELOFAN': 'PAPELES ADHESIVOS',
-            'PAPEL FOTOCOPIA': 'PAPEL FOTOCOPIA',
-            'PAPEL FOTOGRAFICO': 'PAPEL FOTOCOPIA',
-            'PAPELES ADHESIVOS': 'PAPELES ADHESIVOS',
+            'CARTONES': 'cartones', // No existe
+            'CARTULINAS': 'cartulinas', // No existe
+            'PAPEL CELOFAN': 'papel celofan', // No existe
+            'PAPEL FOTOCOPIA': 'papel',
+            'PAPEL FOTOGRAFICO': 'papel fotografico', // No existe
+            'PAPELES ADHESIVOS': 'papel colores',
             
             // ARCHIVO
-            'CARPETAS Y ARCHIVADORES': 'UTILES',
-            'FOLDERES ESCOLARES': 'FOLDERES ESCOLARES',
+            'CARPETAS Y ARCHIVADORES': 'folders',
+            'FOLDERES ESCOLARES': 'folders',
             
             // TECNOLOGIA
-            'CALCULADORAS': 'CALCULADORAS',
-            'ACCESORIOS PARA COMPUTADORA': 'TECNOLOGIA',
-            'MOUSE Y TECLADOS': 'MOUSE Y TECLADOS',
-            'CARGADORES': 'CARGADORES',
-            'MEMORIAS USB': 'TECNOLOGIA',
-            'AUDIFONOS Y PARLANTES': 'AUDIFONOS Y PARLANTES',
-            'ACCESORIOS VARIOS': 'ACCESORIOS VARIOS',
+            'CALCULADORAS': 'calculadora',
+            'ACCESORIOS PARA COMPUTADORA': 'accesorios computadora', // No existe
+            'MOUSE Y TECLADOS': 'mouse',
+            'CARGADORES': 'cargador',
+            'MEMORIAS USB': 'memorias usb', // No existe
+            'AUDIFONOS Y PARLANTES': 'audifonos',
+            'ACCESORIOS VARIOS': 'funkos',
             
-            // BELLEZA
-            'PERFUMES': 'ACCESORIOS VARIOS',
-            'MAQUILLAJE': 'ACCESORIOS VARIOS',
-            'TINTES': 'ACCESORIOS VARIOS',
-            'ESPEJOS': 'ACCESORIOS VARIOS',
-            'CUIDADO PERSONAL': 'ACCESORIOS VARIOS',
+            // BELLEZA - No existen productos
+            'PERFUMES': 'perfumes',
+            'MAQUILLAJE': 'maquillaje',
+            'TINTES': 'tintes',
+            'ESPEJOS': 'espejos',
+            'CUIDADO PERSONAL': 'cuidado personal',
             
             // LECTURA
-            'BIBLIAS': 'LECTURA',
-            'LIBROS ESCOLARES': 'LECTURA',
-            'PLAN LECTOR': 'LECTURA',
-            'TEXTOS ESCOLARES': 'LECTURA',
-            'DE CULTO': 'LECTURA'
+            'BIBLIAS': 'biblias', // No existe
+            'LIBROS ESCOLARES': 'libros',
+            'PLAN LECTOR': 'libros',
+            'TEXTOS ESCOLARES': 'libros',
+            'DE CULTO': 'libros'
         };
 
-        return mappings[category] || category;
+        return mappings[category] || category.toLowerCase();
     }
 
     redirectToCatalog(searchTerm) {
@@ -233,6 +236,27 @@ window.debugDropdown = function() {
         dropdownButtons: document.querySelectorAll('.dropbtn').length,
         productSearch: !!window.productSearch
     };
+};
+
+// Función para probar mapeos específicos
+window.testDropdownMapping = function(category) {
+    if (!window.dropdownNavigation) {
+        console.error('dropdownNavigation no disponible');
+        return;
+    }
+    
+    const mapping = window.dropdownNavigation.getCategoryMapping(category);
+    console.log(`=== PROBANDO MAPEO ===`);
+    console.log(`Categoría: "${category}"`);
+    console.log(`Mapeo: "${mapping}"`);
+    
+    if (window.productSearch && window.productSearch.products) {
+        const results = window.productSearch.searchProducts(mapping);
+        console.log(`Productos encontrados: ${results.length}`);
+        results.forEach(p => console.log(`- ${p.productName} (${p.category})`));
+    }
+    
+    return mapping;
 };
 
 console.log('Función de debugging disponible: window.debugDropdown()');

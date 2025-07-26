@@ -145,13 +145,21 @@ class ProductSearch {
         });
     }
 
-    searchProducts(searchTerm) {
+    searchProducts(searchTerm, exactIdMatch = false) {
         if (!searchTerm || searchTerm.length < 1) {
             return this.products;
         }
 
         const term = searchTerm.toLowerCase().trim();
         
+        // Si es búsqueda exacta por ID (para dropdown)
+        if (exactIdMatch) {
+            return this.products.filter(product => 
+                product.id.toLowerCase() === term
+            );
+        }
+        
+        // Búsqueda general en todos los campos
         return this.products.filter(product => {
             // Buscar en todos los campos del producto
             const searchFields = [
@@ -269,8 +277,14 @@ class ProductSearch {
                 productsContainer.innerHTML += productCard;
             });
 
-            // Agregar botón para volver a todos los productos
+            // Agregar botón para volver a todos los productos (evitar duplicación)
             if (results.length > 0) {
+                // Verificar si ya existe un botón antes de crear uno nuevo
+                const existingBtn = document.querySelector('.back-to-all-products');
+                if (existingBtn) {
+                    existingBtn.remove();
+                }
+                
                 const backToAllBtn = document.createElement('div');
                 backToAllBtn.className = 'back-to-all-products';
                 backToAllBtn.innerHTML = `
