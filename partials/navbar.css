@@ -1211,7 +1211,7 @@ body {
     width: 95vw;
   }
 
-  .mobile-dropdown-content {
+  .mobile-dropdown.active .mobile-dropdown-content {
     max-height: 300px;
   }
 

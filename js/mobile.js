@@ -3,8 +3,6 @@
 (function() {
     'use strict';
     
-    console.log('🔧 Iniciando fix del menú móvil...');
-    
     function initializeMobileMenu() {        
         const elements = {
             mobileMenuBtn: document.getElementById('mobileMenuBtn'),
@@ -12,7 +10,6 @@
             mobileNavClose: document.getElementById('mobileNavClose'),
             mobileOverlay: document.getElementById('mobileOverlay')
         };
-        
         
         const missingElements = Object.entries(elements)
             .filter(([key, element]) => !element)
@@ -27,11 +24,6 @@
             elements.mobileOverlay.classList.add('active');
             document.body.classList.add('menu-open');
             document.body.style.overflow = 'hidden';
-            
-            setTimeout(() => {
-                const navVisible = elements.mobileNav.classList.contains('active');
-                const overlayVisible = elements.mobileOverlay.classList.contains('active');
-            }, 100);
         }
         
         function closeMobileMenu() {            
@@ -39,7 +31,6 @@
             elements.mobileOverlay.classList.remove('active');
             document.body.classList.remove('menu-open');
             document.body.style.overflow = '';
-            
         }
         
         elements.mobileMenuBtn.addEventListener('click', function(e) {
@@ -72,33 +63,43 @@
             }
         });
         
+        // Manejar dropdowns móviles
         const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        
         dropdownBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 const dropdown = this.closest('.mobile-dropdown');
                 const isActive = dropdown.classList.contains('active');
                 
+                // Cerrar todos los otros dropdowns
                 dropdownBtns.forEach(otherBtn => {
                     if (otherBtn !== this) {
-                        otherBtn.closest('.mobile-dropdown').classList.remove('active');
+                        const otherDropdown = otherBtn.closest('.mobile-dropdown');
+                        if (otherDropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
                     }
                 });
                 
+                // Toggle del dropdown actual
                 dropdown.classList.toggle('active', !isActive);
             });
         });
-        
     }
     
+    // Ejecutar inmediatamente si el DOM está listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeMobileMenu);
     } else {
         initializeMobileMenu();
     }
     
+    // También ejecutar cuando se dispare el evento navbarLoaded
     document.addEventListener('navbarLoaded', initializeMobileMenu);
     
-    setTimeout(initializeMobileMenu, 1000);
+    // Ejecutar después de un delay como respaldo
+    setTimeout(initializeMobileMenu, 2000);
     
 })(); 

@@ -165,24 +165,5 @@ document.addEventListener('navbarLoaded', function() {
         }
     });
 
-    // Funcionalidad de dropdowns móviles
-    const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
-    
-    mobileDropdownBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const dropdown = this.parentElement;
-            const isActive = dropdown.classList.contains('active');
-            
-            // Cerrar todos los dropdowns
-            mobileDropdownBtns.forEach(otherBtn => {
-                otherBtn.parentElement.classList.remove('active');
-            });
-            
-            // Abrir el dropdown clickeado si no estaba activo
-            if (!isActive) {
-                dropdown.classList.add('active');
-            }
-        });
-    });
+
 });

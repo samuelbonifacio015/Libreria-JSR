@@ -325,34 +325,50 @@
         <button class="search-overlay-close" id="searchOverlayClose">
           <i class="fas fa-times"></i>
         </button>
-        
+
         <div class="search-overlay-header">
-          <div style="text-align: center; margin-bottom: 1rem;">
-            <i class="fas fa-search" style="font-size: 3rem; color: rgba(255,255,255,0.8);"></i>
+          <div style="text-align: center; margin-bottom: 1rem">
+            <i
+              class="fas fa-search"
+              style="font-size: 3rem; color: rgba(255, 255, 255, 0.8)"
+            ></i>
           </div>
           <h2 class="search-overlay-title">¿Qué estás buscando?</h2>
-          <p class="search-overlay-subtitle">Busca entre audífonos, funkos, útiles escolares y más</p>
+          <p class="search-overlay-subtitle">
+            Busca entre audífonos, funkos, útiles escolares y más
+          </p>
         </div>
-        
+
         <div class="search-overlay-input-container">
-          <input type="text" class="search-overlay-input" id="searchOverlayInput" 
-                 placeholder="Escribe aquí: audifonos, sony, marvel..." autofocus>
+          <input
+            type="text"
+            class="search-overlay-input"
+            id="searchOverlayInput"
+            placeholder="Escribe aquí: audifonos, sony, marvel..."
+            autofocus
+          />
         </div>
-        
+
         <div class="search-suggestions-overlay" id="searchSuggestionsOverlay">
           <!-- Sugerencias se cargarán aquí dinámicamente -->
         </div>
-        
+
         <div class="search-quick-actions">
           <a href="/html/catalogo.html" class="quick-action-btn">
             <i class="fas fa-th-large"></i>
             Ver catálogo completo
           </a>
-          <button class="quick-action-btn" onclick="window.productSearch ? window.productSearch.performSearch('audifonos') : null">
+          <button
+            class="quick-action-btn"
+            onclick="window.productSearch ? window.productSearch.performSearch('audifonos') : null"
+          >
             <i class="fas fa-headphones"></i>
             Audífonos
           </button>
-          <button class="quick-action-btn" onclick="window.productSearch ? window.productSearch.performSearch('marvel') : null">
+          <button
+            class="quick-action-btn"
+            onclick="window.productSearch ? window.productSearch.performSearch('marvel') : null"
+          >
             <i class="fas fa-mask"></i>
             Funkos Marvel
           </button>
@@ -363,53 +379,21 @@
     <!-- JavaScript para funcionalidad del menú -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-        const mobileNav = document.getElementById("mobileNav");
-        const mobileNavClose = document.getElementById("mobileNavClose");
-        const mobileOverlay = document.getElementById("mobileOverlay");
-
-        // Abrir menú mobile
-        if (mobileMenuBtn) {
-          mobileMenuBtn.addEventListener("click", function () {
-            mobileNav.classList.add("active");
-            mobileOverlay.classList.add("active");
-            document.body.style.overflow = "hidden";
-          });
-        }
-
-        // Cerrar menú mobile
-        function closeMobileMenu() {
-          mobileNav.classList.remove("active");
-          mobileOverlay.classList.remove("active");
-          document.body.style.overflow = "";
-        }
-
-        if (mobileNavClose) {
-          mobileNavClose.addEventListener("click", closeMobileMenu);
-        }
-
-        if (mobileOverlay) {
-          mobileOverlay.addEventListener("click", closeMobileMenu);
-        }
-
-        // Manejar dropdowns en mobile
-        const mobileDropdownBtns = document.querySelectorAll(
-          ".mobile-dropdown-btn"
-        );
-        mobileDropdownBtns.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const dropdown = this.closest(".mobile-dropdown");
-            dropdown.classList.toggle("active");
-          });
-        });
-
-        // Cerrar menú al hacer click en un enlace
+        // Solo manejar el cierre del menú al hacer click en enlaces
         const mobileLinks = document.querySelectorAll(
           ".mobile-category-link, .mobile-dropdown-content a"
         );
         mobileLinks.forEach((link) => {
           link.addEventListener("click", function () {
-            setTimeout(closeMobileMenu, 100);
+            const mobileNav = document.getElementById("mobileNav");
+            const mobileOverlay = document.getElementById("mobileOverlay");
+            if (mobileNav && mobileOverlay) {
+              setTimeout(() => {
+                mobileNav.classList.remove("active");
+                mobileOverlay.classList.remove("active");
+                document.body.style.overflow = "";
+              }, 100);
+            }
           });
         });
       });

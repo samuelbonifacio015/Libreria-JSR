@@ -69,16 +69,7 @@ function initializeNavbar() {
         mobileOverlay.addEventListener('click', closeMobileMenu);
     }
 
-    // Manejar dropdowns en mobile
-    const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
-    mobileDropdownBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const dropdown = this.closest('.mobile-dropdown');
-            if (dropdown) {
-                dropdown.classList.toggle('active');
-            }
-        });
-    });
+
 
     // Cerrar menú al hacer click en un enlace
     const mobileLinks = document.querySelectorAll('.mobile-category-link, .mobile-dropdown-content a');
