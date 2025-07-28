@@ -5,14 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
             
-            // Inicializar funcionalidad del navbar después de cargarlo
+            // Cargar el carrito después del navbar
+            return loadCart();
+        })
+        .then(() => {
+            // Inicializar funcionalidad del navbar después de cargar todo
             setTimeout(() => {
                 initializeNavbar();
                 
                 // Disparar evento personalizado para notificar que el navbar está listo
                 const navbarLoadedEvent = new CustomEvent('navbarLoaded');
                 document.dispatchEvent(navbarLoadedEvent);
-                console.log('Navbar cargado y evento disparado');
+                console.log('Navbar y carrito cargados, evento disparado');
             }, 100); // Añadir un pequeño delay para asegurar que el DOM esté listo
         })
         .catch(error => console.error('Error cargando navbar:', error));
@@ -40,6 +44,85 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error cargando footer:', error));
 });
+
+// Función para cargar el carrito (HTML, CSS y JS)
+function loadCart() {
+    return Promise.all([
+        // Cargar HTML del carrito
+        fetch('/partials/cart.html')
+            .then(response => response.text())
+            .then(data => {
+                // Insertar el carrito directamente en el cart-container del navbar
+                const navbarCartContainer = document.querySelector('.cart-container');
+                if (navbarCartContainer) {
+                    // Crear div temporal para parsear el HTML
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+                    
+                    // Insertar cada elemento del carrito
+                    while (tempDiv.firstChild) {
+                        navbarCartContainer.appendChild(tempDiv.firstChild);
+                    }
+                } else {
+                    console.warn('No se encontró .cart-container en el navbar');
+                }
+                console.log('✅ HTML del carrito cargado');
+            }),
+
+        // Cargar CSS del carrito
+        loadCSS('/partials/cart.css'),
+
+        // Cargar JS del carrito
+        loadJS('/partials/cart.js')
+    ]);
+}
+
+// Función para cargar archivos CSS dinámicamente
+function loadCSS(href) {
+    return new Promise((resolve, reject) => {
+        // Verificar si ya está cargado
+        if (document.querySelector(`link[href="${href}"]`)) {
+            resolve();
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.onload = () => {
+            console.log(`✅ CSS cargado: ${href}`);
+            resolve();
+        };
+        link.onerror = () => {
+            console.error(`❌ Error cargando CSS: ${href}`);
+            reject(new Error(`Error cargando CSS: ${href}`));
+        };
+        document.head.appendChild(link);
+    });
+}
+
+// Función para cargar archivos JS dinámicamente
+function loadJS(src) {
+    return new Promise((resolve, reject) => {
+        // Verificar si ya está cargado
+        if (document.querySelector(`script[src="${src}"]`)) {
+            resolve();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => {
+            console.log(`✅ JS cargado: ${src}`);
+            resolve();
+        };
+        script.onerror = () => {
+            console.error(`❌ Error cargando JS: ${src}`);
+            reject(new Error(`Error cargando JS: ${src}`));
+        };
+        document.head.appendChild(script);
+    });
+}
 
 // Función para inicializar la funcionalidad del navbar
 function initializeNavbar() {
@@ -95,62 +178,11 @@ function initializeNavbar() {
         });
     });
 
-    // Manejar dropdown del carrito - MEJORADO
-    const cartDropdown = document.getElementById('cartDropdown');
-    const cartClose = document.querySelector('.cart-close');
-    
-    // Seleccionar botones del carrito tanto desktop como móvil
-    const desktopCartBtn = document.querySelector('.cart-btn');
-    const mobileCartBtn = document.querySelector('.mobile-cart-btn');
-    
-    // Función para mostrar/ocultar el dropdown
-    function toggleCartDropdown(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (cartDropdown) {
-            const isVisible = cartDropdown.style.display === 'block';
-            cartDropdown.style.display = isVisible ? 'none' : 'block';
-        }
-    }
-    
-    // Agregar event listeners a ambos botones
-    if (desktopCartBtn && cartDropdown) {
-        desktopCartBtn.addEventListener('click', toggleCartDropdown);
-    }
-    
-    if (mobileCartBtn && cartDropdown) {
-        mobileCartBtn.addEventListener('click', toggleCartDropdown);
-    }
-
-    // Cerrar dropdown con el botón X
-    if (cartClose && cartDropdown) {
-        cartClose.addEventListener('click', function(e) {
-            e.preventDefault();
-            cartDropdown.style.display = 'none';
-        });
-    }
-
-    // Cerrar dropdown del carrito al hacer click fuera
-    document.addEventListener('click', function(e) {
-        if (cartDropdown && 
-            !e.target.closest('.cart-container') && 
-            !e.target.closest('.mobile-cart-container') &&
-            !e.target.closest('.cart-dropdown')) {
-            cartDropdown.style.display = 'none';
-        }
-    });
-
     // Manejar resize de ventana para responsive
     window.addEventListener('resize', function() {
         // Cerrar menú mobile si se cambia a desktop
         if (window.innerWidth > 768) {
             closeMobileMenu();
-        }
-        
-        // Ocultar dropdown del carrito en resize
-        if (cartDropdown) {
-            cartDropdown.style.display = 'none';
         }
     });
 }
