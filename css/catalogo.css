@@ -861,26 +861,6 @@ modal-close {
   font-size: 24px;
 }
 
-@media (max-width: 768px) {
-  .whatsapp-contact {
-    bottom: 10px;
-    right: 10px;
-  }
-
-  .whatsapp-message {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-
-  .whatsapp-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .whatsapp-icon .fab {
-    font-size: 20px;
-  }
-}
 
 /*-----------------------------------*\
   #FLOATING CART
@@ -1297,6 +1277,21 @@ modal-close {
   #RESPONSIVE
 \*-----------------------------------*/
 
+@media (max-width: 1024px) {
+  .index-page {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
 @media (max-width: 768px) {
   .index-page {
     padding-top: 20px;
@@ -1339,5 +1334,9 @@ modal-close {
   }
   .product-card .brand {
     font-weight: bold;
+  }
+
+  .whatsapp-message {
+    display: none;
   }
 }
