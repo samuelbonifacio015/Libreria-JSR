@@ -122,10 +122,10 @@
 
     <!--whatsapp contact-->
     <div class="whatsapp-contact">
-      <a href="https://wa.me/999451887" target="_blank" class="whatsapp-message">
+      <a href="https://wa.me/999451887" target="_blank" rel="noopener" class="whatsapp-message">
         Realiza tu pedido aquí 🚀
       </a>
-      <a href="https://wa.me/999451887" target="_blank" class="whatsapp-icon">
+      <a href="https://wa.me/999451887" target="_blank" rel="noopener" class="whatsapp-icon">
         <i class="fab fa-whatsapp"></i>
       </a>
     </div>
@@ -187,13 +187,6 @@
     </div>
     <!--quick-view modal end-->
 
-    <!--floating about us button-->
-    <a href="/html/sobrenosotros.html" class="floating-about-us">
-      <i class="fa-solid fa-users"></i>
-      <span>¿Quiénes somos?</span>
-    </a>
-    <!--end-->
-
     <!--footer-->
     <div id="footer-placeholder"></div>
 
@@ -206,23 +199,7 @@
         // Script para probar el carrito
         document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('navbarLoaded', function() {
-                setTimeout(function() {
-                    // Añadir funcionalidad para el botón flotante de Sobre Nosotros
-                    const floatingAboutUs = document.querySelector('.floating-about-us');
-                    
-                    if (floatingAboutUs) {
-                        window.addEventListener('scroll', function() {
-                            // Mostrar el botón después de desplazarse 400px
-                            if (window.scrollY > 400) {
-                                floatingAboutUs.style.opacity = '1';
-                                floatingAboutUs.style.visibility = 'visible';
-                            } else {
-                                floatingAboutUs.style.opacity = '0';
-                                floatingAboutUs.style.visibility = 'hidden';
-                            }
-                        });
-                    }
-                }, 1000);
+                console.log('Navbar cargado en catálogo');
             });
         });
     </script>

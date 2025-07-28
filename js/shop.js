@@ -61,23 +61,35 @@ document.addEventListener('DOMContentLoaded', function() {
     window.setupFloatingCart();
     window.setupPagination();
     
+    // Esperar a que el navbar se cargue antes de inicializar el carrito
     document.addEventListener('navbarLoaded', function() {
-        window.initializeCart();
+        console.log('Navbar cargado, inicializando carrito...');
+        setTimeout(() => {
+            window.initializeCart();
+        }, 200);
     });
     
+    // Fallback: intentar inicializar el carrito después de un tiempo
     setTimeout(function() {
-        window.initializeCart();
-    }, 1000);
+        if (!window.cartInitialized) {
+            console.log('Fallback: inicializando carrito...');
+            window.initializeCart();
+        }
+    }, 2000);
     
     function setupEventListeners() {
         const productsGrid = document.querySelector('.products-grid');
         if (productsGrid) {
             productsGrid.addEventListener('click', function(e) {
                 if (e.target.classList.contains('add-to-cart')) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     handleAddToCart(e);
                 }
                 
                 if (e.target.classList.contains('quick-view')) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     handleQuickView(e);
                 }
             });
@@ -86,13 +98,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalClose = document.getElementById('modalClose');
         if (modalClose) {
             modalClose.addEventListener('click', function() {
-                document.getElementById('quickViewModal').style.display = 'none';
+                const quickViewModal = document.getElementById('quickViewModal');
+                if (quickViewModal) {
+                    quickViewModal.style.display = 'none';
+                }
             });
         }
         
         const modalAddToCartBtn = document.querySelector('.modal-right .add-to-cart');
         if (modalAddToCartBtn) {
-            modalAddToCartBtn.addEventListener('click', function() {
+            modalAddToCartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const modalProductTitle = document.getElementById('modalProductTitle');
                 const modalBrand = document.getElementById('modalBrand');
                 const modalDiscountedPrice = document.getElementById('modalDiscountedPrice');
@@ -100,7 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const modalQuantity = document.getElementById('modalQuantity');
                 const quickViewModal = document.getElementById('quickViewModal');
                 
-                if (!modalProductTitle || !modalBrand || !modalDiscountedPrice || !modalMainImage) return;
+                if (!modalProductTitle || !modalBrand || !modalDiscountedPrice || !modalMainImage) {
+                    console.error('Datos del modal incompletos');
+                    return;
+                }
                 
                 const product = {
                     name: modalProductTitle.textContent,
@@ -110,8 +131,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     quantity: parseInt(modalQuantity ? modalQuantity.value : 1) || 1
                 };
                 
+                console.log('Añadiendo producto desde modal:', product);
+                
                 if (window.addToCart) {
                     window.addToCart(product);
+                } else {
+                    console.error('Función addToCart no disponible en modal');
                 }
                 
                 if (quickViewModal) {
@@ -146,19 +171,37 @@ window.initializeCart = function() {
     const cartIcon = document.querySelector('.cart-icon');
     const cartClose = document.querySelector('.cart-close');
     
-    if (!cartIcon || !cartDropdown) {
-        console.log('Elementos del carrito aún no disponibles');
+    // Buscar elementos del carrito de diferentes maneras
+    const cartBtn = document.querySelector('.cart-btn');
+    const mobileCartBtn = document.querySelector('.mobile-cart-btn');
+    
+    if (!cartDropdown) {
+        console.log('Dropdown del carrito no disponible, reintentando...');
+        setTimeout(() => {
+            window.initializeCart();
+        }, 500);
         return;
     }
     
     console.log('Inicializando carrito');
     window.cartInitialized = true;
     
-    cartIcon.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
-    });
+    // Configurar event listeners para el carrito
+    if (cartBtn) {
+        cartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    }
+    
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    }
     
     if (cartClose) {
         cartClose.addEventListener('click', function(e) {
@@ -169,9 +212,10 @@ window.initializeCart = function() {
     }
     
     document.addEventListener('click', function(e) {
-        if (cartDropdown && cartIcon && 
+        if (cartDropdown && 
             !cartDropdown.contains(e.target) && 
-            !cartIcon.contains(e.target)) {
+            !e.target.closest('.cart-container') &&
+            !e.target.closest('.mobile-cart-container')) {
             cartDropdown.style.display = 'none';
         }
     });
@@ -189,13 +233,33 @@ window.initializeCart = function() {
             product.quantity = product.quantity || 1;
             window.cart.push(product);
         }
+        
+        // Actualizar el carrito
         updateCart();
         
+        // Mostrar el dropdown del carrito
+        const cartDropdown = document.getElementById('cartDropdown');
         if (cartDropdown) {
             cartDropdown.style.display = 'block';
         }
         
-        window.updateFloatingCart();
+        // Actualizar el carrito flotante
+        if (window.updateFloatingCart) {
+            window.updateFloatingCart();
+        }
+        
+        // Mostrar confirmación visual
+        const addToCartBtn = event.target;
+        if (addToCartBtn) {
+            const originalText = addToCartBtn.textContent;
+            addToCartBtn.textContent = '¡Añadido!';
+            addToCartBtn.style.backgroundColor = '#28a745';
+            
+            setTimeout(() => {
+                addToCartBtn.textContent = originalText;
+                addToCartBtn.style.backgroundColor = '';
+            }, 1000);
+        }
     };
     
     window.removeFromCart = function(productName) {
@@ -223,7 +287,14 @@ window.initializeCart = function() {
     };
     
     function updateCart() {
-        if (!cartItemsContainer || !cartCount || !cartTotal) return;
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartCount = document.querySelector('.cart-count');
+        const cartTotal = document.getElementById('cartTotal');
+        
+        if (!cartItemsContainer || !cartCount || !cartTotal) {
+            console.log('Elementos del carrito no disponibles para actualizar');
+            return;
+        }
         
         cartItemsContainer.innerHTML = '';
         
@@ -550,19 +621,23 @@ function handleAddToCart(e) {
             
             console.log('Producto a añadir:', product);
             
-            if (window.addToCart) {
+            // Verificar si el carrito está inicializado
+            if (!window.cartInitialized) {
+                console.log('Carrito no inicializado, intentando inicializar...');
+                window.initializeCart();
+                
+                // Esperar un poco y volver a intentar
+                setTimeout(() => {
+                    if (window.addToCart) {
+                        window.addToCart(product);
+                    } else {
+                        console.error('No se pudo inicializar el carrito');
+                    }
+                }, 300);
+            } else if (window.addToCart) {
                 window.addToCart(product);
             } else {
                 console.error('La función addToCart no está disponible');
-                
-                if (!window.cartInitialized) {
-                    console.log('Intentando inicializar el carrito');
-                    window.initializeCart();
-                    
-                    if (window.addToCart) {
-                        window.addToCart(product);
-                    }
-                }
             }
         } catch (error) {
             console.error('Error al añadir producto al carrito:', error);
