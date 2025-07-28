@@ -1,48 +1,19 @@
-<!-- Cart Dropdown Component -->
+<!-- Cart Dropdown Component - Estilo Antiguo -->
 <div class="cart-dropdown" id="cartDropdown">
   <div class="cart-header">
-    <div class="cart-title">
-      <i class="fas fa-shopping-cart"></i>
-      <h3>Mi Carrito</h3>
-    </div>
-    <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
-      <i class="fas fa-times"></i>
-    </button>
+    <h3>Carrito</h3>
+    <span class="cart-close">×</span>
   </div>
 
-  <div class="cart-content">
-    <div class="cart-items" id="cartItems">
-      <div class="cart-empty" id="cartEmpty">
-        <i class="fas fa-shopping-cart cart-empty-icon"></i>
-        <p>Tu carrito está vacío</p>
-        <small>¡Agrega algunos productos y empezemos a comprar!</small>
-      </div>
-    </div>
+  <div class="cart-items" id="cartItems">
+    <!--items add manually-->
+  </div>
 
-    <div class="cart-footer" id="cartFooter" style="display: none">
-      <div class="cart-summary">
-        <div class="cart-total">
-          <span class="total-label">Total:</span>
-          <span class="total-amount">S/. <span id="cartTotal">0.00</span></span>
-        </div>
-        <div class="cart-items-count">
-          <span id="cartItemsCount">0</span> productos
-        </div>
-      </div>
-
-      <div class="cart-actions">
-        <button class="cart-action-btn view-cart-btn" onclick="viewFullCart()">
-          <i class="fas fa-eye"></i>
-          Ver Carrito Completo
-        </button>
-        <button
-          class="cart-action-btn checkout-btn primary"
-          onclick="proceedToCheckout()"
-        >
-          <i class="fas fa-credit-card"></i>
-          Finalizar Compra
-        </button>
-      </div>
+  <div class="cart-footer">
+    <p>Total: S/. <span id="cartTotal">0.00</span></p>
+    <div class="cart-actions">
+      <button class="view-cart-btn">Ver carrito</button>
+      <button class="checkout-btn">Finalizar Compra</button>
     </div>
   </div>
 </div>
@@ -54,58 +25,3 @@
     <span class="notification-text">Producto añadido al carrito</span>
   </div>
 </div>
-
-<!-- Cart Item Template -->
-<template id="cartItemTemplate">
-  <div class="cart-item" data-product-id="">
-    <div class="cart-item-image">
-      <img src="" alt="" loading="lazy" />
-    </div>
-
-    <div class="cart-item-details">
-      <div class="cart-item-info">
-        <h4 class="cart-item-name"></h4>
-        <p class="cart-item-brand"></p>
-        <div class="cart-item-price">
-          <span class="price-label">Precio:</span>
-          <span class="price-value"
-            >S/. <span class="price-amount">0.00</span></span
-          >
-        </div>
-      </div>
-
-      <div class="cart-item-controls">
-        <div class="quantity-controls">
-          <button
-            class="quantity-btn decrease"
-            onclick="updateCartQuantity(this, -1)"
-          >
-            <i class="fas fa-minus"></i>
-          </button>
-          <span class="quantity-display">1</span>
-          <button
-            class="quantity-btn increase"
-            onclick="updateCartQuantity(this, 1)"
-          >
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-
-        <button
-          class="remove-item-btn"
-          onclick="removeFromCart(this)"
-          title="Eliminar producto"
-        >
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="cart-item-subtotal">
-      <span class="subtotal-label">Subtotal:</span>
-      <span class="subtotal-amount"
-        >S/. <span class="subtotal-value">0.00</span></span
-      >
-    </div>
-  </div>
-</template>

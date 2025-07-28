@@ -110,26 +110,37 @@
     }
 
     /**
-     * Mostrar dropdown del carrito
+     * Mostrar carrito flotante con funcionalidad completa
      */
     function showCartDropdown() {
-        if (!window.JSRCart.dropdown) return;
+        const floatingCart = document.getElementById('floatingCart');
+        if (!floatingCart) return;
 
-        // Asegurar que el dropdown esté renderizado
-        renderCart();
-        
-        window.JSRCart.dropdown.style.display = 'block';
-        
-        // Forzar reflow para la animación
-        window.JSRCart.dropdown.offsetHeight;
-        
-        window.JSRCart.dropdown.classList.add('show');
-        
-        // Actualizar contador y carrito flotante
-        updateCartCount();
+        // Actualizar el carrito flotante
         updateFloatingCart();
+        updateCartCount();
         
-        console.log('🛒 Carrito mostrado');
+        // Activar modo abierto permanente
+        window.JSRCart.isFloatingCartOpen = true;
+        
+        // Hacer visible el carrito flotante con funcionalidad completa
+        floatingCart.classList.add('visible');
+        floatingCart.style.opacity = '1';
+        floatingCart.style.visibility = 'visible';
+        
+        // Forzar que el preview esté siempre visible con funcionalidad completa
+        const preview = floatingCart.querySelector('.floating-cart-preview');
+        if (preview) {
+            preview.style.maxHeight = '500px';
+            preview.style.opacity = '1';
+            preview.style.padding = '15px';
+            preview.style.display = 'flex';
+        }
+        
+        // Mostrar notificación de que el carrito está activo
+        showNotification('Carrito activado - funcionalidad completa visible', 'success');
+        
+        console.log('🛒 Carrito flotante activado con funcionalidad completa');
     }
 
     /**
@@ -253,50 +264,42 @@
     };
 
     /**
-     * Remover producto del carrito
+     * Remover producto del carrito (estilo antiguo)
      */
-    window.removeFromCart = function(element) {
-        const cartItem = element.closest('.cart-item');
-        if (!cartItem) return;
+    window.removeFromCart = function(productName) {
+        if (!window.JSRCart.items) return;
+        
+        const removedItem = window.JSRCart.items.find(item => item.name === productName);
+        window.JSRCart.items = window.JSRCart.items.filter(item => item.name !== productName);
+        
+        // Guardar cambios
+        saveCartToStorage();
 
-        const productId = cartItem.getAttribute('data-product-id');
-        const productIndex = window.JSRCart.items.findIndex(item => item.id === productId);
+        // Actualizar UI
+        renderCart();
+        updateCartCount();
+        updateFloatingCart();
 
-        if (productIndex > -1) {
-            const removedItem = window.JSRCart.items[productIndex];
-            window.JSRCart.items.splice(productIndex, 1);
-
-            // Guardar cambios
-            saveCartToStorage();
-
-            // Actualizar UI
-            renderCart();
-            updateCartCount();
-            updateFloatingCart();
-
+        if (removedItem) {
             showNotification(`${removedItem.name} eliminado del carrito`, 'info');
-            
             console.log('🗑️ Producto eliminado del carrito:', removedItem.name);
         }
     };
 
     /**
-     * Actualizar cantidad de producto
+     * Actualizar cantidad de producto (estilo antiguo)
      */
-    window.updateCartQuantity = function(element, change) {
-        const cartItem = element.closest('.cart-item');
-        if (!cartItem) return;
-
-        const productId = cartItem.getAttribute('data-product-id');
-        const item = window.JSRCart.items.find(item => item.id === productId);
-
+    window.updateCartQuantity = function(productName, change) {
+        if (!window.JSRCart.items) return;
+        
+        const item = window.JSRCart.items.find(item => item.name === productName);
         if (!item) return;
 
         const newQuantity = item.quantity + change;
 
         if (newQuantity <= 0) {
             // Eliminar producto si cantidad es 0 o menor
-            window.removeFromCart(element);
+            window.removeFromCart(productName);
             return;
         }
 
@@ -318,98 +321,69 @@
     };
 
     /**
-     * Renderizar el carrito completo
+     * Renderizar el carrito completo (estilo antiguo)
      */
     function renderCart() {
         const cartItemsContainer = document.getElementById('cartItems');
-        const cartFooter = document.getElementById('cartFooter');
-        const cartEmpty = document.getElementById('cartEmpty');
-
         if (!cartItemsContainer) return;
+
+        cartItemsContainer.innerHTML = '';
 
         if (window.JSRCart.items.length === 0) {
             // Mostrar estado vacío
-            if (cartEmpty) cartEmpty.style.display = 'block';
-            if (cartFooter) cartFooter.style.display = 'none';
-            cartItemsContainer.innerHTML = cartEmpty ? '' : '<div class="cart-empty"><i class="fas fa-shopping-cart cart-empty-icon"></i><p>Tu carrito está vacío</p><small>¡Agrega algunos productos y empezemos a comprar!</small></div>';
+            cartItemsContainer.innerHTML = '<div class="empty-cart">No hay productos en el carrito</div>';
         } else {
-            // Mostrar productos
-            if (cartEmpty) cartEmpty.style.display = 'none';
-            if (cartFooter) cartFooter.style.display = 'block';
-
-            const itemsHTML = window.JSRCart.items.map(item => createCartItemHTML(item)).join('');
-            cartItemsContainer.innerHTML = itemsHTML;
-
-            // Actualizar totales
-            updateCartTotals();
+            // Mostrar productos con estructura antigua
+            window.JSRCart.items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item-entry');
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='/img/products/default.jpg'" />
+                    <div class="cart-item-details">
+                        <div class="brand">${item.brand}</div>
+                        <div class="name">${item.name}</div>
+                        <div class="price">S/. ${(item.price * item.quantity).toFixed(2)}</div>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="decrease" onclick="updateCartQuantity('${item.name}', -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="increase" onclick="updateCartQuantity('${item.name}', 1)">+</button>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart('${item.name}')">Quitar</button>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
         }
+
+        // Actualizar totales
+        updateCartTotals();
     }
 
-    /**
-     * Crear HTML para un item del carrito
-     */
-    function createCartItemHTML(item) {
-        const subtotal = (item.price * item.quantity).toFixed(2);
-        
-        return `
-            <div class="cart-item" data-product-id="${item.id}">
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.src='/img/products/default.jpg'">
-                </div>
-                
-                <div class="cart-item-details">
-                    <div class="cart-item-info">
-                        <h4 class="cart-item-name">${item.name}</h4>
-                        <p class="cart-item-brand">${item.brand}</p>
-                        <div class="cart-item-price">
-                            <span class="price-label">Precio:</span>
-                            <span class="price-value">S/. <span class="price-amount">${item.price.toFixed(2)}</span></span>
-                        </div>
-                    </div>
-                    
-                    <div class="cart-item-controls">
-                        <div class="quantity-controls">
-                            <button class="quantity-btn decrease" onclick="updateCartQuantity(this, -1)" title="Disminuir cantidad">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span class="quantity-display">${item.quantity}</span>
-                            <button class="quantity-btn increase" onclick="updateCartQuantity(this, 1)" title="Aumentar cantidad">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        
-                        <button class="remove-item-btn" onclick="removeFromCart(this)" title="Eliminar producto">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="cart-item-subtotal">
-                    <span class="subtotal-label">Subtotal:</span>
-                    <span class="subtotal-amount">S/. <span class="subtotal-value">${subtotal}</span></span>
-                </div>
-            </div>
-        `;
-    }
+    // Función createCartItemHTML eliminada - ahora usamos estructura antigua
 
     /**
-     * Actualizar totales del carrito
+     * Actualizar totales del carrito (estilo antiguo)
      */
     function updateCartTotals() {
         const total = window.JSRCart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const itemCount = window.JSRCart.items.reduce((sum, item) => sum + item.quantity, 0);
 
-        // Actualizar total
+        // Actualizar total en el carrito dropdown
         const cartTotalElement = document.getElementById('cartTotal');
         if (cartTotalElement) {
             cartTotalElement.textContent = total.toFixed(2);
         }
 
-        // Actualizar contador de productos
-        const cartItemsCountElement = document.getElementById('cartItemsCount');
-        if (cartItemsCountElement) {
-            cartItemsCountElement.textContent = itemCount;
-        }
+        // Actualizar contador en el navbar (tanto desktop como mobile)
+        const cartCountElements = document.querySelectorAll('.cart-count');
+        cartCountElements.forEach(element => {
+            element.textContent = itemCount;
+            if (itemCount > 0) {
+                element.style.display = 'flex';
+            } else {
+                element.style.display = 'none';
+            }
+        });
     }
 
     /**
@@ -539,27 +513,47 @@
         
         if (!floatingCart) return;
 
-        // Mostrar carrito flotante cuando se hace scroll
+        // Variable para rastrear si el carrito flotante está abierto manualmente
+        window.JSRCart.isFloatingCartOpen = false;
+
+        // Mostrar carrito flotante cuando se hace scroll o se abre manualmente
         window.addEventListener('scroll', function() {
             const scrollPosition = window.scrollY;
             const headerHeight = 200;
             
-            if (scrollPosition > headerHeight && window.JSRCart.items.length > 0) {
-                floatingCart.classList.add('visible');
-            } else {
-                floatingCart.classList.remove('visible');
+            // Solo manejar scroll si no está abierto manualmente
+            if (!window.JSRCart.isFloatingCartOpen) {
+                if (scrollPosition > headerHeight && window.JSRCart.items.length > 0) {
+                    floatingCart.classList.add('visible');
+                } else if (window.JSRCart.items.length === 0) {
+                    floatingCart.classList.remove('visible');
+                }
             }
         });
 
         // Click en el ícono del carrito flotante
         if (floatingCartIcon) {
             floatingCartIcon.addEventListener('click', function() {
-                showCartDropdown();
-                // Scroll hacia arriba suavemente
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // Alternar estado abierto/cerrado
+                window.JSRCart.isFloatingCartOpen = !window.JSRCart.isFloatingCartOpen;
+                
+                const preview = floatingCart.querySelector('.floating-cart-preview');
+                if (window.JSRCart.isFloatingCartOpen) {
+                    // Abrir carrito flotante
+                    if (preview) {
+                        preview.style.maxHeight = '500px';
+                        preview.style.opacity = '1';
+                        preview.style.padding = '15px';
+                    }
+                    showNotification('Carrito abierto - funcionalidad completa', 'info');
+                } else {
+                    // Cerrar carrito flotante
+                    if (preview) {
+                        preview.style.maxHeight = '0';
+                        preview.style.opacity = '0';
+                        preview.style.padding = '10px';
+                    }
+                }
             });
         }
 
@@ -569,11 +563,11 @@
 
         if (viewCartBtn) {
             viewCartBtn.addEventListener('click', function() {
-                showCartDropdown();
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
+                showNotification('Navegando al carrito completo...', 'info');
             });
         }
 
@@ -593,7 +587,7 @@
     }
 
     /**
-     * Actualizar carrito flotante
+     * Actualizar carrito flotante con funcionalidad completa
      */
     function updateFloatingCart() {
         const floatingCart = document.getElementById('floatingCart');
@@ -612,7 +606,7 @@
         floatingCartCount.textContent = totalItems;
 
         // Mostrar/ocultar según tenga items
-        if (totalItems > 0 && window.scrollY > 200) {
+        if (totalItems > 0) {
             floatingCart.classList.add('visible');
         } else {
             floatingCart.classList.remove('visible');
@@ -628,33 +622,27 @@
         floatingCartItems.appendChild(selectionInfo);
 
         if (window.JSRCart.items.length > 0) {
-            // Mostrar hasta 3 productos
-            const itemsToShow = window.JSRCart.items.slice(0, 3);
-            
-            itemsToShow.forEach(item => {
+            // Mostrar todos los productos con funcionalidad completa
+            window.JSRCart.items.forEach(item => {
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('floating-cart-item');
                 itemElement.innerHTML = `
                     <img src="${item.image}" alt="${item.name}" onerror="this.src='/img/products/default.jpg'">
                     <div class="floating-cart-item-details">
                         <div class="floating-cart-item-name">${item.name}</div>
-                        <div class="floating-cart-item-price">S/. ${(item.price * item.quantity).toFixed(2)} (x${item.quantity})</div>
+                        <div class="floating-cart-item-brand">${item.brand}</div>
+                        <div class="floating-cart-item-price">S/. ${item.price.toFixed(2)} c/u</div>
+                        <div class="floating-cart-item-controls">
+                            <button class="qty-btn" onclick="updateCartQuantity('${item.name}', -1)">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateCartQuantity('${item.name}', 1)">+</button>
+                            <button class="remove-btn" onclick="removeFromCart('${item.name}')" title="Eliminar">×</button>
+                        </div>
+                        <div class="floating-cart-item-subtotal">Subtotal: S/. ${(item.price * item.quantity).toFixed(2)}</div>
                     </div>
                 `;
                 floatingCartItems.appendChild(itemElement);
             });
-
-            // Si hay más de 3 productos, mostrar indicador
-            if (window.JSRCart.items.length > 3) {
-                const moreItemsElement = document.createElement('div');
-                moreItemsElement.classList.add('floating-cart-item');
-                moreItemsElement.innerHTML = `
-                    <div class="floating-cart-item-details">
-                        <div class="floating-cart-item-name">+ ${window.JSRCart.items.length - 3} productos más...</div>
-                    </div>
-                `;
-                floatingCartItems.appendChild(moreItemsElement);
-            }
         } else {
             // Carrito vacío
             const emptyElement = document.createElement('div');
