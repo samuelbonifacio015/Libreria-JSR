@@ -1291,7 +1291,6 @@ modal-close {
   }
 }
 
-
 @media (max-width: 768px) {
   .index-page {
     padding-top: 20px;
@@ -1338,5 +1337,57 @@ modal-close {
 
   .whatsapp-message {
     display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .product-card {
+    min-height: 300px;
+    padding: 15px;
+  }
+  
+  .product-card img {
+    height: 120px;
+  }
+  
+  .modal-content {
+    flex-direction: column;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-left, .modal-right {
+    width: 100%;
+  }
+  
+  .modal-right .actions {
+    flex-direction: column;
+  }
+  
+  .modal-right .actions button {
+    padding: 15px 20px;
+    margin: 5px 0;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .pagination-item {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .pagination-next {
+    min-width: 80px;
+    font-size: 12px;
   }
 }
