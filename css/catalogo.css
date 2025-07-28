@@ -1292,3 +1292,52 @@ modal-close {
 .pagination-next i {
   margin-left: 5px;
 }
+
+/*-----------------------------------*\
+  #RESPONSIVE
+\*-----------------------------------*/
+
+@media (max-width: 768px) {
+  .index-page {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .products h2{
+    text-align: center;
+  }
+
+  .products-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .catalogo-filter {
+    display: none;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-card {
+    min-height: 350px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-normal);
+  }
+  .product-card img {
+    height: 150px;
+    object-fit: cover;
+  }
+  .product-card .brand {
+    font-weight: bold;
+  }
+}
