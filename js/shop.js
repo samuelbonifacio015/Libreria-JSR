@@ -1,21 +1,44 @@
 // Variables globales para el filtrado
 let allProducts = [];
 let filteredProducts = [];
+let filterTimeout = null;
 
-// Función para cargar y mostrar productos
+// Función para cargar y mostrar productos con efectos de transición
 function loadProducts(products = null) {
     const productsContainer = document.querySelector('.products-grid');
     if (!productsContainer) return;
     
     const productsToShow = products || allProducts;
-    productsContainer.innerHTML = '';
     
-    productsToShow.forEach(product => {
+    // Efecto de fade out para productos existentes
+    const existingCards = productsContainer.querySelectorAll('.product-card');
+    if (existingCards.length > 0) {
+        existingCards.forEach(card => {
+            card.classList.add('fade-out');
+        });
+        
+        // Esperar a que termine la transición de fade out
+        setTimeout(() => {
+            productsContainer.innerHTML = '';
+            renderProducts(productsToShow, productsContainer);
+        }, 300);
+    } else {
+        // Si no hay productos existentes, renderizar directamente
+        renderProducts(productsToShow, productsContainer);
+    }
+    
+    updateProductsCount(productsToShow.length);
+    setupEventListeners();
+}
+
+// Función para renderizar productos con efecto de fade in
+function renderProducts(products, container) {
+    products.forEach((product, index) => {
         const isAvailable = product.availability.toLowerCase().includes('disponible');
         const availabilityClass = isAvailable ? '' : 'out-of-stock';
         
         const productCard = `
-        <div class="product-card">
+        <div class="product-card fade-out">
             <span class="discount">${product.discount}</span>
             <img src="${product.img}" alt="${product.alt}" />
             <div class="brand">${product.brand}</div>
@@ -37,11 +60,17 @@ function loadProducts(products = null) {
             <button class="quick-view">Vista rápida</button>  
         </div>  
         `;
-        productsContainer.innerHTML += productCard;
+        container.innerHTML += productCard;
     });
     
-    updateProductsCount(productsToShow.length);
-    setupEventListeners();
+    // Aplicar efecto de fade in con delay escalonado
+    const newCards = container.querySelectorAll('.product-card');
+    newCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.remove('fade-out');
+            card.classList.add('fade-in');
+        }, index * 50); // Delay escalonado de 50ms entre cada producto
+    });
 }
 
 // Función para actualizar el contador de productos
@@ -50,6 +79,17 @@ function updateProductsCount(count) {
     if (productsCount) {
         productsCount.textContent = `Mostrando 1 - ${count} de ${count} productos`;
     }
+}
+
+// Función para aplicar filtros con debounce
+function applyFiltersWithDebounce() {
+    if (filterTimeout) {
+        clearTimeout(filterTimeout);
+    }
+    
+    filterTimeout = setTimeout(() => {
+        applyFilters();
+    }, 400); // Debounce de 400ms
 }
 
 // Función para aplicar filtros
@@ -90,62 +130,50 @@ function isPriceInRange(priceString, min, max) {
     return price >= min && price <= max;
 }
 
-// Función para limpiar filtros
-function clearFilters() {
-    const brandCheckboxes = document.querySelectorAll('input[data-filter="brand"]');
-    brandCheckboxes.forEach(checkbox => checkbox.checked = false);
-    
-    const minPriceInput = document.querySelector('.min-price');
-    const maxPriceInput = document.querySelector('.max-price');
-    if (minPriceInput) minPriceInput.value = 0;
-    if (maxPriceInput) maxPriceInput.value = 169;
-    
-    const slider = document.querySelector('.slider');
-    if (slider) slider.value = 100;
-    
-    filteredProducts = [...allProducts];
-    loadProducts(filteredProducts);
-}
-
-// Función para configurar los filtros
+// Función para configurar los filtros automáticos
 function setupFilterSystem() {
-    const applyFiltersBtn = document.getElementById('applyFilters');
-    const clearFiltersBtn = document.getElementById('clearFilters');
+    // Event listeners para checkboxes de marcas
+    const brandCheckboxes = document.querySelectorAll('input[data-filter="brand"]');
+    brandCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', applyFiltersWithDebounce);
+    });
     
-    if (applyFiltersBtn) {
-        applyFiltersBtn.addEventListener('click', applyFilters);
-    }
-    
-    if (clearFiltersBtn) {
-        clearFiltersBtn.addEventListener('click', clearFilters);
-    }
-    
+    // Event listeners para inputs de precio
     const minPriceInput = document.querySelector('.min-price');
     const maxPriceInput = document.querySelector('.max-price');
     const slider = document.querySelector('.slider');
     
-    if (minPriceInput && maxPriceInput && slider) {
+    if (minPriceInput) {
         minPriceInput.addEventListener('input', function() {
             const value = parseFloat(this.value) || 0;
             const maxValue = parseFloat(maxPriceInput.value) || 169;
             if (value > maxValue) {
                 this.value = maxValue;
             }
+            applyFiltersWithDebounce();
         });
-        
+    }
+    
+    if (maxPriceInput) {
         maxPriceInput.addEventListener('input', function() {
             const value = parseFloat(this.value) || 169;
             const minValue = parseFloat(minPriceInput.value) || 0;
             if (value < minValue) {
                 this.value = minValue;
             }
+            applyFiltersWithDebounce();
         });
-        
+    }
+    
+    if (slider) {
         slider.addEventListener('input', function() {
             const percentage = this.value;
             const maxPrice = 169;
             const calculatedMax = Math.round((percentage / 100) * maxPrice);
-            maxPriceInput.value = calculatedMax;
+            if (maxPriceInput) {
+                maxPriceInput.value = calculatedMax;
+            }
+            applyFiltersWithDebounce();
         });
     }
 }
