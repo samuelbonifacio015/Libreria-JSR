@@ -43,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('footer-placeholder').innerHTML = data;
         })
         .catch(error => console.error('Error cargando footer:', error));
+
+    // Cargar modal de vista rápida
+    loadModal();
 });
 
 // Función para cargar el carrito (HTML, CSS y JS)
@@ -122,6 +125,40 @@ function loadJS(src) {
         };
         document.head.appendChild(script);
     });
+}
+
+// Función para cargar el modal de vista rápida
+function loadModal() {
+    return Promise.all([
+        // Cargar HTML del modal
+        fetch('/partials/modal.html').then(response => response.text()),
+        // Cargar CSS del modal
+        fetch('/partials/modal.css').then(response => response.text())
+    ]).then(([modalHtml, modalCss]) => {
+        // Insertar HTML del modal en el body
+        const modalContainer = document.createElement('div');
+        modalContainer.innerHTML = modalHtml;
+        document.body.appendChild(modalContainer);
+
+        // Insertar CSS del modal
+        const modalStyle = document.createElement('style');
+        modalStyle.textContent = modalCss;
+        document.head.appendChild(modalStyle);
+
+        // Cargar y ejecutar JavaScript del modal
+        return fetch('/partials/modal.js')
+            .then(response => response.text())
+            .then(modalJs => {
+                const script = document.createElement('script');
+                script.textContent = modalJs;
+                document.head.appendChild(script);
+                
+                // Inicializar funcionalidad del modal
+                if (window.setupQuickView) {
+                    window.setupQuickView();
+                }
+            });
+    }).catch(error => console.error('Error cargando modal:', error));
 }
 
 // Función para inicializar la funcionalidad del navbar
