@@ -40,28 +40,28 @@
         <div class="filter-group">
           <h3>Marca <i class="fa-solid fa-angle-down"></i></h3>
           <ul>
-            <label><input type="checkbox" />ARTESCO</label>
-            <label><input type="checkbox" />ARTI CREATIVO</label>
-            <label><input type="checkbox" />CASIO</label>
-            <label><input type="checkbox" />CATRICE</label>
-            <label><input type="checkbox" />EDICIONES OBELISCO</label>
-            <label><input type="checkbox" />FABER-CASTELL</label>
-            <label><input type="checkbox" />LOGITECH</label>
-            <label><input type="checkbox" />MARVEL</label>
-            <label><input type="checkbox" />MILAN</label>
-            <label><input type="checkbox" />PIGMA-MICRON</label>
-            <label><input type="checkbox" />SONY</label>
-            <label><input type="checkbox" />STICK'N-NOTES</label>
-            <label><input type="checkbox" />VINIFAN</label>
-            <label><input type="checkbox" />XIAOMI</label>
+            <label><input type="checkbox" data-filter="brand" value="ARTESCO" />ARTESCO</label>
+            <label><input type="checkbox" data-filter="brand" value="ARTI CREATIVO" />ARTI CREATIVO</label>
+            <label><input type="checkbox" data-filter="brand" value="CASIO" />CASIO</label>
+            <label><input type="checkbox" data-filter="brand" value="CATRICE" />CATRICE</label>
+            <label><input type="checkbox" data-filter="brand" value="EDICIONES OBELISCO" />EDICIONES OBELISCO</label>
+            <label><input type="checkbox" data-filter="brand" value="FABER-CASTELL" />FABER-CASTELL</label>
+            <label><input type="checkbox" data-filter="brand" value="LOGITECH" />LOGITECH</label>
+            <label><input type="checkbox" data-filter="brand" value="MARVEL" />MARVEL</label>
+            <label><input type="checkbox" data-filter="brand" value="MILAN" />MILAN</label>
+            <label><input type="checkbox" data-filter="brand" value="PIGMA-MICRON" />PIGMA-MICRON</label>
+            <label><input type="checkbox" data-filter="brand" value="SONY" />SONY</label>
+            <label><input type="checkbox" data-filter="brand" value="STICK'N-NOTES" />STICK'N-NOTES</label>
+            <label><input type="checkbox" data-filter="brand" value="VINIFAN" />VINIFAN</label>
+            <label><input type="checkbox" data-filter="brand" value="XIAOMI" />XIAOMI</label>
           </ul>
 
           <h3>Precio <i class="fa-solid fa-angle-down"></i></h3>
           <div class="price-filter">
             <div class="price-range">
               <div class="price-values">
-                <input type="number" class="min-prince" min="0" max="169" value="0">
-                <input type="number" class="max-prince" min="0" max="169" value="169">
+                <input type="number" class="min-price" min="0" max="169" value="0">
+                <input type="number" class="max-price" min="0" max="169" value="169">
               </div>
               <div class="slider-container">
                 <input type="range" class="slider" min="0" max="100" value="100">
@@ -69,7 +69,11 @@
             </div>
           </div>
         </div>
-
+        
+        <div class="filter-actions">
+          <button id="applyFilters" class="apply-filters-btn">Aplicar Filtros</button>
+          <button id="clearFilters" class="clear-filters-btn">Limpiar Filtros</button>
+        </div>
       </aside>
       <!--catalogo aside end-->
 
