@@ -36,6 +36,22 @@ function loadProducts(products = null) {
     
     updateProductsCount(productsToShow.length);
     setupEventListeners();
+    
+    // Aplicar estilos de vista después de cargar productos
+    setTimeout(() => {
+        applyViewStyles(currentView);
+        // Limpiar transiciones después de un tiempo
+        setTimeout(() => {
+            const productsGrid = document.querySelector('.products-grid');
+            const productCards = productsGrid?.querySelectorAll('.product-card');
+            if (productsGrid) productsGrid.style.removeProperty('transition');
+            if (productCards) {
+                productCards.forEach(card => {
+                    card.style.removeProperty('transition');
+                });
+            }
+        }, 350);
+    }, 100);
 }
 
 // Función para mostrar estado de carga
@@ -286,6 +302,36 @@ function changeView(view) {
         if (listButton) listButton.classList.remove('active');
     }
     
+    // Aplicar estilos dinámicos según la vista
+    applyViewStyles(view);
+    
+    // Verificar que los estilos se aplicaron correctamente
+    setTimeout(() => {
+        if (!validateViewStyles(view)) {
+            console.log('Reaplicando estilos para vista:', view);
+            applyViewStyles(view);
+            
+            // Si aún no funciona, forzar la aplicación
+            setTimeout(() => {
+                if (!validateViewStyles(view)) {
+                    forceApplyViewStyles(view);
+                }
+            }, 200);
+        }
+    }, 100);
+    
+    // Limpiar transiciones después de un tiempo
+    setTimeout(() => {
+        const productsGrid = document.querySelector('.products-grid');
+        const productCards = productsGrid?.querySelectorAll('.product-card');
+        if (productsGrid) productsGrid.style.removeProperty('transition');
+        if (productCards) {
+            productCards.forEach(card => {
+                card.style.removeProperty('transition');
+            });
+        }
+    }, 350);
+    
     // Guardar preferencia en localStorage
     localStorage.setItem('productView', view);
 }
@@ -360,6 +406,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 allProducts = data;
                 filteredProducts = [...data];
                 loadProducts();
+                
+                // Aplicar estilos después de cargar productos
+                setTimeout(() => {
+                    if (currentView === 'list') {
+                        applyListResponsiveStyles();
+                    } else {
+                        restoreGridResponsiveStyles();
+                    }
+                }, 500);
             })
             .catch(error => console.error('Error', error));
     } else {
@@ -652,6 +707,20 @@ window.setupProductControls = function() {
             productsGrid.classList.add('grid-view');
         }
     }
+    
+    // Aplicar estilos iniciales
+    setTimeout(() => {
+        applyViewStyles(currentView);
+        // Aplicar estilos responsive iniciales
+        if (currentView === 'list') {
+            applyListResponsiveStyles();
+        } else {
+            restoreGridResponsiveStyles();
+        }
+    }, 200);
+    
+    // Event listener para cambios de tamaño de ventana
+    window.addEventListener('resize', handleResize);
 };
 
 function handleAddToCart(e) {
@@ -777,4 +846,446 @@ function handleQuickView(e) {
             quickViewModal.style.display = 'flex';
         }
     }
+}
+
+// Función para aplicar estilos dinámicos según la vista
+function applyViewStyles(view) {
+    const productsGrid = document.querySelector('.products-grid');
+    if (!productsGrid) return;
+    
+    // Agregar transición suave
+    productsGrid.style.setProperty('transition', 'all 0.3s ease', 'important');
+    
+    // Remover estilos dinámicos anteriores
+    productsGrid.style.removeProperty('grid-template-columns');
+    productsGrid.style.removeProperty('gap');
+    productsGrid.style.removeProperty('max-width');
+    
+    const productCards = productsGrid.querySelectorAll('.product-card');
+    
+    if (view === 'list') {
+        // Estilos para vista de lista (columna)
+        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+        productsGrid.style.setProperty('gap', '20px', 'important');
+        productsGrid.style.setProperty('max-width', '100%', 'important');
+        
+        // Aplicar estilos a las tarjetas de producto para vista de lista
+        productCards.forEach(card => {
+            card.style.setProperty('transition', 'all 0.3s ease', 'important');
+            card.style.setProperty('display', 'flex', 'important');
+            card.style.setProperty('flex-direction', 'row', 'important');
+            card.style.setProperty('align-items', 'center', 'important');
+            card.style.setProperty('text-align', 'left', 'important');
+            card.style.setProperty('min-height', 'auto', 'important');
+            card.style.setProperty('padding', '20px', 'important');
+            card.style.setProperty('gap', '20px', 'important');
+            
+            // Estilos para la imagen en vista de lista
+            const img = card.querySelector('img');
+            if (img) {
+                img.style.setProperty('width', '150px', 'important');
+                img.style.setProperty('height', '150px', 'important');
+                img.style.setProperty('margin-bottom', '0', 'important');
+                img.style.setProperty('flex-shrink', '0', 'important');
+                img.style.setProperty('object-fit', 'contain', 'important');
+            }
+            
+            // Estilos para el contenido en vista de lista
+            const productInfo = card.querySelector('.product-info');
+            if (productInfo) {
+                productInfo.style.setProperty('flex', '1', 'important');
+                productInfo.style.setProperty('display', 'flex', 'important');
+                productInfo.style.setProperty('flex-direction', 'column', 'important');
+                productInfo.style.setProperty('gap', '10px', 'important');
+                productInfo.style.setProperty('justify-content', 'center', 'important');
+            }
+            
+            // Estilos para los botones en vista de lista
+            const productActions = card.querySelector('.product-actions');
+            if (productActions) {
+                productActions.style.setProperty('display', 'flex', 'important');
+                productActions.style.setProperty('flex-direction', 'column', 'important');
+                productActions.style.setProperty('gap', '10px', 'important');
+                productActions.style.setProperty('min-width', '150px', 'important');
+                productActions.style.setProperty('flex-shrink', '0', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
+            }
+            
+            // Estilos para los botones individuales
+            const addToCartBtn = card.querySelector('.add-to-cart');
+            const quickViewBtn = card.querySelector('.quick-view');
+            
+            if (addToCartBtn) {
+                addToCartBtn.style.setProperty('padding', '12px 20px', 'important');
+                addToCartBtn.style.setProperty('font-size', '14px', 'important');
+                addToCartBtn.style.setProperty('font-weight', '600', 'important');
+                addToCartBtn.style.setProperty('border-radius', '6px', 'important');
+            }
+            
+            if (quickViewBtn) {
+                quickViewBtn.style.setProperty('padding', '12px 20px', 'important');
+                quickViewBtn.style.setProperty('font-size', '14px', 'important');
+                quickViewBtn.style.setProperty('font-weight', '600', 'important');
+                quickViewBtn.style.setProperty('border-radius', '6px', 'important');
+            }
+            
+            // Estilos para elementos individuales en vista de lista
+            const brand = card.querySelector('.brand');
+            const productName = card.querySelector('.product-name');
+            const reviews = card.querySelector('.reviews');
+            const price = card.querySelector('.price');
+            const availability = card.querySelector('.availability');
+            
+            if (brand) {
+                brand.style.setProperty('font-size', '14px', 'important');
+                brand.style.setProperty('font-weight', '600', 'important');
+                brand.style.setProperty('color', '#666', 'important');
+            }
+            if (productName) {
+                productName.style.setProperty('font-size', '16px', 'important');
+                productName.style.setProperty('font-weight', '600', 'important');
+                productName.style.setProperty('line-height', '1.3', 'important');
+            }
+            if (reviews) {
+                reviews.style.setProperty('justify-content', 'flex-start', 'important');
+                reviews.style.setProperty('margin', '8px 0', 'important');
+            }
+            if (price) {
+                price.style.setProperty('margin', '10px 0', 'important');
+                price.style.setProperty('display', 'flex', 'important');
+                price.style.setProperty('flex-direction', 'column', 'important');
+                price.style.setProperty('gap', '5px', 'important');
+            }
+            if (availability) {
+                availability.style.setProperty('justify-content', 'flex-start', 'important');
+                availability.style.setProperty('margin', '8px 0', 'important');
+            }
+        });
+        
+        // Estilos responsive para vista de lista
+        applyListResponsiveStyles();
+        
+    } else {
+        // Restaurar estilos originales para vista de cuadrícula
+        productsGrid.style.setProperty('grid-template-columns', 'repeat(auto-fill, minmax(230px, 1fr))', 'important');
+        productsGrid.style.removeProperty('gap');
+        productsGrid.style.removeProperty('max-width');
+        
+        // Restaurar estilos originales de las tarjetas
+        productCards.forEach(card => {
+            card.style.setProperty('transition', 'all 0.3s ease', 'important');
+            card.style.removeProperty('display');
+            card.style.removeProperty('flex-direction');
+            card.style.removeProperty('align-items');
+            card.style.removeProperty('text-align');
+            card.style.removeProperty('min-height');
+            card.style.removeProperty('padding');
+            card.style.removeProperty('gap');
+            
+            // Restaurar imagen
+            const img = card.querySelector('img');
+            if (img) {
+                img.style.removeProperty('width');
+                img.style.removeProperty('height');
+                img.style.removeProperty('margin-bottom');
+                img.style.removeProperty('flex-shrink');
+                img.style.removeProperty('object-fit');
+            }
+            
+            // Restaurar product-info
+            const productInfo = card.querySelector('.product-info');
+            if (productInfo) {
+                productInfo.style.removeProperty('flex');
+                productInfo.style.removeProperty('display');
+                productInfo.style.removeProperty('flex-direction');
+                productInfo.style.removeProperty('gap');
+                productInfo.style.removeProperty('justify-content');
+            }
+            
+            // Restaurar product-actions
+            const productActions = card.querySelector('.product-actions');
+            if (productActions) {
+                productActions.style.removeProperty('display');
+                productActions.style.removeProperty('flex-direction');
+                productActions.style.removeProperty('gap');
+                productActions.style.removeProperty('min-width');
+                productActions.style.removeProperty('flex-shrink');
+                productActions.style.removeProperty('justify-content');
+            }
+            
+            // Restaurar elementos individuales
+            const brand = card.querySelector('.brand');
+            const productName = card.querySelector('.product-name');
+            const reviews = card.querySelector('.reviews');
+            const price = card.querySelector('.price');
+            const availability = card.querySelector('.availability');
+            
+            if (brand) brand.style.removeProperty('font-size');
+            if (productName) productName.style.removeProperty('font-size');
+            if (reviews) reviews.style.removeProperty('justify-content');
+            if (price) price.style.removeProperty('margin');
+            if (availability) availability.style.removeProperty('justify-content');
+        });
+        
+        // Restaurar estilos responsive originales
+        restoreGridResponsiveStyles();
+    }
+}
+
+// Función para aplicar estilos responsive en vista de lista
+function applyListResponsiveStyles() {
+    const productsGrid = document.querySelector('.products-grid');
+    const productCards = productsGrid?.querySelectorAll('.product-card');
+    
+    if (!productsGrid || !productCards) return;
+    
+    if (window.innerWidth <= 768) {
+        // Estilos para móviles en vista de lista
+        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+        productsGrid.style.setProperty('gap', '15px', 'important');
+        
+        productCards.forEach(card => {
+            card.style.setProperty('flex-direction', 'column', 'important');
+            card.style.setProperty('text-align', 'center', 'important');
+            card.style.setProperty('padding', '15px', 'important');
+            card.style.setProperty('gap', '15px', 'important');
+            
+            const img = card.querySelector('img');
+            if (img) {
+                img.style.setProperty('width', '120px', 'important');
+                img.style.setProperty('height', '120px', 'important');
+            }
+            
+            const productInfo = card.querySelector('.product-info');
+            if (productInfo) {
+                productInfo.style.setProperty('justify-content', 'center', 'important');
+            }
+            
+            const productActions = card.querySelector('.product-actions');
+            if (productActions) {
+                productActions.style.setProperty('flex-direction', 'row', 'important');
+                productActions.style.setProperty('min-width', 'auto', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
+            }
+        });
+    } else if (window.innerWidth <= 1024) {
+        // Estilos para tablets en vista de lista
+        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+        productsGrid.style.setProperty('gap', '20px', 'important');
+        
+        productCards.forEach(card => {
+            card.style.setProperty('flex-direction', 'row', 'important');
+            card.style.setProperty('text-align', 'left', 'important');
+            card.style.setProperty('padding', '20px', 'important');
+            card.style.setProperty('gap', '20px', 'important');
+            
+            const img = card.querySelector('img');
+            if (img) {
+                img.style.setProperty('width', '150px', 'important');
+                img.style.setProperty('height', '150px', 'important');
+            }
+            
+            const productInfo = card.querySelector('.product-info');
+            if (productInfo) {
+                productInfo.style.setProperty('justify-content', 'center', 'important');
+            }
+            
+            const productActions = card.querySelector('.product-actions');
+            if (productActions) {
+                productActions.style.setProperty('flex-direction', 'column', 'important');
+                productActions.style.setProperty('min-width', '150px', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
+            }
+        });
+    } else {
+        // Estilos para desktop en vista de lista
+        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+        productsGrid.style.setProperty('gap', '20px', 'important');
+        
+        productCards.forEach(card => {
+            card.style.setProperty('flex-direction', 'row', 'important');
+            card.style.setProperty('text-align', 'left', 'important');
+            card.style.setProperty('padding', '20px', 'important');
+            card.style.setProperty('gap', '20px', 'important');
+            
+            const img = card.querySelector('img');
+            if (img) {
+                img.style.setProperty('width', '150px', 'important');
+                img.style.setProperty('height', '150px', 'important');
+            }
+            
+            const productInfo = card.querySelector('.product-info');
+            if (productInfo) {
+                productInfo.style.setProperty('justify-content', 'center', 'important');
+            }
+            
+            const productActions = card.querySelector('.product-actions');
+            if (productActions) {
+                productActions.style.setProperty('flex-direction', 'column', 'important');
+                productActions.style.setProperty('min-width', '150px', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
+            }
+        });
+    }
+}
+
+// Función para restaurar estilos responsive originales
+function restoreGridResponsiveStyles() {
+    const productsGrid = document.querySelector('.products-grid');
+    if (!productsGrid) return;
+    
+    // Restaurar estilos originales del grid según el tamaño de pantalla
+    if (window.innerWidth <= 768) {
+        productsGrid.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
+        productsGrid.style.removeProperty('gap');
+    } else if (window.innerWidth <= 1024) {
+        productsGrid.style.setProperty('grid-template-columns', 'repeat(3, 1fr)', 'important');
+        productsGrid.style.removeProperty('gap');
+    } else {
+        productsGrid.style.setProperty('grid-template-columns', 'repeat(auto-fill, minmax(230px, 1fr))', 'important');
+        productsGrid.style.removeProperty('gap');
+    }
+    
+    // Restaurar estilos originales de las tarjetas
+    const productCards = productsGrid.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        // Remover todos los estilos dinámicos aplicados
+        card.style.removeProperty('display');
+        card.style.removeProperty('flex-direction');
+        card.style.removeProperty('align-items');
+        card.style.removeProperty('text-align');
+        card.style.removeProperty('min-height');
+        card.style.removeProperty('padding');
+        card.style.removeProperty('gap');
+        card.style.removeProperty('transition');
+        
+        // Restaurar imagen
+        const img = card.querySelector('img');
+        if (img) {
+            img.style.removeProperty('width');
+            img.style.removeProperty('height');
+            img.style.removeProperty('margin-bottom');
+            img.style.removeProperty('flex-shrink');
+            img.style.removeProperty('object-fit');
+        }
+        
+        // Restaurar product-info
+        const productInfo = card.querySelector('.product-info');
+        if (productInfo) {
+            productInfo.style.removeProperty('flex');
+            productInfo.style.removeProperty('display');
+            productInfo.style.removeProperty('flex-direction');
+            productInfo.style.removeProperty('gap');
+            productInfo.style.removeProperty('justify-content');
+        }
+        
+        // Restaurar product-actions
+        const productActions = card.querySelector('.product-actions');
+        if (productActions) {
+            productActions.style.removeProperty('display');
+            productActions.style.removeProperty('flex-direction');
+            productActions.style.removeProperty('gap');
+            productActions.style.removeProperty('min-width');
+            productActions.style.removeProperty('flex-shrink');
+            productActions.style.removeProperty('justify-content');
+        }
+        
+        // Restaurar elementos individuales
+        const brand = card.querySelector('.brand');
+        const productName = card.querySelector('.product-name');
+        const reviews = card.querySelector('.reviews');
+        const price = card.querySelector('.price');
+        const availability = card.querySelector('.availability');
+        const addToCartBtn = card.querySelector('.add-to-cart');
+        const quickViewBtn = card.querySelector('.quick-view');
+        
+        if (brand) {
+            brand.style.removeProperty('font-size');
+            brand.style.removeProperty('font-weight');
+            brand.style.removeProperty('color');
+        }
+        if (productName) {
+            productName.style.removeProperty('font-size');
+            productName.style.removeProperty('font-weight');
+            productName.style.removeProperty('line-height');
+        }
+        if (reviews) {
+            reviews.style.removeProperty('justify-content');
+            reviews.style.removeProperty('margin');
+        }
+        if (price) {
+            price.style.removeProperty('margin');
+            price.style.removeProperty('display');
+            price.style.removeProperty('flex-direction');
+            price.style.removeProperty('gap');
+        }
+        if (availability) {
+            availability.style.removeProperty('justify-content');
+            availability.style.removeProperty('margin');
+        }
+        if (addToCartBtn) {
+            addToCartBtn.style.removeProperty('padding');
+            addToCartBtn.style.removeProperty('font-size');
+            addToCartBtn.style.removeProperty('font-weight');
+            addToCartBtn.style.removeProperty('border-radius');
+        }
+        if (quickViewBtn) {
+            quickViewBtn.style.removeProperty('padding');
+            quickViewBtn.style.removeProperty('font-size');
+            quickViewBtn.style.removeProperty('font-weight');
+            quickViewBtn.style.removeProperty('border-radius');
+        }
+    });
+}
+
+// Función para manejar cambios de tamaño de ventana
+function handleResize() {
+    // Debounce para evitar múltiples llamadas
+    if (window.resizeTimeout) {
+        clearTimeout(window.resizeTimeout);
+    }
+    
+    window.resizeTimeout = setTimeout(() => {
+        if (currentView === 'list') {
+            applyListResponsiveStyles();
+        } else {
+            restoreGridResponsiveStyles();
+        }
+    }, 100);
+}
+
+// Función para verificar si los estilos se aplicaron correctamente
+function validateViewStyles(view) {
+    const productsGrid = document.querySelector('.products-grid');
+    if (!productsGrid) return false;
+    
+    if (view === 'list') {
+        const computedStyle = window.getComputedStyle(productsGrid);
+        return computedStyle.gridTemplateColumns === '1fr';
+    } else {
+        const computedStyle = window.getComputedStyle(productsGrid);
+        return computedStyle.gridTemplateColumns.includes('repeat');
+    }
+}
+
+// Función para forzar la aplicación de estilos si fallan
+function forceApplyViewStyles(view) {
+    console.log('Forzando aplicación de estilos para vista:', view);
+    
+    const productsGrid = document.querySelector('.products-grid');
+    if (!productsGrid) return;
+    
+    // Remover todas las clases y estilos
+    productsGrid.className = 'products-grid';
+    productsGrid.removeAttribute('style');
+    
+    // Aplicar estilos desde cero
+    setTimeout(() => {
+        applyViewStyles(view);
+        if (view === 'list') {
+            applyListResponsiveStyles();
+        } else {
+            restoreGridResponsiveStyles();
+        }
+    }, 50);
 }
