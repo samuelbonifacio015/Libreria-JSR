@@ -866,7 +866,6 @@ function applyViewStyles(view) {
     if (view === 'list') {
         // Estilos para vista de lista (columna)
         productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
-        productsGrid.style.setProperty('gap', '20px', 'important');
         productsGrid.style.setProperty('max-width', '100%', 'important');
         
         // Aplicar estilos a las tarjetas de producto para vista de lista
@@ -878,7 +877,6 @@ function applyViewStyles(view) {
             card.style.setProperty('text-align', 'left', 'important');
             card.style.setProperty('min-height', 'auto', 'important');
             card.style.setProperty('padding', '20px', 'important');
-            card.style.setProperty('gap', '20px', 'important');
             
             // Estilos para la imagen en vista de lista
             const img = card.querySelector('img');
@@ -896,7 +894,6 @@ function applyViewStyles(view) {
                 productInfo.style.setProperty('flex', '1', 'important');
                 productInfo.style.setProperty('display', 'flex', 'important');
                 productInfo.style.setProperty('flex-direction', 'column', 'important');
-                productInfo.style.setProperty('gap', '10px', 'important');
                 productInfo.style.setProperty('justify-content', 'center', 'important');
             }
             
@@ -1042,7 +1039,7 @@ function applyListResponsiveStyles() {
     if (window.innerWidth <= 768) {
         // Estilos para móviles en vista de lista
         productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
-        productsGrid.style.setProperty('gap', '15px', 'important');
+        productsGrid.style.removeProperty('gap');
         
         productCards.forEach(card => {
             card.style.setProperty('flex-direction', 'column', 'important');
@@ -1071,7 +1068,7 @@ function applyListResponsiveStyles() {
     } else if (window.innerWidth <= 1024) {
         // Estilos para tablets en vista de lista
         productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
-        productsGrid.style.setProperty('gap', '20px', 'important');
+        productsGrid.style.removeProperty('gap');
         
         productCards.forEach(card => {
             card.style.setProperty('flex-direction', 'row', 'important');
@@ -1100,7 +1097,7 @@ function applyListResponsiveStyles() {
     } else {
         // Estilos para desktop en vista de lista
         productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
-        productsGrid.style.setProperty('gap', '20px', 'important');
+        productsGrid.style.removeProperty('gap');
         
         productCards.forEach(card => {
             card.style.setProperty('flex-direction', 'row', 'important');
