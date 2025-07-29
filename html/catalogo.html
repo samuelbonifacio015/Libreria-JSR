@@ -80,19 +80,25 @@
           <div class="products-controls">
             <div class="sort-control">
               <label>Ordenar por: </label>
-              <select>
-                <option>Más vendidos</option>
-                <option>Precio: menor a mayor</option>
-                <option>Precio: mayor a menor</option>
-                <option>Nombre: A-Z</option>
-                <option>Nombre: Z-A</option>
+              <select id="sortSelect">
+                <option value="popular">Más vendidos</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+                <option value="name-asc">Nombre: A-Z</option>
+                <option value="name-desc">Nombre: Z-A</option>
+                <option value="newest">Más recientes</option>
+                <option value="rating">Mejor valorados</option>
               </select>
             </div>
 
             <div class="view-control">
               <span>Ver</span>
-              <button class="grid-view active"><i class="fa-solid fa-grip"></i></button>
-              <button class="list-view"><i class="fa-solid fa-list"></i></button>
+              <button class="grid-view active" data-view="grid" aria-label="Vista en cuadrícula">
+                <i class="fa-solid fa-grip"></i>
+              </button>
+              <button class="list-view" data-view="list" aria-label="Vista en lista">
+                <i class="fa-solid fa-list"></i>
+              </button>
             </div>
 
           </div>

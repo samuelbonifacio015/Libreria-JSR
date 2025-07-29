@@ -292,6 +292,8 @@ body {
   display: flex;
   align-items: center;
   gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .sort-control {
@@ -299,6 +301,12 @@ body {
   align-items: center;
   gap: var(--spacing-sm);
   font-size: var(--font-sm);
+  color: var(--text-dark);
+}
+
+.sort-control label {
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .sort-control select {
@@ -306,6 +314,21 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   background-color: var(--bg-white);
+  font-size: var(--font-sm);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  min-width: 180px;
+}
+
+.sort-control select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.sort-control select:hover {
+  border-color: var(--primary-color);
 }
 
 .view-control {
@@ -315,17 +338,93 @@ body {
   font-size: var(--font-sm);
 }
 
+.view-control span {
+  font-weight: 500;
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
 .view-control button {
   background: none;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-sm);
   padding: var(--spacing-xs) var(--spacing-sm);
   cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 36px;
+}
+
+.view-control button:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(0, 123, 255, 0.05);
 }
 
 .view-control button.active {
   background-color: var(--primary-color);
   color: var(--text-white);
+  border-color: var(--primary-color);
+}
+
+.view-control button.active:hover {
+  background-color: var(--primary-color-dark);
+  border-color: var(--primary-color-dark);
+}
+
+.view-control button i {
+  font-size: 14px;
+}
+
+/* Estilos para mejorar la accesibilidad */
+.sort-control select:focus,
+.view-control button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Animación suave para cambios de vista */
+.products-grid {
+  transition: all 0.3s ease;
+}
+
+/* Estilos para estado de carga */
+.products-grid.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.products-grid.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .view-control button {
+    min-width: 44px;
+    height: 44px;
+  }
+  
+  .sort-control select {
+    min-height: 44px;
+  }
 }
 
 /*-----------------------------------*\
@@ -337,6 +436,58 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   justify-content: center;
   padding: var(--spacing-xs);
+  gap: var(--spacing-md);
+  transition: all var(--transition-normal);
+}
+
+.products-grid.list-view {
+  grid-template-columns: 1fr;
+  gap: var(--spacing-sm);
+}
+
+.products-grid.list-view .product-card {
+  flex-direction: row;
+  min-height: auto;
+  padding: var(--spacing-md);
+  text-align: left;
+  align-items: center;
+}
+
+.products-grid.list-view .product-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.products-grid.list-view .product-card .product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.products-grid.list-view .product-card .product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: flex-end;
+  margin-left: var(--spacing-md);
+}
+
+.products-grid.list-view .product-card .brand,
+.products-grid.list-view .product-card .product-name,
+.products-grid.list-view .product-card .reviews,
+.products-grid.list-view .product-card .price,
+.products-grid.list-view .product-card .availability {
+  margin: 0;
+}
+
+.products-grid.list-view .product-card .discount {
+  position: static;
+  display: inline-block;
+  margin-bottom: var(--spacing-xs);
 }
 
 .product-card {
@@ -1062,6 +1213,14 @@ body {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  
+  .products-controls {
+    gap: var(--spacing-md);
+  }
+  
+  .sort-control select {
+    min-width: 160px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1086,7 +1245,23 @@ body {
   }
 
   .products-controls {
+    flex-direction: column;
     gap: 10px;
+    width: 100%;
+  }
+
+  .sort-control {
+    width: 100%;
+  }
+
+  .sort-control select {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .view-control {
+    justify-content: center;
+    width: 100%;
   }
 
   .catalogo-filter {
@@ -1097,6 +1272,29 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .products-grid.list-view {
+    grid-template-columns: 1fr;
+  }
+
+  .products-grid.list-view .product-card {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--spacing-sm);
+  }
+
+  .products-grid.list-view .product-card img {
+    width: 100px;
+    height: 100px;
+    margin-right: 0;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .products-grid.list-view .product-card .product-actions {
+    align-items: center;
+    margin-left: 0;
+    margin-top: var(--spacing-sm);
+  }
+
   .product-card {
     min-height: 350px;
     width: 100%;
@@ -1104,10 +1302,12 @@ body {
     box-shadow: var(--shadow-sm);
     transition: box-shadow var(--transition-normal);
   }
+  
   .product-card img {
     height: 150px;
     object-fit: cover;
   }
+  
   .product-card .brand {
     font-weight: bold;
   }

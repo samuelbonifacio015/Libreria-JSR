@@ -2,6 +2,8 @@
 let allProducts = [];
 let filteredProducts = [];
 let filterTimeout = null;
+let currentView = 'grid';
+let currentSort = 'popular';
 
 // Función para cargar y mostrar productos con efectos de transición
 function loadProducts(products = null) {
@@ -9,6 +11,9 @@ function loadProducts(products = null) {
     if (!productsContainer) return;
     
     const productsToShow = products || allProducts;
+    
+    // Mostrar indicador de carga
+    showLoadingState();
     
     // Efecto de fade out para productos existentes
     const existingCards = productsContainer.querySelectorAll('.product-card');
@@ -21,14 +26,34 @@ function loadProducts(products = null) {
         setTimeout(() => {
             productsContainer.innerHTML = '';
             renderProducts(productsToShow, productsContainer);
+            hideLoadingState();
         }, 300);
     } else {
         // Si no hay productos existentes, renderizar directamente
         renderProducts(productsToShow, productsContainer);
+        hideLoadingState();
     }
     
     updateProductsCount(productsToShow.length);
     setupEventListeners();
+}
+
+// Función para mostrar estado de carga
+function showLoadingState() {
+    const productsContainer = document.querySelector('.products-grid');
+    if (productsContainer) {
+        productsContainer.style.opacity = '0.6';
+        productsContainer.style.pointerEvents = 'none';
+    }
+}
+
+// Función para ocultar estado de carga
+function hideLoadingState() {
+    const productsContainer = document.querySelector('.products-grid');
+    if (productsContainer) {
+        productsContainer.style.opacity = '1';
+        productsContainer.style.pointerEvents = 'auto';
+    }
 }
 
 // Función para renderizar productos con efecto de fade in
@@ -37,29 +62,62 @@ function renderProducts(products, container) {
         const isAvailable = product.availability.toLowerCase().includes('disponible');
         const availabilityClass = isAvailable ? '' : 'out-of-stock';
         
-        const productCard = `
-        <div class="product-card fade-out">
-            <span class="discount">${product.discount}</span>
-            <img src="${product.img}" alt="${product.alt}" />
-            <div class="brand">${product.brand}</div>
-            <div class="product-name">${product.productName}</div>
-            <div class="reviews">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <span>${product.reviews}</span>
-            </div>
-            <p class="price">
-              <span class="original">${product.priceOriginal}</span>  
-              <span class="discounted">${product.priceDiscounted}</span>
-            </p>
-            <p class="availability ${availabilityClass}">${product.availability}</p>
-            <button class="add-to-cart">Añadir al carrito</button>
-            <button class="quick-view">Vista rápida</button>  
-        </div>  
-        `;
+        let productCard;
+        
+        if (currentView === 'list') {
+            productCard = `
+            <div class="product-card fade-out">
+                <span class="discount">${product.discount}</span>
+                <img src="${product.img}" alt="${product.alt}" />
+                <div class="product-info">
+                    <div class="brand">${product.brand}</div>
+                    <div class="product-name">${product.productName}</div>
+                    <div class="reviews">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <span>${product.reviews}</span>
+                    </div>
+                    <p class="price">
+                        <span class="original">${product.priceOriginal}</span>  
+                        <span class="discounted">${product.priceDiscounted}</span>
+                    </p>
+                    <p class="availability ${availabilityClass}">${product.availability}</p>
+                </div>
+                <div class="product-actions">
+                    <button class="add-to-cart">Añadir al carrito</button>
+                    <button class="quick-view">Vista rápida</button>
+                </div>
+            </div>  
+            `;
+        } else {
+            productCard = `
+            <div class="product-card fade-out">
+                <span class="discount">${product.discount}</span>
+                <img src="${product.img}" alt="${product.alt}" />
+                <div class="brand">${product.brand}</div>
+                <div class="product-name">${product.productName}</div>
+                <div class="reviews">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span>${product.reviews}</span>
+                </div>
+                <p class="price">
+                    <span class="original">${product.priceOriginal}</span>  
+                    <span class="discounted">${product.priceDiscounted}</span>
+                </p>
+                <p class="availability ${availabilityClass}">${product.availability}</p>
+                <button class="add-to-cart">Añadir al carrito</button>
+                <button class="quick-view">Vista rápida</button>  
+            </div>  
+            `;
+        }
+        
         container.innerHTML += productCard;
     });
     
@@ -104,6 +162,8 @@ function applyFilters() {
         return brandMatch && priceMatch;
     });
     
+    // Aplicar ordenamiento después del filtrado
+    sortProducts();
     loadProducts(filteredProducts);
 }
 
@@ -128,6 +188,116 @@ function getPriceRange() {
 function isPriceInRange(priceString, min, max) {
     const price = parseFloat(priceString.replace('S/. ', ''));
     return price >= min && price <= max;
+}
+
+// Función para ordenar productos
+function sortProducts() {
+    if (!filteredProducts.length) return;
+    
+    switch (currentSort) {
+        case 'popular':
+            // Ordenar por popularidad (simulado con reviews)
+            filteredProducts.sort((a, b) => {
+                const reviewsA = parseInt(a.reviews) || 0;
+                const reviewsB = parseInt(b.reviews) || 0;
+                return reviewsB - reviewsA;
+            });
+            break;
+            
+        case 'price-asc':
+            // Ordenar por precio de menor a mayor
+            filteredProducts.sort((a, b) => {
+                const priceA = parseFloat(a.priceDiscounted.replace('S/. ', ''));
+                const priceB = parseFloat(b.priceDiscounted.replace('S/. ', ''));
+                return priceA - priceB;
+            });
+            break;
+            
+        case 'price-desc':
+            // Ordenar por precio de mayor a menor
+            filteredProducts.sort((a, b) => {
+                const priceA = parseFloat(a.priceDiscounted.replace('S/. ', ''));
+                const priceB = parseFloat(b.priceDiscounted.replace('S/. ', ''));
+                return priceB - priceA;
+            });
+            break;
+            
+        case 'name-asc':
+            // Ordenar por nombre A-Z
+            filteredProducts.sort((a, b) => {
+                return a.productName.localeCompare(b.productName, 'es');
+            });
+            break;
+            
+        case 'name-desc':
+            // Ordenar por nombre Z-A
+            filteredProducts.sort((a, b) => {
+                return b.productName.localeCompare(a.productName, 'es');
+            });
+            break;
+            
+        case 'newest':
+            // Ordenar por más recientes (simulado con ID)
+            filteredProducts.sort((a, b) => {
+                const idA = parseInt(a.id) || 0;
+                const idB = parseInt(b.id) || 0;
+                return idB - idA;
+            });
+            break;
+            
+        case 'rating':
+            // Ordenar por mejor valorados (simulado con reviews)
+            filteredProducts.sort((a, b) => {
+                const ratingA = parseFloat(a.rating) || 4.5;
+                const ratingB = parseFloat(b.rating) || 4.5;
+                return ratingB - ratingA;
+            });
+            break;
+            
+        default:
+            // Ordenamiento por defecto (popular)
+            filteredProducts.sort((a, b) => {
+                const reviewsA = parseInt(a.reviews) || 0;
+                const reviewsB = parseInt(b.reviews) || 0;
+                return reviewsB - reviewsA;
+            });
+    }
+}
+
+// Función para cambiar vista de productos
+function changeView(view) {
+    currentView = view;
+    const productsGrid = document.querySelector('.products-grid');
+    const gridButton = document.querySelector('.grid-view');
+    const listButton = document.querySelector('.list-view');
+    
+    if (!productsGrid) return;
+    
+    // Actualizar clases CSS
+    if (view === 'list') {
+        productsGrid.classList.add('list-view');
+        productsGrid.classList.remove('grid-view');
+        if (listButton) listButton.classList.add('active');
+        if (gridButton) gridButton.classList.remove('active');
+    } else {
+        productsGrid.classList.remove('list-view');
+        productsGrid.classList.add('grid-view');
+        if (gridButton) gridButton.classList.add('active');
+        if (listButton) listButton.classList.remove('active');
+    }
+    
+    // Guardar preferencia en localStorage
+    localStorage.setItem('productView', view);
+}
+
+// Función para cambiar ordenamiento
+function changeSort(sortType) {
+    currentSort = sortType;
+    sortProducts();
+    loadProducts(filteredProducts);
+    
+    // Guardar preferencia en localStorage
+    localStorage.setItem('productSort', sortType);
 }
 
 // Función para configurar los filtros automáticos
@@ -203,6 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.setupFilters();
     window.setupFloatingCart();
     window.setupPagination();
+    window.setupProductControls();
     
     document.addEventListener('navbarLoaded', function() {
         console.log('Navbar cargado, inicializando carrito...');
@@ -428,6 +599,58 @@ window.setupPagination = function() {
                 });
             }
         });
+    }
+};
+
+window.setupProductControls = function() {
+    // Configurar controles de vista
+    const gridButton = document.querySelector('.grid-view');
+    const listButton = document.querySelector('.list-view');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    // Cargar preferencias guardadas
+    const savedView = localStorage.getItem('productView') || 'grid';
+    const savedSort = localStorage.getItem('productSort') || 'popular';
+    
+    // Aplicar vista guardada
+    changeView(savedView);
+    
+    // Aplicar ordenamiento guardado
+    if (sortSelect) {
+        sortSelect.value = savedSort;
+        currentSort = savedSort;
+    }
+    
+    // Event listeners para botones de vista
+    if (gridButton) {
+        gridButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            changeView('grid');
+        });
+    }
+    
+    if (listButton) {
+        listButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            changeView('list');
+        });
+    }
+    
+    // Event listener para selector de ordenamiento
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            changeSort(this.value);
+        });
+    }
+    
+    // Configurar vista inicial del grid
+    const productsGrid = document.querySelector('.products-grid');
+    if (productsGrid) {
+        if (currentView === 'list') {
+            productsGrid.classList.add('list-view');
+        } else {
+            productsGrid.classList.add('grid-view');
+        }
     }
 };
 
