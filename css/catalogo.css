@@ -179,6 +179,50 @@ body {
   transform: scale(1.1);
 }
 
+.filter-actions {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.apply-filters-btn,
+.clear-filters-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.apply-filters-btn {
+  background-color: var(--secondary-color);
+  color: var(--text-white);
+}
+
+.apply-filters-btn:hover {
+  background-color: var(--secondary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.clear-filters-btn {
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.clear-filters-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
 .price-filter {
   margin-top: var(--spacing-md);
   padding: 0 var(--spacing-sm) var(--spacing-md);
@@ -861,7 +905,6 @@ modal-close {
   font-size: 24px;
 }
 
-
 /*-----------------------------------*\
   #FLOATING CART
 \*-----------------------------------*/
@@ -1300,7 +1343,7 @@ modal-close {
     width: 100%;
   }
 
-  .products h2{
+  .products h2 {
     text-align: center;
   }
 
@@ -1312,10 +1355,14 @@ modal-close {
     gap: 10px;
   }
 
+  .products-controls {
+    gap: 10px;
+  }
+
   .catalogo-filter {
     display: none;
   }
-  
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1337,57 +1384,5 @@ modal-close {
 
   .whatsapp-message {
     display: none;
-  }
-}
-
-@media (max-width: 375px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .product-card {
-    min-height: 300px;
-    padding: 15px;
-  }
-  
-  .product-card img {
-    height: 120px;
-  }
-  
-  .modal-content {
-    flex-direction: column;
-    width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  
-  .modal-left, .modal-right {
-    width: 100%;
-  }
-  
-  .modal-right .actions {
-    flex-direction: column;
-  }
-  
-  .modal-right .actions button {
-    padding: 15px 20px;
-    margin: 5px 0;
-  }
-  
-  .pagination {
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  
-  .pagination-item {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-  }
-  
-  .pagination-next {
-    min-width: 80px;
-    font-size: 12px;
   }
 }

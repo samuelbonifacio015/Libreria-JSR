@@ -1,67 +1,181 @@
+// Variables globales para el filtrado
+let allProducts = [];
+let filteredProducts = [];
+
+// Función para cargar y mostrar productos
+function loadProducts(products = null) {
+    const productsContainer = document.querySelector('.products-grid');
+    if (!productsContainer) return;
+    
+    const productsToShow = products || allProducts;
+    productsContainer.innerHTML = '';
+    
+    productsToShow.forEach(product => {
+        const isAvailable = product.availability.toLowerCase().includes('disponible');
+        const availabilityClass = isAvailable ? '' : 'out-of-stock';
+        
+        const productCard = `
+        <div class="product-card">
+            <span class="discount">${product.discount}</span>
+            <img src="${product.img}" alt="${product.alt}" />
+            <div class="brand">${product.brand}</div>
+            <div class="product-name">${product.productName}</div>
+            <div class="reviews">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span>${product.reviews}</span>
+            </div>
+            <p class="price">
+              <span class="original">${product.priceOriginal}</span>  
+              <span class="discounted">${product.priceDiscounted}</span>
+            </p>
+            <p class="availability ${availabilityClass}">${product.availability}</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+            <button class="quick-view">Vista rápida</button>  
+        </div>  
+        `;
+        productsContainer.innerHTML += productCard;
+    });
+    
+    updateProductsCount(productsToShow.length);
+    setupEventListeners();
+}
+
+// Función para actualizar el contador de productos
+function updateProductsCount(count) {
+    const productsCount = document.querySelector('.products-count');
+    if (productsCount) {
+        productsCount.textContent = `Mostrando 1 - ${count} de ${count} productos`;
+    }
+}
+
+// Función para aplicar filtros
+function applyFilters() {
+    const selectedBrands = getSelectedBrands();
+    const priceRange = getPriceRange();
+    
+    filteredProducts = allProducts.filter(product => {
+        const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+        const priceMatch = isPriceInRange(product.priceDiscounted, priceRange.min, priceRange.max);
+        
+        return brandMatch && priceMatch;
+    });
+    
+    loadProducts(filteredProducts);
+}
+
+// Función para obtener las marcas seleccionadas
+function getSelectedBrands() {
+    const brandCheckboxes = document.querySelectorAll('input[data-filter="brand"]:checked');
+    return Array.from(brandCheckboxes).map(checkbox => checkbox.value);
+}
+
+// Función para obtener el rango de precios
+function getPriceRange() {
+    const minPriceInput = document.querySelector('.min-price');
+    const maxPriceInput = document.querySelector('.max-price');
+    
+    return {
+        min: minPriceInput ? parseFloat(minPriceInput.value) || 0 : 0,
+        max: maxPriceInput ? parseFloat(maxPriceInput.value) || 169 : 169
+    };
+}
+
+// Función para verificar si el precio está en el rango
+function isPriceInRange(priceString, min, max) {
+    const price = parseFloat(priceString.replace('S/. ', ''));
+    return price >= min && price <= max;
+}
+
+// Función para limpiar filtros
+function clearFilters() {
+    const brandCheckboxes = document.querySelectorAll('input[data-filter="brand"]');
+    brandCheckboxes.forEach(checkbox => checkbox.checked = false);
+    
+    const minPriceInput = document.querySelector('.min-price');
+    const maxPriceInput = document.querySelector('.max-price');
+    if (minPriceInput) minPriceInput.value = 0;
+    if (maxPriceInput) maxPriceInput.value = 169;
+    
+    const slider = document.querySelector('.slider');
+    if (slider) slider.value = 100;
+    
+    filteredProducts = [...allProducts];
+    loadProducts(filteredProducts);
+}
+
+// Función para configurar los filtros
+function setupFilterSystem() {
+    const applyFiltersBtn = document.getElementById('applyFilters');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', applyFilters);
+    }
+    
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', clearFilters);
+    }
+    
+    const minPriceInput = document.querySelector('.min-price');
+    const maxPriceInput = document.querySelector('.max-price');
+    const slider = document.querySelector('.slider');
+    
+    if (minPriceInput && maxPriceInput && slider) {
+        minPriceInput.addEventListener('input', function() {
+            const value = parseFloat(this.value) || 0;
+            const maxValue = parseFloat(maxPriceInput.value) || 169;
+            if (value > maxValue) {
+                this.value = maxValue;
+            }
+        });
+        
+        maxPriceInput.addEventListener('input', function() {
+            const value = parseFloat(this.value) || 169;
+            const minValue = parseFloat(minPriceInput.value) || 0;
+            if (value < minValue) {
+                this.value = minValue;
+            }
+        });
+        
+        slider.addEventListener('input', function() {
+            const percentage = this.value;
+            const maxPrice = 169;
+            const calculatedMax = Math.round((percentage / 100) * maxPrice);
+            maxPriceInput.value = calculatedMax;
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Verificar si hay parámetros de búsqueda en la URL o términos guardados
     const urlParams = new URLSearchParams(window.location.search);
     const searchTerm = urlParams.get('search');
     const savedSearchTerm = sessionStorage.getItem('searchTerm');
     
-    // Si hay términos de búsqueda, no cargar todos los productos (lo manejará search.js)
     if (!searchTerm && !savedSearchTerm) {
         fetch('../partials/products.json')
             .then(response => response.json())
             .then(data => {
-                const productsContainer = document.querySelector('.products-grid');  
-                if (productsContainer) {
-                    
-                    data.forEach(product => {
-                        // Determinar si el producto está disponible
-                        const isAvailable = product.availability.toLowerCase().includes('disponible');
-                        const availabilityClass = isAvailable ? '' : 'out-of-stock';
-                        
-                        const productCard = `
-                        <div class="product-card">
-                            <span class="discount">${product.discount}</span>
-                            <img src="${product.img}" alt="${product.alt}" />
-                            <div class="brand">${product.brand}</div>
-                            <div class="product-name">${product.productName}</div>
-                            <div class="reviews">
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <i class="fa-solid fa-star"></i>
-                              <span>${product.reviews}</span>
-                            </div>
-                            <p class="price">
-                              <span class="original">${product.priceOriginal}</span>  
-                              <span class="discounted">${product.priceDiscounted}</span>
-                            </p>
-                            <p class="availability ${availabilityClass}">${product.availability}</p>
-                            <button class="add-to-cart">Añadir al carrito</button>
-                            <button class="quick-view">Vista rápida</button>  
-                        </div>  
-                        `;
-                        productsContainer.innerHTML += productCard;  
-                    });
-                    
-                    setupEventListeners();
-                }
+                allProducts = data;
+                filteredProducts = [...data];
+                loadProducts();
             })
             .catch(error => console.error('Error', error));
     } else {
-        // Si hay búsqueda, solo configurar los event listeners después de que search.js cargue los resultados
         setTimeout(() => {
             setupEventListeners();
         }, 200);
     }
     
-    // Inicializar componentes que no dependen del navbar
     window.setupQuickView();
     window.setupBackToTop();
     window.setupFilters();
     window.setupFloatingCart();
     window.setupPagination();
     
-    // Esperar a que el navbar se cargue antes de inicializar el carrito
     document.addEventListener('navbarLoaded', function() {
         console.log('Navbar cargado, inicializando carrito...');
         setTimeout(() => {
@@ -69,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     });
     
-    // Fallback: intentar inicializar el carrito después de un tiempo
     setTimeout(function() {
         if (!window.cartInitialized) {
             console.log('Fallback: inicializando carrito...');
@@ -161,7 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Mantener compatibilidad con el código existente mientras se migra al nuevo sistema
 window.initializeCart = function() {
-    // Función legacy - el nuevo sistema JSRCart se inicializa automáticamente
     console.log('⚠️ initializeCart() es una función legacy - el carrito se inicializa automáticamente');
 };
 
@@ -169,7 +281,6 @@ window.initializeCart = function() {
 window.setupFloatingCart = function() {
     console.log('⚠️ setupFloatingCart() es una función legacy - el carrito flotante se configura automáticamente');
     
-    // Si el JSRCart está disponible, actualizar el carrito flotante
     if (window.updateFloatingCart) {
         window.updateFloatingCart();
     }
@@ -226,7 +337,7 @@ window.setupBackToTop = function() {
 };
 
 window.setupFilters = function() {
-    const filterHeaders = document.querySelectorAll('.sidebar h2');
+    const filterHeaders = document.querySelectorAll('.sidebar h2, .catalogo-filter h3');
     filterHeaders.forEach(header => {
         header.addEventListener('click', function() {
             const icon = this.querySelector('i');
@@ -239,15 +350,7 @@ window.setupFilters = function() {
         });
     });
     
-    const filtersTitle = document.querySelector('.sidebar h3');
-    const filtersList = document.querySelector('.sidebar ul');
-    if (filtersTitle && filtersList) {
-        filtersTitle.addEventListener('click', () => {
-            filtersList.classList.toggle('collapsed');
-            const icon = filtersTitle.querySelector('i');
-            if (icon) icon.classList.toggle('rotated');
-        });
-    }
+    setupFilterSystem();
 };
 
 window.setupPagination = function() {
@@ -325,12 +428,10 @@ function handleAddToCart(e) {
             
             console.log('Producto a añadir:', product);
             
-            // Verificar si el carrito está inicializado
             if (!window.cartInitialized) {
                 console.log('Carrito no inicializado, intentando inicializar...');
                 window.initializeCart();
                 
-                // Esperar un poco y volver a intentar
                 setTimeout(() => {
                     if (window.addToCart) {
                         window.addToCart(product);
@@ -372,10 +473,8 @@ function handleQuickView(e) {
         const modalThumbnails = document.getElementById('modalThumbnails');
         const quickViewModal = document.getElementById('quickViewModal');
         
-        // Se añade info de disponibilidad al modal
         const modalActions = document.querySelector('.modal-right .actions');
         if (modalActions) {
-            // Eliminar el mensaje de disponibilidad anterior si existe
             const existingAvailability = document.querySelector('.modal-right .product-availability');
             if (existingAvailability) {
                 existingAvailability.remove();
@@ -405,7 +504,6 @@ function handleQuickView(e) {
             }
         }
         
-        // Se añade info de disponibilidad al modal
         if (modalMainImage) modalMainImage.src = imgSrc;
         if (modalProductTitle) modalProductTitle.textContent = productName;
         if (modalBrand) modalBrand.textContent = brand;
@@ -414,7 +512,6 @@ function handleQuickView(e) {
         if (modalDiscountedPrice) modalDiscountedPrice.textContent = discountedPrice;
         if (modalQuantity) modalQuantity.value = 1;
         
-        // Se añade miniaturas al modal
         if (modalThumbnails) {
             modalThumbnails.innerHTML = '';
             for (let i = 0; i < 4; i++) {
@@ -425,7 +522,6 @@ function handleQuickView(e) {
             }
         }
 
-        // Se muestra el modal
         if (quickViewModal) {
             quickViewModal.style.display = 'flex';
         }
