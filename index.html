@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="partials/footer.css" />
     <link rel="stylesheet" href="partials/navbar.css" />
     <link rel="stylesheet" href="partials/headernav.css" />
+    <link rel="stylesheet" href="partials/modal.css" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -259,6 +260,15 @@
     <script src="js/merchandising.js"></script>
     <script src="js/search.js"></script>
     <script src="js/dropdown.js"></script>
+    <script src="partials/modal.js"></script>
+    <script>
+        // Inicializar modal después de cargar el DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.setupQuickView) {
+                window.setupQuickView();
+            }
+        });
+    </script>
     
   </body>
 </html>
