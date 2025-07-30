@@ -1115,7 +1115,8 @@
                 <div class="floating-cart-selection-info">
                     ${totalItems} producto${totalItems !== 1 ? 's' : ''} seleccionado${totalItems !== 1 ? 's' : ''}
                 </div>
-                ${totalItems > 0 ? '<button class="floating-cart-purchase" title="Finalizar compra">🛒 Comprar</button>' : ''}
+                ${totalItems > 0 ? '<button class="floating-cart-purchase" onclick="event.stopPropagation()" title="Finalizar compra">🛒 Comprar</button>' : ''}
+                ${totalItems > 0 ? '<button class="floating-cart-clear" onclick="event.stopPropagation(); window.clearCart()" title="Vaciar carrito">🗑️ Vaciar carrito</button>' : ''}
             `;
             floatingCartItems.appendChild(headerInfo);
 
@@ -1138,10 +1139,10 @@
                             <div class="floating-cart-item-brand">${item.brand}</div>
                             <div class="floating-cart-item-price">S/. ${item.price.toFixed(2)} c/u</div>
                             <div class="floating-cart-item-controls">
-                                <button class="qty-btn" onclick="window.updateCartQuantity('${item.name}', -1)">-</button>
+                                <button class="qty-btn" onclick="event.stopPropagation(); window.updateCartQuantity('${item.name}', -1)">-</button>
                                 <span class="qty-display">${item.quantity}</span>
-                                <button class="qty-btn" onclick="window.updateCartQuantity('${item.name}', 1)">+</button>
-                                <button class="remove-btn" onclick="window.removeFromCart('${item.name}')" title="Eliminar">×</button>
+                                <button class="qty-btn" onclick="event.stopPropagation(); window.updateCartQuantity('${item.name}', 1)">+</button>
+                                <button class="remove-btn" onclick="event.stopPropagation(); window.removeFromCart('${item.name}')" title="Eliminar">×</button>
                             </div>
                             <div class="floating-cart-item-subtotal">Subtotal: S/. ${(item.price * item.quantity).toFixed(2)}</div>
                         </div>
