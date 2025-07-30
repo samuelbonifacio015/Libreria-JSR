@@ -317,7 +317,8 @@ body {
   font-size: var(--font-sm);
   color: var(--text-dark);
   cursor: pointer;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  transition: border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
   min-width: 180px;
 }
 
@@ -385,15 +386,13 @@ body {
   outline-offset: 2px;
 }
 
-
-
 /* Estilos para dispositivos táctiles */
 @media (hover: none) and (pointer: coarse) {
   .view-control button {
     min-width: 44px;
     height: 44px;
   }
-  
+
   .sort-control select {
     min-height: 44px;
   }
@@ -427,8 +426,6 @@ body {
 .product-card:hover {
   box-shadow: var(--shadow-md);
 }
-
-
 
 .product-card .discount {
   position: absolute;
@@ -744,7 +741,8 @@ body {
   max-height: 0;
   overflow-y: auto;
   opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, transform 0.3s ease;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease,
+    transform 0.3s ease;
   margin-left: 15px;
   position: relative;
   transform: translateX(-10px);
@@ -777,6 +775,43 @@ body {
   margin-bottom: 10px;
   text-align: center;
   border-left: 3px solid var(--secondary-color);
+}
+
+.floating-cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.floating-cart-purchase {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: auto;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.floating-cart-purchase:hover {
+  background: linear-gradient(135deg, #229954, #1e8449);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+.floating-cart-purchase:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
 }
 
 .floating-cart-items {
@@ -1122,11 +1157,11 @@ body {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .products-controls {
     gap: var(--spacing-md);
   }
-  
+
   .sort-control select {
     min-width: 160px;
   }
@@ -1181,8 +1216,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-
-
   .product-card {
     min-height: 350px;
     width: 100%;
@@ -1190,12 +1223,12 @@ body {
     box-shadow: var(--shadow-sm);
     transition: box-shadow var(--transition-normal);
   }
-  
+
   .product-card img {
     height: 150px;
     object-fit: cover;
   }
-  
+
   .product-card .brand {
     font-weight: bold;
   }

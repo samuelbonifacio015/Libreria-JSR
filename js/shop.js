@@ -82,7 +82,7 @@ function renderProducts(products, container) {
         
         if (currentView === 'list') {
             productCard = `
-            <div class="product-card fade-out">
+            <div class="product-card fade-out" data-product-id="${product.id}">
                 <span class="discount">${product.discount}</span>
                 <img src="${product.img}" alt="${product.alt}" />
                 <div class="product-info">
@@ -110,7 +110,7 @@ function renderProducts(products, container) {
             `;
         } else {
             productCard = `
-            <div class="product-card fade-out">
+            <div class="product-card fade-out" data-product-id="${product.id}">
                 <span class="discount">${product.discount}</span>
                 <img src="${product.img}" alt="${product.alt}" />
                 <div class="brand">${product.brand}</div>
@@ -749,12 +749,21 @@ function handleAddToCart(e) {
 
         const name = nameElement.textContent.trim();
         const brand = brandElement.textContent.trim();
-        const priceText = priceElement.textContent.replace('S/. ', '').trim();
-        const price = parseFloat(priceText);
+        const priceText = priceElement.textContent.trim();
+        // Extraer solo números y punto decimal, igual que en cart.js
+        const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
         const image = imageElement.src;
 
-        if (!name || !brand || isNaN(price) || !image) {
-            console.error('Datos de producto inválidos:', { 
+        console.log('Shop.js: Debug extracción precio:', {
+            priceText: priceText,
+            extractedPrice: price,
+            selector: '.discounted',
+            productName: name,
+            productBrand: brand
+        });
+
+        if (!name || !brand || isNaN(price) || price <= 0 || !image) {
+            console.error('Shop.js: Datos de producto inválidos:', { 
                 name, 
                 brand, 
                 price, 
