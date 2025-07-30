@@ -320,9 +320,13 @@
                         priceOriginal: product.priceOriginal
                     });
 
-                    // Extraer precio con regex más robusto
-                    const priceDiscounted = parseFloat(product.priceDiscounted.replace(/[^\d.]/g, ''));
-                    const priceOriginal = parseFloat(product.priceOriginal.replace(/[^\d.]/g, ''));
+                    // Extraer precio usando solo priceDiscounted
+                    const priceMatch = product.priceDiscounted.match(/(\d+(?:\.\d+)?)/);
+                    const priceDiscounted = priceMatch ? parseFloat(priceMatch[0]) : 0;
+
+                    // Extraer precio original si es necesario
+                    const originalMatch = product.priceOriginal.match(/(\d+(?:\.\d+)?)/);
+                    const priceOriginal = originalMatch ? parseFloat(originalMatch[0]) : 0;
 
                     console.log('JSR Cart: Precios extraídos:', {
                         priceDiscounted: priceDiscounted,
@@ -1076,33 +1080,33 @@
             const timestamp = Date.now().toString(36);
             const random = Math.random().toString(36).substr(2, 5);
             return `${prefix}-${timestamp}-${random}`.toUpperCase();
-    }
-
-    /**
-     * Actualizar carrito flotante con funcionalidad completa
-     */
-        updateFloatingCart() {
-            const { floatingCart, floatingCartCount, floatingCartItems, floatingCartTotal } = window.JSRCart.elements;
-        
-        if (!floatingCart || !floatingCartCount || !floatingCartItems || !floatingCartTotal) {
-            return;
         }
 
-        const totalItems = window.JSRCart.items.reduce((sum, item) => sum + item.quantity, 0);
-        const totalPrice = window.JSRCart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        /**
+         * Actualizar carrito flotante con funcionalidad completa
+         */
+        updateFloatingCart() {
+            const { floatingCart, floatingCartCount, floatingCartItems, floatingCartTotal } = window.JSRCart.elements;
+            
+            if (!floatingCart || !floatingCartCount || !floatingCartItems || !floatingCartTotal) {
+                return;
+            }
 
-        // Actualizar contador
-        floatingCartCount.textContent = totalItems;
+            const totalItems = window.JSRCart.items.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = window.JSRCart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Actualizar contador
+            floatingCartCount.textContent = totalItems;
 
             // Mostrar/ocultar según tenga items o esté forzado a mostrar
             if (totalItems > 0 || window.JSRCart.isFloatingCartOpen) {
-            floatingCart.classList.add('visible');
-        } else {
-            floatingCart.classList.remove('visible');
-        }
+                floatingCart.classList.add('visible');
+            } else {
+                floatingCart.classList.remove('visible');
+            }
 
-        // Limpiar items anteriores
-        floatingCartItems.innerHTML = '';
+            // Limpiar items anteriores
+            floatingCartItems.innerHTML = '';
 
             // Agregar información de selección y botón de compra
             const headerInfo = document.createElement('div');
@@ -1115,51 +1119,51 @@
             `;
             floatingCartItems.appendChild(headerInfo);
 
-        if (window.JSRCart.items.length > 0) {
-            // Mostrar todos los productos con funcionalidad completa
-            window.JSRCart.items.forEach(item => {
-                console.log('JSR Cart: Renderizando item en carrito flotante:', {
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    subtotal: item.price * item.quantity
-                });
+            if (window.JSRCart.items.length > 0) {
+                // Mostrar todos los productos con funcionalidad completa
+                window.JSRCart.items.forEach(item => {
+                    console.log('JSR Cart: Renderizando item en carrito flotante:', {
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        subtotal: item.price * item.quantity
+                    });
 
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('floating-cart-item');
-                itemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" onerror="this.src='/img/products/default.jpg'">
-                    <div class="floating-cart-item-details">
-                        <div class="floating-cart-item-name">${item.name}</div>
-                        <div class="floating-cart-item-brand">${item.brand}</div>
-                        <div class="floating-cart-item-price">S/. ${item.price.toFixed(2)} c/u</div>
-                        <div class="floating-cart-item-controls">
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('floating-cart-item');
+                    itemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" onerror="this.src='/img/products/default.jpg'">
+                        <div class="floating-cart-item-details">
+                            <div class="floating-cart-item-name">${item.name}</div>
+                            <div class="floating-cart-item-brand">${item.brand}</div>
+                            <div class="floating-cart-item-price">S/. ${item.price.toFixed(2)} c/u</div>
+                            <div class="floating-cart-item-controls">
                                 <button class="qty-btn" onclick="window.updateCartQuantity('${item.name}', -1)">-</button>
-                            <span class="qty-display">${item.quantity}</span>
+                                <span class="qty-display">${item.quantity}</span>
                                 <button class="qty-btn" onclick="window.updateCartQuantity('${item.name}', 1)">+</button>
                                 <button class="remove-btn" onclick="window.removeFromCart('${item.name}')" title="Eliminar">×</button>
+                            </div>
+                            <div class="floating-cart-item-subtotal">Subtotal: S/. ${(item.price * item.quantity).toFixed(2)}</div>
                         </div>
-                        <div class="floating-cart-item-subtotal">Subtotal: S/. ${(item.price * item.quantity).toFixed(2)}</div>
-                    </div>
-                `;
-                floatingCartItems.appendChild(itemElement);
-            });
-        } else {
-            // Carrito vacío
-            const emptyElement = document.createElement('div');
-            emptyElement.classList.add('floating-cart-item');
-            emptyElement.innerHTML = '<div class="floating-cart-item-details">No hay productos en el carrito</div>';
-            floatingCartItems.appendChild(emptyElement);
-        }
+                    `;
+                    floatingCartItems.appendChild(itemElement);
+                });
+            } else {
+                // Carrito vacío
+                const emptyElement = document.createElement('div');
+                emptyElement.classList.add('floating-cart-item');
+                emptyElement.innerHTML = '<div class="floating-cart-item-details">No hay productos en el carrito</div>';
+                floatingCartItems.appendChild(emptyElement);
+            }
 
-        // Actualizar total
-        floatingCartTotal.textContent = totalPrice.toFixed(2);
-        
-        console.log('JSR Cart: Total del carrito flotante actualizado:', {
-            totalItems: totalItems,
-            totalPrice: totalPrice,
-            itemsCount: window.JSRCart.items.length
-        });
+            // Actualizar total
+            floatingCartTotal.textContent = totalPrice.toFixed(2);
+            
+            console.log('JSR Cart: Total del carrito flotante actualizado:', {
+                totalItems: totalItems,
+                totalPrice: totalPrice,
+                itemsCount: window.JSRCart.items.length
+            });
         }
     }
 
