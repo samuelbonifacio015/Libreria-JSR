@@ -725,48 +725,68 @@ window.setupProductControls = function() {
 
 function handleAddToCart(e) {
     const productCard = e.target.closest('.product-card');
-    if (productCard) {
-        try {
-            const name = productCard.querySelector('.product-name').textContent;
-            const brand = productCard.querySelector('.brand').textContent;
-            const priceText = productCard.querySelector('.discounted').textContent.replace('S/. ', '');
-            const price = parseFloat(priceText);
-            const image = productCard.querySelector('img').src;
-            
-            if (!name || !brand || isNaN(price) || !image) {
-                console.error('Datos de producto inválidos:', { name, brand, price, image });
-                return;
-            }
-            
-            const product = {
-                name: name,
-                brand: brand,
-                price: price,
-                image: image,
-                quantity: 1
-            };
-            
-            console.log('Producto a añadir:', product);
-            
-            if (!window.cartInitialized) {
-                console.log('Carrito no inicializado, intentando inicializar...');
-                window.initializeCart();
-                
-                setTimeout(() => {
-                    if (window.addToCart) {
-                        window.addToCart(product);
-                    } else {
-                        console.error('No se pudo inicializar el carrito');
-                    }
-                }, 300);
-            } else if (window.addToCart) {
-                window.addToCart(product);
-            } else {
-                console.error('La función addToCart no está disponible');
-            }
-        } catch (error) {
-            console.error('Error al añadir producto al carrito:', error);
+    if (!productCard) {
+        console.error('No se encontró el elemento product-card');
+        return;
+    }
+
+    try {
+        // Extraer datos del producto con validación
+        const nameElement = productCard.querySelector('.product-name');
+        const brandElement = productCard.querySelector('.brand');
+        const priceElement = productCard.querySelector('.discounted');
+        const imageElement = productCard.querySelector('img');
+
+        if (!nameElement || !brandElement || !priceElement || !imageElement) {
+            console.error('Elementos del producto no encontrados:', {
+                name: !!nameElement,
+                brand: !!brandElement,
+                price: !!priceElement,
+                image: !!imageElement
+            });
+            return;
         }
+
+        const name = nameElement.textContent.trim();
+        const brand = brandElement.textContent.trim();
+        const priceText = priceElement.textContent.replace('S/. ', '').trim();
+        const price = parseFloat(priceText);
+        const image = imageElement.src;
+
+        if (!name || !brand || isNaN(price) || !image) {
+            console.error('Datos de producto inválidos:', { 
+                name, 
+                brand, 
+                price, 
+                image,
+                priceText 
+            });
+            return;
+        }
+
+        const product = {
+            name: name,
+            brand: brand,
+            price: price,
+            image: image,
+            quantity: 1
+        };
+
+        console.log('Producto a añadir:', product);
+
+        // Verificar si el carrito está disponible
+        if (typeof window.addToCart !== 'function') {
+            console.error('La función addToCart no está disponible');
+            showNotification('Error: Carrito no disponible', 'error');
+            return;
+        }
+
+        // Intentar añadir al carrito
+        window.addToCart(product);
+
+    } catch (error) {
+        console.error('Error al añadir producto al carrito:', error);
+        showNotification('Error al añadir producto', 'error');
     }
 }
 
@@ -1285,4 +1305,34 @@ function forceApplyViewStyles(view) {
             restoreGridResponsiveStyles();
         }
     }, 50);
+}
+
+// Función para mostrar notificaciones simples
+function showNotification(message, type = 'info') {
+    console.log(`[${type.toUpperCase()}] ${message}`);
+    
+    // Crear notificación temporal si no existe el sistema de notificaciones
+    if (!window.JSRCart || !window.JSRCart.notification) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#10b981'};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            z-index: 9999;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 3000);
+    }
 }

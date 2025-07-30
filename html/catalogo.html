@@ -159,8 +159,6 @@
     </div>
     <!--floating cart end-->
 
-
-
     <!--footer-->
     <div id="footer-placeholder"></div>
 
@@ -174,7 +172,33 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('navbarLoaded', function() {
                 console.log('Navbar cargado en catálogo');
+                
+                // Debug del carrito después de 2 segundos
+                setTimeout(() => {
+                    if (window.debugCart) {
+                        window.debugCart();
+                    }
+                }, 2000);
             });
+            
+            // Función de prueba para añadir productos
+            window.testAddToCart = function() {
+                const testProduct = {
+                    name: 'Producto de Prueba',
+                    brand: 'Marca Test',
+                    price: 25.99,
+                    image: '/img/products/default.jpg',
+                    quantity: 1
+                };
+                
+                console.log('🧪 Probando añadir producto de prueba:', testProduct);
+                
+                if (window.addToCart) {
+                    window.addToCart(testProduct);
+                } else {
+                    console.error('❌ Función addToCart no disponible');
+                }
+            };
         });
     </script>
 </body>

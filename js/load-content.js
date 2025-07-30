@@ -53,7 +53,12 @@ function loadCart() {
     return Promise.all([
         // Cargar HTML del carrito
         fetch('/partials/cart.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
             .then(data => {
                 // Insertar el carrito directamente en el cart-container del navbar
                 const navbarCartContainer = document.querySelector('.cart-container');
@@ -66,18 +71,41 @@ function loadCart() {
                     while (tempDiv.firstChild) {
                         navbarCartContainer.appendChild(tempDiv.firstChild);
                     }
+                    console.log('✅ HTML del carrito cargado');
                 } else {
                     console.warn('No se encontró .cart-container en el navbar');
                 }
-                console.log('✅ HTML del carrito cargado');
+            })
+            .catch(error => {
+                console.error('Error cargando HTML del carrito:', error);
+                throw error;
             }),
 
         // Cargar CSS del carrito
-        loadCSS('/partials/cart.css'),
+        loadCSS('/partials/cart.css').catch(error => {
+            console.error('Error cargando CSS del carrito:', error);
+            throw error;
+        }),
 
         // Cargar JS del carrito
-        loadJS('/partials/cart.js')
-    ]);
+        loadJS('/partials/cart.js').catch(error => {
+            console.error('Error cargando JS del carrito:', error);
+            throw error;
+        })
+    ]).then(() => {
+        console.log('✅ Todos los componentes del carrito cargados');
+        
+        // Intentar inicializar el carrito después de cargar todo
+        setTimeout(() => {
+            if (window.JSRCart && typeof window.JSRCart.init === 'function') {
+                window.JSRCart.init();
+            } else if (typeof initializeCart === 'function') {
+                initializeCart();
+            } else {
+                console.warn('No se pudo inicializar el carrito automáticamente');
+            }
+        }, 200);
+    });
 }
 
 // Función para cargar archivos CSS dinámicamente
