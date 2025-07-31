@@ -21,23 +21,23 @@
             return;
         }
         
-        // Remover event listeners existentes para evitar duplicados
-        const existingDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
-        existingDropdownBtns.forEach(btn => {
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
+        // Asegurar que todos los dropdowns estén cerrados por defecto
+        const allDropdowns = document.querySelectorAll('.mobile-dropdown');
+        allDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
         });
         
         function openMobileMenu() {            
+            // Cerrar TODOS los dropdowns antes de abrir el menú
+            const allDropdowns = document.querySelectorAll('.mobile-dropdown');
+            allDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            
             elements.mobileNav.classList.add('active');
             elements.mobileOverlay.classList.add('active');
             document.body.classList.add('menu-open');
             document.body.style.overflow = 'hidden';
-            
-            setTimeout(() => {
-                const navVisible = elements.mobileNav.classList.contains('active');
-                const overlayVisible = elements.mobileOverlay.classList.contains('active');
-            }, 100);
         }
         
         function closeMobileMenu() {            
@@ -45,6 +45,11 @@
             elements.mobileOverlay.classList.remove('active');
             document.body.classList.remove('menu-open');
             document.body.style.overflow = '';
+            
+            // Cerrar todos los dropdowns al cerrar el menú
+            allDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
         }
         
         elements.mobileMenuBtn.addEventListener('click', function(e) {
@@ -80,7 +85,12 @@
         // Manejar dropdowns con lógica mejorada
         const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
         dropdownBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            // Remover event listeners existentes
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            // Agregar nuevo event listener
+            newBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
