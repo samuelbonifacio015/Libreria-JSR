@@ -816,6 +816,18 @@ body {
   box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
 }
 
+.floating-cart-clear {
+  background-color: var(--error-color);
+  color: var(--text-white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .floating-cart-items {
   display: flex;
   flex-direction: column;
