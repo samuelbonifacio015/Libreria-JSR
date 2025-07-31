@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finalizar Compra - Librería JSR</title>
+    <link rel="icon" type="image/x-icon" href="/img/JSR.ico" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/purchase.css" />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="purchase-container">
+      <!-- Header de la página de compra -->
+      <header class="purchase-header">
+        <div class="header-content">
+          <div class="logo-section">
+            <img src="/img/JSR.jpg" alt="Librería JSR" class="logo" />
+            <h1>Finalizar Compra</h1>
+          </div>
+          <div class="security-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span>Compra Segura</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="purchase-main">
+        <div class="purchase-content">
+          <!-- Resumen del pedido -->
+          <section class="order-summary">
+            <div class="summary-header">
+              <h2><i class="fas fa-shopping-cart"></i> Resumen del Pedido</h2>
+              <div class="order-id" id="orderIdDisplay"></div>
+            </div>
+
+            <div class="order-items" id="orderItems">
+              <!-- Los productos se cargarán dinámicamente -->
+            </div>
+
+            <div class="order-totals">
+              <div class="subtotal-row">
+                <span>Subtotal:</span>
+                <span id="subtotalAmount">S/. 0.00</span>
+              </div>
+              <div class="shipping-row">
+                <span>Envío:</span>
+                <span id="shippingAmount">S/. 10.00</span>
+              </div>
+              <div class="total-row">
+                <span>Total:</span>
+                <span id="totalAmount">S/. 0.00</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Información del cliente -->
+          <section class="customer-info">
+            <h2><i class="fas fa-user"></i> Información de Entrega</h2>
+
+            <form id="purchaseForm" class="purchase-form">
+              <div class="form-group">
+                <label for="customerName">Nombre completo *</label>
+                <input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="customerEmail">Correo electrónico *</label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  name="customerEmail"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="customerPhone">Teléfono *</label>
+                <input
+                  type="tel"
+                  id="customerPhone"
+                  name="customerPhone"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="customerAddress">Dirección de entrega *</label>
+                <textarea
+                  id="customerAddress"
+                  name="customerAddress"
+                  rows="3"
+                  required
+                  placeholder="Incluye distrito, referencias, etc."
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="deliveryNotes">Notas de entrega (opcional)</label>
+                <textarea
+                  id="deliveryNotes"
+                  name="deliveryNotes"
+                  rows="2"
+                  placeholder="Instrucciones especiales para la entrega"
+                ></textarea>
+              </div>
+            </form>
+          </section>
+
+          <!-- Método de pago -->
+          <section class="payment-method">
+            <h2><i class="fas fa-credit-card"></i> Método de Pago</h2>
+
+            <div class="payment-options">
+              <div class="payment-option">
+                <input
+                  type="radio"
+                  id="paymentCard"
+                  name="paymentMethod"
+                  value="card"
+                  checked
+                />
+                <label for="paymentCard">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Tarjeta de Crédito/Débito</span>
+                </label>
+              </div>
+
+              <div class="payment-option">
+                <input
+                  type="radio"
+                  id="paymentTransfer"
+                  name="paymentMethod"
+                  value="transfer"
+                />
+                <label for="paymentTransfer">
+                  <i class="fas fa-university"></i>
+                  <span>Transferencia Bancaria</span>
+                </label>
+              </div>
+
+              <div class="payment-option">
+                <input
+                  type="radio"
+                  id="paymentCash"
+                  name="paymentMethod"
+                  value="cash"
+                />
+                <label for="paymentCash">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <span>Pago Contra Entrega</span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <!-- Acciones -->
+          <section class="purchase-actions">
+            <div class="actions-container">
+              <button type="button" class="btn-secondary" id="backToCart">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Carrito
+              </button>
+
+              <button type="button" class="btn-primary" id="confirmPurchase">
+                <i class="fas fa-check"></i>
+                Confirmar Pedido
+              </button>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Modal de confirmación -->
+      <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3><i class="fas fa-check-circle"></i> ¡Pedido Confirmado!</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+              Tu pedido <strong id="finalOrderId"></strong> ha sido procesado
+              exitosamente.
+            </p>
+            <p>
+              Recibirás un correo de confirmación con los detalles de tu compra.
+            </p>
+            <div class="estimated-delivery">
+              <i class="fas fa-truck"></i>
+              <span>Tiempo estimado de entrega: 2-3 días hábiles</span>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-primary" id="goToHome">
+              <i class="fas fa-home"></i>
+              Ir al Inicio
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/purchase.js"></script>
+  </body>
+</html>

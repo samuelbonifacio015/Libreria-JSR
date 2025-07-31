@@ -1115,8 +1115,8 @@
                 <div class="floating-cart-selection-info">
                     ${totalItems} producto${totalItems !== 1 ? 's' : ''} seleccionado${totalItems !== 1 ? 's' : ''}
                 </div>
-                ${totalItems > 0 ? '<button class="floating-cart-purchase" onclick="event.stopPropagation()" title="Finalizar compra">🛒 Comprar</button>' : ''}
-                ${totalItems > 0 ? '<button class="floating-cart-clear" onclick="event.stopPropagation(); window.clearCart()" title="Vaciar carrito">🗑️ Vaciar carrito</button>' : ''}
+                ${totalItems > 0 ? '<button class="floating-cart-purchase" onclick="event.stopPropagation()" title="Finalizar compra"> Comprar</button>' : ''}
+                ${totalItems > 0 ? '<button class="floating-cart-clear" onclick="event.stopPropagation(); window.clearCart()" title="Vaciar carrito"> Vaciar carrito</button>' : ''}
             `;
             floatingCartItems.appendChild(headerInfo);
 
