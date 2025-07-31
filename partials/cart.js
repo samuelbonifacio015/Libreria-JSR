@@ -706,6 +706,14 @@
             this.showFloatingCart(true);
             this.showNotification(`${product.name} añadido al carrito`);
 
+            // Verificar si estamos en index.html y redirigir a catálogo
+            if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+                console.log('🔄 Redirigiendo a catálogo desde index.html...');
+                setTimeout(() => {
+                    window.location.href = '/html/catalogo.html';
+                }, 1500);
+            }
+
             console.log('✅ Producto procesado correctamente');
             return true;
         }
@@ -986,15 +994,19 @@
                         return;
                     }
                     
-                    this.showNotification('Redirigiendo al checkout...', 'info');
-                    this.proceedToCheckout();
+                    this.showNotification('Redirigiendo a finalizar compra...', 'info');
+                    this.proceedToPurchase();
                 });
             }
 
             // Configurar delegación de eventos para botones dinámicos
             document.addEventListener('click', (e) => {
-                if (e.target.matches('.floating-cart-purchase, .purchase-btn')) {
+                if (e.target.matches('.floating-cart-checkout')) {
                     e.preventDefault();
+                    if (window.JSRCart.items.length === 0) {
+                        this.showNotification('Tu carrito está vacío', 'warning');
+                        return;
+                    }
                     this.proceedToPurchase();
                 }
             });
@@ -1108,14 +1120,13 @@
             // Limpiar items anteriores
             floatingCartItems.innerHTML = '';
 
-            // Agregar información de selección y botón de compra
+            // Agregar información de selección y botón de vaciar carrito
             const headerInfo = document.createElement('div');
             headerInfo.classList.add('floating-cart-header');
             headerInfo.innerHTML = `
                 <div class="floating-cart-selection-info">
                     ${totalItems} producto${totalItems !== 1 ? 's' : ''} seleccionado${totalItems !== 1 ? 's' : ''}
                 </div>
-                ${totalItems > 0 ? '<button class="floating-cart-purchase" onclick="event.stopPropagation()" title="Finalizar compra"> Comprar</button>' : ''}
                 ${totalItems > 0 ? '<button class="floating-cart-clear" onclick="event.stopPropagation(); window.clearCart()" title="Vaciar carrito"> Vaciar carrito</button>' : ''}
             `;
             floatingCartItems.appendChild(headerInfo);
