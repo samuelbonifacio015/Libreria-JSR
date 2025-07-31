@@ -13,7 +13,6 @@
             mobileOverlay: document.getElementById('mobileOverlay')
         };
         
-        
         const missingElements = Object.entries(elements)
             .filter(([key, element]) => !element)
             .map(([key]) => key);
@@ -21,6 +20,13 @@
         if (missingElements.length > 0) {
             return;
         }
+        
+        // Remover event listeners existentes para evitar duplicados
+        const existingDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        existingDropdownBtns.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+        });
         
         function openMobileMenu() {            
             elements.mobileNav.classList.add('active');
@@ -39,7 +45,6 @@
             elements.mobileOverlay.classList.remove('active');
             document.body.classList.remove('menu-open');
             document.body.style.overflow = '';
-            
         }
         
         elements.mobileMenuBtn.addEventListener('click', function(e) {
@@ -72,23 +77,32 @@
             }
         });
         
+        // Manejar dropdowns con lógica mejorada
         const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
         dropdownBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
+                
                 const dropdown = this.closest('.mobile-dropdown');
                 const isActive = dropdown.classList.contains('active');
                 
+                // Cerrar otros dropdowns
                 dropdownBtns.forEach(otherBtn => {
                     if (otherBtn !== this) {
-                        otherBtn.closest('.mobile-dropdown').classList.remove('active');
+                        const otherDropdown = otherBtn.closest('.mobile-dropdown');
+                        if (otherDropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
                     }
                 });
                 
-                dropdown.classList.toggle('active', !isActive);
+                // Toggle del dropdown actual
+                if (dropdown) {
+                    dropdown.classList.toggle('active', !isActive);
+                }
             });
         });
-        
     }
     
     if (document.readyState === 'loading') {
