@@ -60,7 +60,7 @@ function loadCart() {
                 return response.text();
             })
             .then(data => {
-                // Insertar el carrito directamente en el cart-container del navbar
+                // Insertar el carrito dropdown en el cart-container del navbar
                 const navbarCartContainer = document.querySelector('.cart-container');
                 if (navbarCartContainer) {
                     // Crear div temporal para parsear el HTML
@@ -71,9 +71,46 @@ function loadCart() {
                     while (tempDiv.firstChild) {
                         navbarCartContainer.appendChild(tempDiv.firstChild);
                     }
-                    console.log('✅ HTML del carrito cargado');
+                    console.log('✅ HTML del carrito dropdown cargado en navbar');
                 } else {
                     console.warn('No se encontró .cart-container en el navbar');
+                }
+
+                // Crear e insertar el carrito flotante en el body
+                const floatingCartHTML = `
+                    <!--floating cart start-->
+                    <div class="floating-cart" id="floatingCart">
+                        <div class="floating-cart-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="floating-cart-count" id="floatingCartCount">0</span>
+                        </div>
+                        <div class="floating-cart-preview">
+                            <div class="floating-cart-preview-title">Carrito de Compras</div>
+                            <div class="floating-cart-items" id="floatingCartItems">
+                                <!-- items auto adding -->
+                            </div>
+                            <div class="floating-cart-total">
+                                <span>Total:</span>
+                                <span>S/. <span id="floatingCartTotal">0.00</span></span>
+                            </div>
+                            <div class="floating-cart-actions">
+                                <button class="floating-cart-view-cart">Ver Carrito</button>
+                                <button class="floating-cart-checkout">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--floating cart end-->
+                `;
+                
+                // Insertar carrito flotante antes del elemento footer-placeholder
+                const footerPlaceholder = document.getElementById('footer-placeholder');
+                if (footerPlaceholder) {
+                    footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
+                    console.log('✅ Carrito flotante insertado en el body');
+                } else {
+                    // Si no hay footer-placeholder, insertar al final del body
+                    document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
+                    console.log('✅ Carrito flotante insertado al final del body');
                 }
             })
             .catch(error => {
