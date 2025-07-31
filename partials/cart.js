@@ -1080,7 +1080,7 @@
             
             // Redirigir a la página de compra
             setTimeout(() => {
-                window.location.href = '/purchase.html';
+                window.location.href = '/html/purchase.html';
             }, 1000);
         }
 
