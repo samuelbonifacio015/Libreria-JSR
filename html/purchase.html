@@ -37,11 +37,60 @@
         <div class="form-section">
           <h2 class="section-title">VERIFICAR DATOS</h2>
           
+          <!-- Formulario -->
           <form>
             <div class="form-row">
-              
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required />
+              </div>
+              <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" required />
+              </div>
             </div>
+            
+            <div class="form-group full-width">
+              <label for="contacto">Contacto</label>
+              <input type="email" id="contacto" name="contacto" placeholder="Correo electrónico (opcional)"/>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="telefono">Telefono</label>
+              <input type="tel" id="telefono" name="telefono" required />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="mensaje">Mensaje</label>
+              <input type="mensaje" id="contacto" name="contacto" placeholder="Correo electrónico (opcional)"/>
+            </div>
+
+            <button type="submit" class="continue-btn">Continuar</button>
           </form>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-section">
+          <div class="order-summary">
+            <h3 class="summary-title">RESUMEN DEL PEDIDO</h3>
+
+            <div class="product-item">
+              <div class="product-image"></div>
+              <div class="product-details">
+                <div class="product-name">PRODUCTO</div>
+                <div class="product-brand">MARCA</div>
+                <div class="product-quantity">CANTIDAD: 1</div>
+                <div class="product-price">PRECIO: S/0.00</div>
+              </div>
+            </div>
+
+            <hr class="summary-divider">
+
+            <div class="total">
+              <span>Total:</span>
+              <span class="total-amount">S/0.00</span>
+            </div>
+          </div>
         </div>
       </div>
 
