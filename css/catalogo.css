@@ -320,6 +320,7 @@ body {
   transition: border-color var(--transition-normal),
     box-shadow var(--transition-normal);
   min-width: 180px;
+  min-height: 36px;
 }
 
 .sort-control select:focus {
@@ -395,6 +396,7 @@ body {
 
   .sort-control select {
     min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 }
 
@@ -1163,7 +1165,8 @@ body {
   }
 
   .sort-control select {
-    min-width: 160px;
+    min-width: 200px;
+    max-width: 250px;
   }
 }
 
@@ -1196,11 +1199,22 @@ body {
 
   .sort-control {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .sort-control label {
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
   }
 
   .sort-control select {
-    min-width: 100%;
     width: 100%;
+    min-width: unset;
+    max-width: none;
+    min-height: 44px;
+    font-size: var(--font-md);
   }
 
   .view-control {
@@ -1235,5 +1249,26 @@ body {
 
   .whatsapp-message {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-controls {
+    gap: var(--spacing-sm);
+  }
+
+  .sort-control select {
+    min-height: 48px;
+    font-size: var(--font-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .view-control button {
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .view-control button i {
+    font-size: 16px;
   }
 }
