@@ -25,6 +25,15 @@
     function initializePurchase() {
         console.log('🛒 Inicializando sistema de compra...');
         
+        // Verificar si hay productos en el carrito
+        if (!hasCartItems()) {
+            showError('No hay productos en el carrito. Redirigiendo al inicio...');
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+            return;
+        }
+        
         // Cargar datos de compra
         loadPurchaseData();
         
@@ -38,29 +47,53 @@
     }
 
     /**
+     * Verificar si hay productos en el carrito
+     */
+    function hasCartItems() {
+        try {
+            const cartItems = localStorage.getItem('jsr_cart_items');
+            if (!cartItems) return false;
+            
+            const items = JSON.parse(cartItems);
+            return items && items.length > 0;
+        } catch (error) {
+            console.error('Error al verificar carrito:', error);
+            return false;
+        }
+    }
+
+    /**
      * Cargar datos de compra desde localStorage
      */
     function loadPurchaseData() {
         try {
-            const savedData = localStorage.getItem('jsr_purchase_data');
-            if (!savedData) {
-                showError('No se encontraron datos de compra. Redirigiendo al carrito...');
+            const cartItems = localStorage.getItem('jsr_cart_items');
+            if (!cartItems) {
+                showError('No se encontraron productos en el carrito. Redirigiendo...');
                 setTimeout(() => {
                     window.location.href = '/index.html';
                 }, 2000);
                 return;
             }
 
-            purchaseData = JSON.parse(savedData);
-            
-            // Validar datos
-            if (!purchaseData.items || purchaseData.items.length === 0) {
+            const items = JSON.parse(cartItems);
+            if (!items || items.length === 0) {
                 showError('El carrito está vacío. Redirigiendo...');
                 setTimeout(() => {
                     window.location.href = '/index.html';
                 }, 2000);
                 return;
             }
+
+            // Crear datos de compra
+            purchaseData = {
+                orderId: generateOrderId(),
+                items: items,
+                subtotal: 0,
+                shipping: 0,
+                total: 0,
+                createdAt: new Date().toISOString()
+            };
 
             console.log('✅ Datos de compra cargados:', purchaseData);
         } catch (error) {
@@ -73,25 +106,34 @@
     }
 
     /**
+     * Generar ID de pedido único
+     */
+    function generateOrderId() {
+        const timestamp = Date.now().toString(36);
+        const random = Math.random().toString(36).substr(2, 5);
+        return `${PURCHASE_CONFIG.orderPrefix}-${timestamp.toUpperCase()}-${random.toUpperCase()}`;
+    }
+
+    /**
      * Configurar event listeners
      */
     function setupEventListeners() {
-        // Botón de volver al carrito
-        const backToCartBtn = document.getElementById('backToCart');
-        if (backToCartBtn) {
-            backToCartBtn.addEventListener('click', handleBackToCart);
-        }
-
-        // Botón de confirmar compra
-        const confirmBtn = document.getElementById('confirmPurchase');
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', handleConfirmPurchase);
+        // Formulario de compra
+        const purchaseForm = document.getElementById('purchaseForm');
+        if (purchaseForm) {
+            purchaseForm.addEventListener('submit', handleConfirmPurchase);
         }
 
         // Botón del modal para ir al inicio
         const goToHomeBtn = document.getElementById('goToHome');
         if (goToHomeBtn) {
             goToHomeBtn.addEventListener('click', handleGoToHome);
+        }
+
+        // Botón de cerrar modal
+        const modalCloseBtn = document.getElementById('modalClose');
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', closeConfirmationModal);
         }
 
         // Validación en tiempo real del formulario
@@ -148,7 +190,7 @@
                 <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.src='/img/products/default.jpg'">
                 <div class="item-details">
                     <div class="item-name">${item.name}</div>
-                    <div class="item-brand">${item.brand}</div>
+                    <div class="item-brand">${item.brand || 'Sin marca'}</div>
                     <div class="item-quantity">Cantidad: ${item.quantity}</div>
                 </div>
                 <div class="item-price">S/. ${(item.price * item.quantity).toFixed(2)}</div>
@@ -198,20 +240,11 @@
     }
 
     /**
-     * Manejar volver al carrito
-     */
-    function handleBackToCart() {
-        // Guardar datos actualizados
-        localStorage.setItem('jsr_purchase_data', JSON.stringify(purchaseData));
-        
-        // Redirigir al carrito
-        window.location.href = '/index.html#cart';
-    }
-
-    /**
      * Manejar confirmación de compra
      */
-    async function handleConfirmPurchase() {
+    async function handleConfirmPurchase(event) {
+        event.preventDefault();
+        
         if (isProcessing) return;
 
         // Validar formulario
@@ -343,12 +376,11 @@
             ...purchaseData,
             customer: {
                 name: formData.get('customerName'),
+                lastName: formData.get('customerLastName'),
                 email: formData.get('customerEmail'),
                 phone: formData.get('customerPhone'),
-                address: formData.get('customerAddress'),
                 notes: formData.get('deliveryNotes')
             },
-            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value,
             processedAt: new Date().toISOString(),
             status: 'confirmed'
         };
@@ -368,7 +400,7 @@
         if (confirmBtn) {
             if (processing) {
                 confirmBtn.classList.add('loading');
-                confirmBtn.innerHTML = '<i class="fas fa-spinner"></i> Procesando...';
+                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
                 confirmBtn.disabled = true;
             } else {
                 confirmBtn.classList.remove('loading');
@@ -392,10 +424,19 @@
     }
 
     /**
+     * Cerrar modal de confirmación
+     */
+    function closeConfirmationModal() {
+        const modal = document.getElementById('confirmationModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    }
+
+    /**
      * Limpiar carrito después de la compra
      */
     function clearCart() {
-        localStorage.removeItem('jsr_purchase_data');
         localStorage.removeItem('jsr_cart_items');
     }
 

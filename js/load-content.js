@@ -3,10 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/partials/navbar.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('navbar-placeholder').innerHTML = data;
-            
-            // Cargar el carrito después del navbar
-            return loadCart();
+            const navbarContainer = document.getElementById('navbar-container');
+            if (navbarContainer) {
+                navbarContainer.innerHTML = data;
+                
+                // Cargar el carrito después del navbar
+                return loadCart();
+            } else {
+                console.warn('No se encontró navbar-container');
+                return Promise.resolve();
+            }
         })
         .then(() => {
             // Inicializar funcionalidad del navbar después de cargar todo
@@ -25,14 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/partials/headernav.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('headernav-placeholder').innerHTML = data;
-            
-            // Disparar evento personalizado para notificar que el headernav está listo
-            setTimeout(() => {
-                const headernavLoadedEvent = new CustomEvent('headernavLoaded');
-                document.dispatchEvent(headernavLoadedEvent);
-                console.log('Headernav cargado y evento disparado');
-            }, 100);
+            const headernavPlaceholder = document.getElementById('headernav-placeholder');
+            if (headernavPlaceholder) {
+                headernavPlaceholder.innerHTML = data;
+                
+                // Disparar evento personalizado para notificar que el headernav está listo
+                setTimeout(() => {
+                    const headernavLoadedEvent = new CustomEvent('headernavLoaded');
+                    document.dispatchEvent(headernavLoadedEvent);
+                    console.log('Headernav cargado y evento disparado');
+                }, 100);
+            }
         })
         .catch(error => console.error('Error cargando header nav:', error));
 
@@ -40,7 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/partials/footer.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
+            const footerContainer = document.getElementById('footer-container');
+            if (footerContainer) {
+                footerContainer.innerHTML = data;
+            } else {
+                console.warn('No se encontró footer-container');
+            }
         })
         .catch(error => console.error('Error cargando footer:', error));
 
@@ -102,13 +116,13 @@ function loadCart() {
                     <!--floating cart end-->
                 `;
                 
-                // Insertar carrito flotante antes del elemento footer-placeholder
-                const footerPlaceholder = document.getElementById('footer-placeholder');
-                if (footerPlaceholder) {
-                    footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
+                // Insertar carrito flotante antes del elemento footer-container
+                const footerContainer = document.getElementById('footer-container');
+                if (footerContainer) {
+                    footerContainer.insertAdjacentHTML('beforebegin', floatingCartHTML);
                     console.log('✅ Carrito flotante insertado en el body');
                 } else {
-                    // Si no hay footer-placeholder, insertar al final del body
+                    // Si no hay footer-container, insertar al final del body
                     document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
                     console.log('✅ Carrito flotante insertado al final del body');
                 }
