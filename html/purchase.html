@@ -19,6 +19,14 @@
     <div id="navbar-container"></div>
 
     <div class="purchase-container">
+      <!-- Botón de volver -->
+      <div class="back-button-container">
+        <button class="back-btn" id="backToCatalog">
+          <i class="fas fa-arrow-left"></i>
+          Volver al Catálogo
+        </button>
+      </div>
+
       <!-- header purchase -->
       <div class="header">
         <div class="logo">
@@ -33,11 +41,12 @@
           </div>
           <div class="step inactive" id="step2">
               <div class="step-number">2</div>
-              <span>RECOJO EN TIENDA</span>
+              <span>PROCESO DE PAGO</span>
           </div>
         </div>
 
-        <div class="main-content">
+        <!-- Paso 1: Verificar Datos -->
+        <div class="main-content" id="step1Content">
           <div class="form-section">
             <h2 class="section-title">VERIFICAR DATOS</h2>
             
@@ -69,8 +78,8 @@
                 <textarea id="deliveryNotes" name="deliveryNotes" placeholder="Mensaje (opcional)"></textarea>
               </div>
   
-              <button type="submit" class="continue-btn" id="confirmPurchase">
-                <i class="fas fa-check"></i> Confirmar Pedido
+              <button type="submit" class="continue-btn" id="continueToPayment">
+                <i class="fas fa-arrow-right"></i> Continuar
               </button>
             </form>
           </div>
@@ -105,13 +114,38 @@
             </div>
           </div>
         </div>
+
+        <!-- Paso 2: Proceso de Pago -->
+        <div class="main-content" id="step2Content" style="display: none;">
+          <div class="payment-section">
+            <h2 class="section-title">PROCESO DE PAGO</h2>
+            
+            <div class="payment-instructions">
+              <h3>Instrucciones:</h3>
+              <ul>
+                <li>Verifique que la cantidad de productos sea correcta antes de proceder a finalizar el pedido.</li>
+                <li>Al hacer clic en "Finalizar el pedido" se le emitirá un código de pedido (ejemplo: Pedido: JSR-MDRXVJQ4-EA61V).</li>
+                <li>Al terminar el proceso se enviará un mensaje automáticamente a la tienda como notificación de que se ha completado el pedido.</li>
+              </ul>
+            </div>
+
+            <div class="payment-summary">
+              <h3>Resumen Final:</h3>
+              <div id="finalOrderSummary"></div>
+            </div>
+
+            <button type="button" class="finalize-btn" id="finalizeOrder">
+              <i class="fas fa-check"></i> Finalizar el Pedido
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Modal de confirmación -->
       <div id="confirmationModal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h2>¡Pedido Confirmado!</h2>
+            <h2>¡Gracias por tu Compra!</h2>
             <button class="modal-close" id="modalClose">&times;</button>
           </div>
           <div class="modal-body">
@@ -124,10 +158,10 @@
               <span id="finalOrderId"></span>
             </div>
             <p class="order-instructions">
-              <strong>Instrucciones:</strong><br>
-              • Verifica que la cantidad de productos sea correcta antes de proceder a finalizar el pedido.<br>
-              • Al hacer clic en "Finalizar el pedido" se te emitirá un código de pedido (ejemplo: Pedido: JSR-MDRXVJQ4-EA61V).<br>
-              • Al terminar el proceso se enviará un mensaje automáticamente a la tienda como notificación de que se ha completado el pedido.
+              <strong>Próximos pasos:</strong><br>
+              • Recibirás una confirmación por correo electrónico.<br>
+              • Nuestro equipo se pondrá en contacto contigo pronto.<br>
+              • Puedes hacer seguimiento de tu pedido con el ID proporcionado.
             </p>
           </div>
           <div class="modal-footer">

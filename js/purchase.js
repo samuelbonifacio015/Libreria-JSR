@@ -18,6 +18,7 @@
     // Estado de la aplicación
     let purchaseData = null;
     let isProcessing = false;
+    let currentStep = 1;
 
     /**
      * Inicializar el sistema de compra
@@ -118,10 +119,22 @@
      * Configurar event listeners
      */
     function setupEventListeners() {
-        // Formulario de compra
+        // Botón de volver al catálogo
+        const backToCatalogBtn = document.getElementById('backToCatalog');
+        if (backToCatalogBtn) {
+            backToCatalogBtn.addEventListener('click', handleBackToCatalog);
+        }
+
+        // Formulario de compra (Paso 1)
         const purchaseForm = document.getElementById('purchaseForm');
         if (purchaseForm) {
-            purchaseForm.addEventListener('submit', handleConfirmPurchase);
+            purchaseForm.addEventListener('submit', handleContinueToPayment);
+        }
+
+        // Botón de finalizar pedido (Paso 2)
+        const finalizeOrderBtn = document.getElementById('finalizeOrder');
+        if (finalizeOrderBtn) {
+            finalizeOrderBtn.addEventListener('click', handleFinalizeOrder);
         }
 
         // Botón del modal para ir al inicio
@@ -240,9 +253,16 @@
     }
 
     /**
-     * Manejar confirmación de compra
+     * Manejar volver al catálogo
      */
-    async function handleConfirmPurchase(event) {
+    function handleBackToCatalog() {
+        window.location.href = '/html/catalogo.html';
+    }
+
+    /**
+     * Manejar continuar al paso de pago
+     */
+    async function handleContinueToPayment(event) {
         event.preventDefault();
         
         if (isProcessing) return;
@@ -252,6 +272,26 @@
             showError('Por favor, completa todos los campos requeridos correctamente.');
             return;
         }
+
+        // Guardar datos del formulario
+        const formData = new FormData(document.getElementById('purchaseForm'));
+        purchaseData.customer = {
+            name: formData.get('customerName'),
+            lastName: formData.get('customerLastName'),
+            email: formData.get('customerEmail'),
+            phone: formData.get('customerPhone'),
+            notes: formData.get('deliveryNotes')
+        };
+
+        // Ir al paso 2
+        goToStep(2);
+    }
+
+    /**
+     * Manejar finalizar pedido
+     */
+    async function handleFinalizeOrder() {
+        if (isProcessing) return;
 
         isProcessing = true;
         showProcessingState(true);
@@ -273,6 +313,91 @@
             isProcessing = false;
             showProcessingState(false);
         }
+    }
+
+    /**
+     * Navegar a un paso específico
+     */
+    function goToStep(step) {
+        currentStep = step;
+        
+        // Ocultar todos los contenidos
+        document.getElementById('step1Content').style.display = 'none';
+        document.getElementById('step2Content').style.display = 'none';
+        
+        // Mostrar el contenido del paso actual
+        if (step === 1) {
+            document.getElementById('step1Content').style.display = 'grid';
+        } else if (step === 2) {
+            document.getElementById('step2Content').style.display = 'block';
+            renderFinalOrderSummary();
+        }
+        
+        // Actualizar indicadores de pasos
+        updateStepIndicators(step);
+    }
+
+    /**
+     * Actualizar indicadores de pasos
+     */
+    function updateStepIndicators(activeStep) {
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        
+        if (activeStep === 1) {
+            step1.classList.remove('inactive');
+            step1.classList.add('active');
+            step2.classList.remove('active');
+            step2.classList.add('inactive');
+        } else if (activeStep === 2) {
+            step1.classList.remove('active');
+            step1.classList.add('inactive');
+            step2.classList.remove('inactive');
+            step2.classList.add('active');
+        }
+    }
+
+    /**
+     * Renderizar resumen final del pedido
+     */
+    function renderFinalOrderSummary() {
+        const container = document.getElementById('finalOrderSummary');
+        if (!container || !purchaseData) return;
+
+        let html = `
+            <div class="final-summary-item">
+                <strong>ID del Pedido:</strong> ${purchaseData.orderId}
+            </div>
+            <div class="final-summary-item">
+                <strong>Cliente:</strong> ${purchaseData.customer.name} ${purchaseData.customer.lastName}
+            </div>
+            <div class="final-summary-item">
+                <strong>Teléfono:</strong> ${purchaseData.customer.phone}
+            </div>
+        `;
+
+        if (purchaseData.customer.email) {
+            html += `<div class="final-summary-item">
+                <strong>Email:</strong> ${purchaseData.customer.email}
+            </div>`;
+        }
+
+        html += `
+            <div class="final-summary-item">
+                <strong>Total de Productos:</strong> ${purchaseData.items.length}
+            </div>
+            <div class="final-summary-item">
+                <strong>Subtotal:</strong> S/. ${purchaseData.subtotal.toFixed(2)}
+            </div>
+            <div class="final-summary-item">
+                <strong>Envío:</strong> ${purchaseData.shipping === 0 ? 'GRATIS' : `S/. ${purchaseData.shipping.toFixed(2)}`}
+            </div>
+            <div class="final-summary-item total">
+                <strong>Total Final:</strong> S/. ${purchaseData.total.toFixed(2)}
+            </div>
+        `;
+
+        container.innerHTML = html;
     }
 
     /**
@@ -370,17 +495,8 @@
         // Simular tiempo de procesamiento
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Recopilar datos del formulario
-        const formData = new FormData(document.getElementById('purchaseForm'));
         const orderData = {
             ...purchaseData,
-            customer: {
-                name: formData.get('customerName'),
-                lastName: formData.get('customerLastName'),
-                email: formData.get('customerEmail'),
-                phone: formData.get('customerPhone'),
-                notes: formData.get('deliveryNotes')
-            },
             processedAt: new Date().toISOString(),
             status: 'confirmed'
         };
@@ -396,16 +512,16 @@
      * Mostrar estado de procesamiento
      */
     function showProcessingState(processing) {
-        const confirmBtn = document.getElementById('confirmPurchase');
-        if (confirmBtn) {
+        const finalizeBtn = document.getElementById('finalizeOrder');
+        if (finalizeBtn) {
             if (processing) {
-                confirmBtn.classList.add('loading');
-                confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-                confirmBtn.disabled = true;
+                finalizeBtn.classList.add('loading');
+                finalizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                finalizeBtn.disabled = true;
             } else {
-                confirmBtn.classList.remove('loading');
-                confirmBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Pedido';
-                confirmBtn.disabled = false;
+                finalizeBtn.classList.remove('loading');
+                finalizeBtn.innerHTML = '<i class="fas fa-check"></i> Finalizar el Pedido';
+                finalizeBtn.disabled = false;
             }
         }
     }

@@ -4,15 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             const navbarContainer = document.getElementById('navbar-container');
+            const navbarPlaceholder = document.getElementById('navbar-placeholder');
+            
             if (navbarContainer) {
                 navbarContainer.innerHTML = data;
-                
-                // Cargar el carrito después del navbar
-                return loadCart();
+            } else if (navbarPlaceholder) {
+                navbarPlaceholder.innerHTML = data;
             } else {
-                console.warn('No se encontró navbar-container');
+                console.warn('No se encontró navbar-container ni navbar-placeholder');
                 return Promise.resolve();
             }
+            
+            // Cargar el carrito después del navbar
+            return loadCart();
         })
         .then(() => {
             // Inicializar funcionalidad del navbar después de cargar todo
@@ -50,10 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(data => {
             const footerContainer = document.getElementById('footer-container');
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            
             if (footerContainer) {
                 footerContainer.innerHTML = data;
+            } else if (footerPlaceholder) {
+                footerPlaceholder.innerHTML = data;
             } else {
-                console.warn('No se encontró footer-container');
+                console.warn('No se encontró footer-container ni footer-placeholder');
             }
         })
         .catch(error => console.error('Error cargando footer:', error));
@@ -116,13 +124,18 @@ function loadCart() {
                     <!--floating cart end-->
                 `;
                 
-                // Insertar carrito flotante antes del elemento footer-container
+                // Insertar carrito flotante antes del elemento footer-placeholder o footer-container
+                const footerPlaceholder = document.getElementById('footer-placeholder');
                 const footerContainer = document.getElementById('footer-container');
-                if (footerContainer) {
+                
+                if (footerPlaceholder) {
+                    footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
+                    console.log('✅ Carrito flotante insertado en el body');
+                } else if (footerContainer) {
                     footerContainer.insertAdjacentHTML('beforebegin', floatingCartHTML);
                     console.log('✅ Carrito flotante insertado en el body');
                 } else {
-                    // Si no hay footer-container, insertar al final del body
+                    // Si no hay footer-placeholder ni footer-container, insertar al final del body
                     document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
                     console.log('✅ Carrito flotante insertado al final del body');
                 }
