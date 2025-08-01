@@ -7,14 +7,26 @@
     <link rel="icon" type="image/x-icon" href="/img/JSR.ico" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/purchase.css" />
+    <link rel="stylesheet" href="/partials/navbar.css" />
+    <link rel="stylesheet" href="/partials/footer.css" />
     <script
       src="https://kit.fontawesome.com/a076d05399.js"
       crossorigin="anonymous"
     ></script>
   </head>
   <body>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
 
     <div class="purchase-container">
+      <!-- Botón de volver -->
+      <div class="back-button-container">
+        <button class="back-btn" id="backToCatalog">
+          <i class="fas fa-arrow-left"></i>
+          Volver al Catálogo
+        </button>
+      </div>
+
       <!-- header purchase -->
       <div class="header">
         <div class="logo">
@@ -23,49 +35,52 @@
         </div>
 
         <div class="steps">
-          <div class="step active">
+          <div class="step active" id="step1">
               <div class="step-number">1</div>
               <span>VERIFICAR DATOS</span>
           </div>
-          <div class="step inactive">
+          <div class="step inactive" id="step2">
               <div class="step-number">2</div>
-              <span>RECOJO EN TIENDA</span>
+              <span>PROCESO DE PAGO</span>
           </div>
         </div>
 
-        <div class="main-content">
+        <!-- Paso 1: Verificar Datos -->
+        <div class="main-content" id="step1Content">
           <div class="form-section">
             <h2 class="section-title">VERIFICAR DATOS</h2>
             
             <!-- Formulario -->
-            <form>
+            <form id="purchaseForm">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" id="nombre" name="nombre" required />
+                  <label for="customerName">Nombre</label>
+                  <input type="text" id="customerName" name="customerName" required />
                 </div>
                 <div class="form-group">
-                  <label for="apellido">Apellido</label>
-                  <input type="text" id="apellido" name="apellido" required />
+                  <label for="customerLastName">Apellido</label>
+                  <input type="text" id="customerLastName" name="customerLastName" required />
                 </div>
               </div>
               
               <div class="form-group full-width">
-                <label for="contacto">Contacto</label>
-                <input type="email" id="contacto" name="contacto" placeholder="Correo electrónico (opcional)"/>
+                <label for="customerEmail">Contacto</label>
+                <input type="email" id="customerEmail" name="customerEmail" placeholder="Correo electrónico (opcional)"/>
               </div>
   
               <div class="form-group full-width">
-                <label for="telefono">Telefono</label>
-                <input type="tel" id="telefono" name="telefono" required />
+                <label for="customerPhone">Teléfono</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required />
               </div>
   
               <div class="form-group full-width">
-                <label for="mensaje">Mensaje</label>
-                <input type="mensaje" id="contacto" name="contacto" placeholder="Correo electrónico (opcional)"/>
+                <label for="deliveryNotes">Mensaje</label>
+                <textarea id="deliveryNotes" name="deliveryNotes" placeholder="Mensaje (opcional)"></textarea>
               </div>
   
-              <button type="submit" class="continue-btn">Continuar</button>
+              <button type="submit" class="continue-btn" id="continueToPayment">
+                <i class="fas fa-arrow-right"></i> Continuar
+              </button>
             </form>
           </div>
   
@@ -73,31 +88,95 @@
           <div class="summary-section">
             <div class="order-summary">
               <h3 class="summary-title">RESUMEN DEL PEDIDO</h3>
+              
+              <div id="orderIdDisplay" class="order-id"></div>
   
-              <div class="product-item">
-                <div class="product-image"></div>
-                <div class="product-details">
-                  <div class="product-name">PRODUCTO</div>
-                  <div class="product-brand">MARCA</div>
-                  <div class="product-quantity">CANTIDAD: 1</div>
-                  <div class="product-price">PRECIO: S/0.00</div>
-                </div>
+              <div id="orderItems" class="order-items">
+                <!-- Los items se cargarán dinámicamente -->
               </div>
   
               <hr class="summary-divider">
   
-              <div class="total">
-                <span>Total:</span>
-                <span class="total-amount">S/0.00</span>
+              <div class="totals">
+                <div class="total-row">
+                  <span>Subtotal:</span>
+                  <span id="subtotalAmount">S/. 0.00</span>
+                </div>
+                <div class="total-row">
+                  <span>Envío:</span>
+                  <span id="shippingAmount">S/. 0.00</span>
+                </div>
+                <div class="total-row total-final">
+                  <span>Total:</span>
+                  <span id="totalAmount">S/. 0.00</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Paso 2: Proceso de Pago -->
+        <div class="main-content" id="step2Content" style="display: none;">
+          <div class="payment-section">
+            <h2 class="section-title">PROCESO DE PAGO</h2>
+            
+            <div class="payment-instructions">
+              <h3>Instrucciones:</h3>
+              <ul>
+                <li>Verifique que la cantidad de productos sea correcta antes de proceder a finalizar el pedido.</li>
+                <li>Al hacer clic en "Finalizar el pedido" se le emitirá un código de pedido (ejemplo: Pedido: JSR-MDRXVJQ4-EA61V).</li>
+                <li>Al terminar el proceso se enviará un mensaje automáticamente a la tienda como notificación de que se ha completado el pedido.</li>
+              </ul>
+            </div>
+
+            <div class="payment-summary">
+              <h3>Resumen Final:</h3>
+              <div id="finalOrderSummary"></div>
+            </div>
+
+            <button type="button" class="finalize-btn" id="finalizeOrder">
+              <i class="fas fa-check"></i> Finalizar el Pedido
+            </button>
+          </div>
+        </div>
       </div>
 
-     
+      <!-- Modal de confirmación -->
+      <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>¡Gracias por tu Compra!</h2>
+            <button class="modal-close" id="modalClose">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <p>Tu pedido ha sido procesado exitosamente.</p>
+            <div class="order-id-display">
+              <strong>ID del Pedido:</strong>
+              <span id="finalOrderId"></span>
+            </div>
+            <p class="order-instructions">
+              <strong>Próximos pasos:</strong><br>
+              • Recibirás una confirmación por correo electrónico.<br>
+              • Nuestro equipo se pondrá en contacto contigo pronto.<br>
+              • Puedes hacer seguimiento de tu pedido con el ID proporcionado.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button id="goToHome" class="btn-primary">Ir al Inicio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
 
     <!-- Scripts -->
+    <script src="/js/load-content.js"></script>
+    <script src="/js/mobile.js"></script>
     <script src="/js/purchase.js"></script>
   </body>
 </html>

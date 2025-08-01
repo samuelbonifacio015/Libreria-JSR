@@ -18,12 +18,22 @@
     // Estado de la aplicación
     let purchaseData = null;
     let isProcessing = false;
+    let currentStep = 1;
 
     /**
      * Inicializar el sistema de compra
      */
     function initializePurchase() {
         console.log('🛒 Inicializando sistema de compra...');
+        
+        // Verificar si hay productos en el carrito
+        if (!hasCartItems()) {
+            showError('No hay productos en el carrito. Redirigiendo al inicio...');
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+            return;
+        }
         
         // Cargar datos de compra
         loadPurchaseData();
@@ -38,29 +48,53 @@
     }
 
     /**
+     * Verificar si hay productos en el carrito
+     */
+    function hasCartItems() {
+        try {
+            const cartItems = localStorage.getItem('jsr_cart_items');
+            if (!cartItems) return false;
+            
+            const items = JSON.parse(cartItems);
+            return items && items.length > 0;
+        } catch (error) {
+            console.error('Error al verificar carrito:', error);
+            return false;
+        }
+    }
+
+    /**
      * Cargar datos de compra desde localStorage
      */
     function loadPurchaseData() {
         try {
-            const savedData = localStorage.getItem('jsr_purchase_data');
-            if (!savedData) {
-                showError('No se encontraron datos de compra. Redirigiendo al carrito...');
+            const cartItems = localStorage.getItem('jsr_cart_items');
+            if (!cartItems) {
+                showError('No se encontraron productos en el carrito. Redirigiendo...');
                 setTimeout(() => {
                     window.location.href = '/index.html';
                 }, 2000);
                 return;
             }
 
-            purchaseData = JSON.parse(savedData);
-            
-            // Validar datos
-            if (!purchaseData.items || purchaseData.items.length === 0) {
+            const items = JSON.parse(cartItems);
+            if (!items || items.length === 0) {
                 showError('El carrito está vacío. Redirigiendo...');
                 setTimeout(() => {
                     window.location.href = '/index.html';
                 }, 2000);
                 return;
             }
+
+            // Crear datos de compra
+            purchaseData = {
+                orderId: generateOrderId(),
+                items: items,
+                subtotal: 0,
+                shipping: 0,
+                total: 0,
+                createdAt: new Date().toISOString()
+            };
 
             console.log('✅ Datos de compra cargados:', purchaseData);
         } catch (error) {
@@ -73,25 +107,46 @@
     }
 
     /**
+     * Generar ID de pedido único
+     */
+    function generateOrderId() {
+        const timestamp = Date.now().toString(36);
+        const random = Math.random().toString(36).substr(2, 5);
+        return `${PURCHASE_CONFIG.orderPrefix}-${timestamp.toUpperCase()}-${random.toUpperCase()}`;
+    }
+
+    /**
      * Configurar event listeners
      */
     function setupEventListeners() {
-        // Botón de volver al carrito
-        const backToCartBtn = document.getElementById('backToCart');
-        if (backToCartBtn) {
-            backToCartBtn.addEventListener('click', handleBackToCart);
+        // Botón de volver al catálogo
+        const backToCatalogBtn = document.getElementById('backToCatalog');
+        if (backToCatalogBtn) {
+            backToCatalogBtn.addEventListener('click', handleBackToCatalog);
         }
 
-        // Botón de confirmar compra
-        const confirmBtn = document.getElementById('confirmPurchase');
-        if (confirmBtn) {
-            confirmBtn.addEventListener('click', handleConfirmPurchase);
+        // Formulario de compra (Paso 1)
+        const purchaseForm = document.getElementById('purchaseForm');
+        if (purchaseForm) {
+            purchaseForm.addEventListener('submit', handleContinueToPayment);
+        }
+
+        // Botón de finalizar pedido (Paso 2)
+        const finalizeOrderBtn = document.getElementById('finalizeOrder');
+        if (finalizeOrderBtn) {
+            finalizeOrderBtn.addEventListener('click', handleFinalizeOrder);
         }
 
         // Botón del modal para ir al inicio
         const goToHomeBtn = document.getElementById('goToHome');
         if (goToHomeBtn) {
             goToHomeBtn.addEventListener('click', handleGoToHome);
+        }
+
+        // Botón de cerrar modal
+        const modalCloseBtn = document.getElementById('modalClose');
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', closeConfirmationModal);
         }
 
         // Validación en tiempo real del formulario
@@ -148,7 +203,7 @@
                 <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.src='/img/products/default.jpg'">
                 <div class="item-details">
                     <div class="item-name">${item.name}</div>
-                    <div class="item-brand">${item.brand}</div>
+                    <div class="item-brand">${item.brand || 'Sin marca'}</div>
                     <div class="item-quantity">Cantidad: ${item.quantity}</div>
                 </div>
                 <div class="item-price">S/. ${(item.price * item.quantity).toFixed(2)}</div>
@@ -198,20 +253,18 @@
     }
 
     /**
-     * Manejar volver al carrito
+     * Manejar volver al catálogo
      */
-    function handleBackToCart() {
-        // Guardar datos actualizados
-        localStorage.setItem('jsr_purchase_data', JSON.stringify(purchaseData));
-        
-        // Redirigir al carrito
-        window.location.href = '/index.html#cart';
+    function handleBackToCatalog() {
+        window.location.href = '/html/catalogo.html';
     }
 
     /**
-     * Manejar confirmación de compra
+     * Manejar continuar al paso de pago
      */
-    async function handleConfirmPurchase() {
+    async function handleContinueToPayment(event) {
+        event.preventDefault();
+        
         if (isProcessing) return;
 
         // Validar formulario
@@ -219,6 +272,26 @@
             showError('Por favor, completa todos los campos requeridos correctamente.');
             return;
         }
+
+        // Guardar datos del formulario
+        const formData = new FormData(document.getElementById('purchaseForm'));
+        purchaseData.customer = {
+            name: formData.get('customerName'),
+            lastName: formData.get('customerLastName'),
+            email: formData.get('customerEmail'),
+            phone: formData.get('customerPhone'),
+            notes: formData.get('deliveryNotes')
+        };
+
+        // Ir al paso 2
+        goToStep(2);
+    }
+
+    /**
+     * Manejar finalizar pedido
+     */
+    async function handleFinalizeOrder() {
+        if (isProcessing) return;
 
         isProcessing = true;
         showProcessingState(true);
@@ -240,6 +313,91 @@
             isProcessing = false;
             showProcessingState(false);
         }
+    }
+
+    /**
+     * Navegar a un paso específico
+     */
+    function goToStep(step) {
+        currentStep = step;
+        
+        // Ocultar todos los contenidos
+        document.getElementById('step1Content').style.display = 'none';
+        document.getElementById('step2Content').style.display = 'none';
+        
+        // Mostrar el contenido del paso actual
+        if (step === 1) {
+            document.getElementById('step1Content').style.display = 'grid';
+        } else if (step === 2) {
+            document.getElementById('step2Content').style.display = 'block';
+            renderFinalOrderSummary();
+        }
+        
+        // Actualizar indicadores de pasos
+        updateStepIndicators(step);
+    }
+
+    /**
+     * Actualizar indicadores de pasos
+     */
+    function updateStepIndicators(activeStep) {
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        
+        if (activeStep === 1) {
+            step1.classList.remove('inactive');
+            step1.classList.add('active');
+            step2.classList.remove('active');
+            step2.classList.add('inactive');
+        } else if (activeStep === 2) {
+            step1.classList.remove('active');
+            step1.classList.add('inactive');
+            step2.classList.remove('inactive');
+            step2.classList.add('active');
+        }
+    }
+
+    /**
+     * Renderizar resumen final del pedido
+     */
+    function renderFinalOrderSummary() {
+        const container = document.getElementById('finalOrderSummary');
+        if (!container || !purchaseData) return;
+
+        let html = `
+            <div class="final-summary-item">
+                <strong>ID del Pedido:</strong> ${purchaseData.orderId}
+            </div>
+            <div class="final-summary-item">
+                <strong>Cliente:</strong> ${purchaseData.customer.name} ${purchaseData.customer.lastName}
+            </div>
+            <div class="final-summary-item">
+                <strong>Teléfono:</strong> ${purchaseData.customer.phone}
+            </div>
+        `;
+
+        if (purchaseData.customer.email) {
+            html += `<div class="final-summary-item">
+                <strong>Email:</strong> ${purchaseData.customer.email}
+            </div>`;
+        }
+
+        html += `
+            <div class="final-summary-item">
+                <strong>Total de Productos:</strong> ${purchaseData.items.length}
+            </div>
+            <div class="final-summary-item">
+                <strong>Subtotal:</strong> S/. ${purchaseData.subtotal.toFixed(2)}
+            </div>
+            <div class="final-summary-item">
+                <strong>Envío:</strong> ${purchaseData.shipping === 0 ? 'GRATIS' : `S/. ${purchaseData.shipping.toFixed(2)}`}
+            </div>
+            <div class="final-summary-item total">
+                <strong>Total Final:</strong> S/. ${purchaseData.total.toFixed(2)}
+            </div>
+        `;
+
+        container.innerHTML = html;
     }
 
     /**
@@ -337,18 +495,8 @@
         // Simular tiempo de procesamiento
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Recopilar datos del formulario
-        const formData = new FormData(document.getElementById('purchaseForm'));
         const orderData = {
             ...purchaseData,
-            customer: {
-                name: formData.get('customerName'),
-                email: formData.get('customerEmail'),
-                phone: formData.get('customerPhone'),
-                address: formData.get('customerAddress'),
-                notes: formData.get('deliveryNotes')
-            },
-            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value,
             processedAt: new Date().toISOString(),
             status: 'confirmed'
         };
@@ -364,16 +512,16 @@
      * Mostrar estado de procesamiento
      */
     function showProcessingState(processing) {
-        const confirmBtn = document.getElementById('confirmPurchase');
-        if (confirmBtn) {
+        const finalizeBtn = document.getElementById('finalizeOrder');
+        if (finalizeBtn) {
             if (processing) {
-                confirmBtn.classList.add('loading');
-                confirmBtn.innerHTML = '<i class="fas fa-spinner"></i> Procesando...';
-                confirmBtn.disabled = true;
+                finalizeBtn.classList.add('loading');
+                finalizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                finalizeBtn.disabled = true;
             } else {
-                confirmBtn.classList.remove('loading');
-                confirmBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Pedido';
-                confirmBtn.disabled = false;
+                finalizeBtn.classList.remove('loading');
+                finalizeBtn.innerHTML = '<i class="fas fa-check"></i> Finalizar el Pedido';
+                finalizeBtn.disabled = false;
             }
         }
     }
@@ -392,10 +540,19 @@
     }
 
     /**
+     * Cerrar modal de confirmación
+     */
+    function closeConfirmationModal() {
+        const modal = document.getElementById('confirmationModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    }
+
+    /**
      * Limpiar carrito después de la compra
      */
     function clearCart() {
-        localStorage.removeItem('jsr_purchase_data');
         localStorage.removeItem('jsr_cart_items');
     }
 
