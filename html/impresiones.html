@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servicios de Impresión - JSR Librería</title>
+
+    <link rel="icon" href="../img/JSR.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../partials/footer.css" />
+    <link rel="stylesheet" href="../partials/navbar.css" />
+    <link rel="stylesheet" href="../partials/headernav.css" />
+    <link rel="stylesheet" href="../partials/modal.css" />
+    <link rel="stylesheet" href="../partials/cart.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .impresiones-hero {
+        background: linear-gradient(135deg, #19416f 0%, #00aeef 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .impresiones-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,800 1000,1000"/></svg>');
+        background-size: cover;
+        z-index: 1;
+      }
+
+      .impresiones-hero-content {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--spacing-xl);
+        position: relative;
+        z-index: 2;
+      }
+
+      .impresiones-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .impresiones-hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .impresiones-services {
+        padding: 4rem 0;
+        background: var(--bg-light);
+      }
+
+      .services-grid {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--spacing-xl);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .service-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-md);
+        transition: transform var(--transition-normal),
+          box-shadow var(--transition-normal);
+        text-align: center;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .service-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+      }
+
+      .service-card p {
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .service-price {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+      }
+
+      .service-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+      }
+
+      .service-features li {
+        padding: 0.5rem 0;
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .service-features i {
+        color: var(--success-color);
+        font-size: 0.9rem;
+      }
+
+      .service-btn {
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .service-btn:hover {
+        background: var(--secondary-hover);
+        transform: translateY(-2px);
+      }
+
+      .contact-section {
+        padding: 4rem 0;
+        background: white;
+      }
+
+      .contact-container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--spacing-xl);
+        text-align: center;
+      }
+
+      .contact-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .contact-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem;
+        background: var(--bg-light);
+        border-radius: 10px;
+      }
+
+      .contact-item i {
+        font-size: 2rem;
+        color: var(--secondary-color);
+      }
+
+      .contact-item h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      .contact-item p {
+        color: var(--text-light);
+      }
+
+      @media (max-width: 768px) {
+        .impresiones-hero h1 {
+          font-size: 2rem;
+        }
+
+        .impresiones-hero p {
+          font-size: 1rem;
+        }
+
+        .services-grid {
+          grid-template-columns: 1fr;
+          padding: 0 var(--spacing-md);
+        }
+
+        .service-card {
+          padding: 1.5rem;
+        }
+
+        .contact-info {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .impresiones-hero {
+          padding: 2rem 0;
+        }
+
+        .impresiones-hero h1 {
+          font-size: 1.5rem;
+        }
+
+        .service-card {
+          padding: 1rem;
+        }
+
+        .service-icon {
+          width: 60px;
+          height: 60px;
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--navbar-->
+    <div id="navbar-placeholder"></div>
+
+    <!--headernav-->
+    <div id="headernav-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="impresiones-hero">
+      <div class="impresiones-hero-content">
+        <h1>Servicios de Impresión Profesional</h1>
+        <p>
+          Alta calidad, a tiempo récord. Impresiones para todos tus proyectos
+        </p>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="impresiones-services">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-print"></i>
+          </div>
+          <h3>Impresión Básica</h3>
+          <p>
+            Impresiones en blanco y negro y color para documentos, trabajos y
+            proyectos escolares.
+          </p>
+          <div class="service-price">S/ 0.50</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Blanco y negro</li>
+            <li><i class="fas fa-check"></i> Color</li>
+            <li><i class="fas fa-check"></i> Diferentes tamaños</li>
+            <li><i class="fas fa-check"></i> Entrega inmediata</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <h3>Impresión Digital</h3>
+          <p>
+            Impresiones de alta calidad para presentaciones, portafolios y
+            material promocional.
+          </p>
+          <div class="service-price">S/ 1.00</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Alta resolución</li>
+            <li><i class="fas fa-check"></i> Papel premium</li>
+            <li><i class="fas fa-check"></i> Acabados especiales</li>
+            <li><i class="fas fa-check"></i> Asesoría técnica</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-copy"></i>
+          </div>
+          <h3>Fotocopias</h3>
+          <p>
+            Servicio rápido de fotocopias para documentos, libros y material
+            educativo.
+          </p>
+          <div class="service-price">S/ 0.30</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Rápido y económico</li>
+            <li><i class="fas fa-check"></i> Múltiples copias</li>
+            <li><i class="fas fa-check"></i> Diferentes tamaños</li>
+            <li><i class="fas fa-check"></i> Servicio express</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-scroll"></i>
+          </div>
+          <h3>Impresión Gran Formato</h3>
+          <p>
+            Banners, posters y material publicitario en gran formato para
+            eventos y promociones.
+          </p>
+          <div class="service-price">S/ 15.00</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Hasta A0</li>
+            <li><i class="fas fa-check"></i> Material resistente</li>
+            <li><i class="fas fa-check"></i> Diseño incluido</li>
+            <li><i class="fas fa-check"></i> Instalación</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3>Encuadernación</h3>
+          <p>
+            Servicios de encuadernación profesional para tesis, libros y
+            documentos importantes.
+          </p>
+          <div class="service-price">S/ 8.00</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Espiral</li>
+            <li><i class="fas fa-check"></i> Tapa dura</li>
+            <li><i class="fas fa-check"></i> Tapa blanda</li>
+            <li><i class="fas fa-check"></i> Personalizado</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3>Diseño Gráfico</h3>
+          <p>
+            Servicios de diseño gráfico para logos, tarjetas de presentación y
+            material promocional.
+          </p>
+          <div class="service-price">S/ 25.00</div>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Diseño personalizado</li>
+            <li><i class="fas fa-check"></i> Múltiples revisiones</li>
+            <li><i class="fas fa-check"></i> Formatos digitales</li>
+            <li><i class="fas fa-check"></i> Asesoría completa</li>
+          </ul>
+          <a href="#" class="service-btn">Solicitar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="contact-container">
+        <h2>¿Necesitas ayuda con tu proyecto?</h2>
+        <p>
+          Contáctanos para obtener asesoría personalizada y cotizaciones
+          especiales
+        </p>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <h4>Llámanos</h4>
+            <p>999 451 887</p>
+          </div>
+
+          <div class="contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <h4>WhatsApp</h4>
+            <p>999 451 887</p>
+          </div>
+
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <h4>Email</h4>
+            <p>impresiones@jsr.com</p>
+          </div>
+
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <h4>Horarios</h4>
+            <p>Lun - Sáb: 8:00 - 20:00</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--footer-->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="../js/load-content.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/dropdown.js"></script>
+    <script src="../partials/modal.js"></script>
+    <script src="../js/mobile.js"></script>
+  </body>
+</html>

@@ -2,9 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.carousel');
     const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+    const dots = document.querySelectorAll('.carousel-dot');
 
     let currentSlide = 0;
     const totalSlides = slides.length;
@@ -36,16 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function prevSlide() {
         goToSlide(currentSlide - 1);
     }
-
-    nextBtn.addEventListener('click', () =>{
-        nextSlide();
-        resetAutoplay();
-    });
-
-    prevBtn.addEventListener('click', () =>{
-        prevSlide();
-        resetAutoplay();
-    });
 
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {

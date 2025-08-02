@@ -117,34 +117,35 @@ body {
   display: block;
 }
 
-.carousel-controls {
+.carousel-dots {
   position: absolute;
-  top: 50%;
-  width: 100%;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
+  gap: 10px;
   z-index: 10;
 }
 
-.carousel-control {
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius-round);
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  margin: 0 var(--spacing-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
-.carousel-control:hover {
-  background: rgba(0, 0, 0, 0.8);
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  transform: scale(1.2);
 }
 
 /*-----------------------------------*\
@@ -172,11 +173,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 45px;
-    height: 45px;
-    font-size: 20px;
-    margin: 0 1rem;
+  .carousel-dots {
+    bottom: 15px;
+  }
+
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
   }
 }
 
@@ -190,11 +193,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
-    margin: 0 0.75rem;
+  .carousel-dots {
+    bottom: 12px;
+  }
+
+  .carousel-dot {
+    width: 9px;
+    height: 9px;
   }
 }
 
@@ -208,11 +213,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    margin: 0 0.5rem;
+  .carousel-dots {
+    bottom: 10px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
   }
 }
 
@@ -233,31 +240,13 @@ body {
     width: 100%;
   }
 
-  .carousel-controls {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    z-index: 10;
-    padding: 0 0.5rem;
+  .carousel-dots {
+    bottom: 8px;
   }
 
-  .carousel-control {
-    width: 38px;
-    height: 38px;
-    font-size: 16px;
-    margin: 0;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .carousel-control:hover {
-    background: rgba(0, 0, 0, 0.9);
+  .carousel-dot {
+    width: 7px;
+    height: 7px;
   }
 }
 
@@ -271,10 +260,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
+  .carousel-dots {
+    bottom: 6px;
+  }
+
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
   }
 }
 
@@ -288,10 +280,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
+  .carousel-dots {
+    bottom: 5px;
+  }
+
+  .carousel-dot {
+    width: 5px;
+    height: 5px;
   }
 }
 
@@ -305,9 +300,13 @@ body {
     object-fit: contain;
   }
 
-  .carousel-control {
-    width: 30px;
-    height: 30px;
+  .carousel-dots {
+    bottom: 4px;
+  }
+
+  .carousel-dot {
+    width: 4px;
+    height: 4px;
   }
 }
 
@@ -1137,12 +1136,12 @@ body {
 }
 
 /*-----------------------------------*\
-  #RESPONSIVE CAROUSEL-CONTROLS
+  #RESPONSIVE CAROUSEL-DOTS
 \*-----------------------------------*/
 
 @media (max-width: 768px) {
-  .carousel-controls {
-    display: none !important;
+  .carousel-dots {
+    display: flex;
   }
 }
 
@@ -1596,8 +1595,6 @@ body {
     padding: 0.25rem 0.5rem;
   }
 }
-
-
 
 @media (max-width: 768px) {
   .carousel-container {
