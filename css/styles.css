@@ -488,8 +488,9 @@ body {
 
 .merchandising-section .product-list-container {
   position: relative;
-  width: calc(6 * 250px);
-  max-width: calc(100vw - 13rem - 2rem);
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
   overflow: hidden;
 }
 
@@ -584,11 +585,9 @@ body {
   .merchandising-section .product-list-container {
     margin-left: 0;
     width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+    max-width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
     padding: 0 10px;
   }
 
@@ -607,6 +606,11 @@ body {
   }
 
   .product-nav-arrow {
+    display: none;
+  }
+
+  .go-back-button,
+  .go-next-button {
     display: none;
   }
 }
@@ -1938,4 +1942,57 @@ body {
   .promotion-product-card img {
     height: 140px;
   }
+}
+
+.merchandising-section {
+  position: relative;
+}
+
+.go-back-button,
+.go-next-button {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background: none;
+  border: none;
+  box-shadow: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.go-back-button {
+  left: 5px;
+}
+
+.go-next-button {
+  right: 5px;
+}
+
+.go-back-button:hover,
+.go-next-button:hover {
+  transform: translateY(-50%) scale(1.1);
+  filter: brightness(1.2);
+}
+
+.go-back-button:active,
+.go-next-button:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.go-back-icon,
+.go-next-icon {
+  stroke: #93c5fd;
+  background: none;
+  transition: stroke 0.3s ease;
+}
+
+.go-back-button:hover .go-back-icon,
+.go-next-button:hover .go-next-icon {
+  stroke: #3b82f6;
 }
