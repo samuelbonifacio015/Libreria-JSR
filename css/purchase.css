@@ -495,11 +495,12 @@ textarea {
   border-radius: 10px;
   padding: 0;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   animation: modalSlideIn 0.3s ease-out;
+  position: relative;
 }
 
 @keyframes modalSlideIn {
@@ -521,11 +522,16 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  min-height: 60px;
 }
 
 .modal-header h2 {
   margin: 0;
   font-size: 20px;
+  flex: 1;
+  text-align: center;
+  padding-right: 40px;
 }
 
 .modal-close {
@@ -542,6 +548,10 @@ textarea {
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.3s ease;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
 }
 
 .modal-close:hover {
@@ -602,7 +612,8 @@ textarea {
   transform: translateY(-1px);
 }
 
-@media (max-width: 2000px) and (min-width: 1325px) {
+@media (max-width: 2000px) and (min-width: 1425px) {
+
   body {
     padding-top: 120px;
   }
@@ -610,12 +621,69 @@ textarea {
   .summary-section {
     padding-left: 12rem;
   }
+
+  .modal-content {
+    max-width: 650px;
+  }
+
+  .modal-header h2 {
+    font-size: 22px;
+    padding-right: 45px;
+  }
+
+  .modal-close {
+    top: 18px;
+    right: 18px;
+    width: 32px;
+    height: 32px;
+    font-size: 26px;
+  }
+
+  .success-icon {
+    font-size: 65px;
+  }
+
+  .order-id-display {
+    font-size: 18px;
+    padding: 18px;
+  }
+
+  .order-instructions {
+    font-size: 15px;
+    padding: 18px;
+  }
+
+  .btn-primary {
+    padding: 14px 28px;
+    font-size: 17px;
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+
+  .mobile-promotional-header {
+    display: none !important;
+  }
+
+  .modal-content {
+    max-width: 550px;
+  }
+
+  .modal-header h2 {
+    font-size: 19px;
+    padding-right: 38px;
+  }
+
+  .modal-close {
+    top: 13px;
+    right: 13px;
+    width: 29px;
+    height: 29px;
+    font-size: 22px;
+  }
+
   body {
-    padding: 10px;
-    padding-top: 25rem;
+    padding-top: 10rem;
   }
 
   .back-btn {
@@ -680,10 +748,43 @@ textarea {
   .modal-content {
     width: 95%;
     margin: 20px;
+    max-width: 500px;
   }
 
   .modal-body {
     padding: 20px 15px;
+  }
+
+  .modal-header h2 {
+    font-size: 18px;
+    padding-right: 35px;
+  }
+
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+
+  .success-icon {
+    font-size: 50px;
+  }
+
+  .order-id-display {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .order-instructions {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 14px;
   }
 }
 
@@ -722,5 +823,55 @@ textarea {
   .item-image {
     margin: 0 auto;
     display: block;
+  }
+
+  .modal-content {
+    width: 98%;
+    margin: 10px;
+    max-width: 400px;
+  }
+
+  .modal-header {
+    padding: 15px;
+    min-height: 50px;
+  }
+
+  .modal-header h2 {
+    font-size: 16px;
+    padding-right: 30px;
+  }
+
+  .modal-close {
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+  }
+
+  .modal-body {
+    padding: 15px 10px;
+  }
+
+  .success-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+  }
+
+  .order-id-display {
+    font-size: 12px;
+    padding: 10px;
+    margin: 15px 0;
+  }
+
+  .order-instructions {
+    font-size: 12px;
+    padding: 10px;
+    margin-top: 15px;
+  }
+
+  .btn-primary {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }
