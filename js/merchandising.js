@@ -80,6 +80,8 @@ function loadMerchandisingProducts() {
                 updateNavigationVisibility();
                 // Mostrar flecha derecha por defecto cuando hay productos
                 showInitialNavigation();
+                // Inicializar estado de botones
+                initializeButtonStates();
             }, 100);
             
         })
@@ -126,20 +128,44 @@ function renderProducts(containerId, products) {
 
 // Funciones para navegación horizontal
 function initializeProductNavigation() {
-    const navButtons = document.querySelectorAll('.product-nav-arrow');
+    // Configurar event listeners para los botones go-back-button y go-next-button
+    const backButtons = document.querySelectorAll('.go-back-button');
+    const nextButtons = document.querySelectorAll('.go-next-button');
     
-    navButtons.forEach(button => {
+    backButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const section = this.getAttribute('data-section');
-            const direction = this.classList.contains('prev') ? -1 : 1;
-            scrollProducts(section, direction);
+            console.log('👈 Botón "go back" clickeado');
+            const merchandisingSection = this.closest('.merchandising-section');
+            const productList = merchandisingSection.querySelector('.product-list');
+            if (productList) {
+                const section = productList.id.replace('-products', '');
+                console.log('📋 Sección identificada:', section);
+                scrollProducts(section, -1);
+            } else {
+                console.log('❌ No se encontró product-list en la sección');
+            }
+        });
+    });
+    
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('👉 Botón "go next" clickeado');
+            const merchandisingSection = this.closest('.merchandising-section');
+            const productList = merchandisingSection.querySelector('.product-list');
+            if (productList) {
+                const section = productList.id.replace('-products', '');
+                console.log('📋 Sección identificada:', section);
+                scrollProducts(section, 1);
+            } else {
+                console.log('❌ No se encontró product-list en la sección');
+            }
         });
     });
 
     // Agregar eventos de scroll para actualizar visibilidad de flechas
-    const containers = document.querySelectorAll('.merchandising-section .product-list-container');
-    containers.forEach(container => {
-        container.addEventListener('scroll', function() {
+    const productLists = document.querySelectorAll('.merchandising-section .product-list');
+    productLists.forEach(productList => {
+        productList.addEventListener('scroll', function() {
             updateNavigationVisibility();
         });
     });
@@ -149,10 +175,17 @@ function initializeProductNavigation() {
 }
 
 function scrollProducts(section, direction) {
-    const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
-    const productList = container.querySelector('.product-list');
+    const productList = document.querySelector(`#${section}-products`);
     
-    if (!container || !productList) return;
+    if (!productList) {
+        console.log('❌ No se encontró el elemento product-list para la sección:', section);
+        return;
+    }
+
+    console.log('✅ Elemento product-list encontrado:', productList);
+    console.log('📏 Scroll actual:', productList.scrollLeft);
+    console.log('📐 Ancho del elemento:', productList.scrollWidth);
+    console.log('📐 Ancho visible:', productList.clientWidth);
 
     // Obtener el ancho de desplazamiento basado en el tamaño de la pantalla
     let scrollAmount;
@@ -165,14 +198,21 @@ function scrollProducts(section, direction) {
         scrollAmount = 250; // Ancho de producto desktop + gap
     }
 
-    const currentScroll = container.scrollLeft;
+    const currentScroll = productList.scrollLeft;
     const targetScroll = currentScroll + (scrollAmount * direction);
 
+    console.log('🎯 Dirección:', direction);
+    console.log('📏 Scroll actual:', currentScroll);
+    console.log('📏 Scroll objetivo:', targetScroll);
+    console.log('📏 Cantidad de scroll:', scrollAmount);
+
     // Scroll suave
-    container.scrollTo({
+    productList.scrollTo({
         left: targetScroll,
         behavior: 'smooth'
     });
+
+    console.log('✅ Scroll ejecutado');
 
     // Actualizar visibilidad de flechas después del scroll
     setTimeout(() => {
@@ -181,43 +221,7 @@ function scrollProducts(section, direction) {
 }
 
 function updateNavigationVisibility() {
-    const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
-    
-    sections.forEach(section => {
-        const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
-        if (!container) return;
-
-        const productList = container.querySelector('.product-list');
-        const prevBtn = container.querySelector('.product-nav-arrow.prev');
-        const nextBtn = container.querySelector('.product-nav-arrow.next');
-
-        if (!productList || !prevBtn || !nextBtn) return;
-
-        const scrollLeft = container.scrollLeft;
-        const scrollWidth = container.scrollWidth;
-        const clientWidth = container.clientWidth;
-        const maxScroll = scrollWidth - clientWidth;
-
-        // Mostrar/ocultar flecha izquierda
-        if (scrollLeft > 5) {
-            prevBtn.classList.add('visible');
-        } else {
-            prevBtn.classList.remove('visible');
-        }
-
-        // Mostrar/ocultar flecha derecha
-        if (scrollLeft < maxScroll - 5) {
-            nextBtn.classList.add('visible');
-        } else {
-            nextBtn.classList.remove('visible');
-        }
-
-        // En desktop, ocultar flechas si no hay scroll necesario
-        if (window.innerWidth > 768 && maxScroll <= 0) {
-            prevBtn.classList.remove('visible');
-            nextBtn.classList.remove('visible');
-        }
-    });
+    // Los botones siempre están visibles, no necesitamos lógica de visibilidad
 }
 
 // Touch/swipe support para móviles
@@ -225,26 +229,26 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 document.addEventListener('touchstart', function(e) {
-    const container = e.target.closest('.product-list-container');
-    if (container) {
+    const productList = e.target.closest('.product-list');
+    if (productList) {
         touchStartX = e.changedTouches[0].screenX;
     }
 });
 
 document.addEventListener('touchend', function(e) {
-    const container = e.target.closest('.product-list-container');
-    if (container) {
+    const productList = e.target.closest('.product-list');
+    if (productList) {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(container);
+        handleSwipe(productList);
     }
 });
 
-function handleSwipe(container) {
+function handleSwipe(productList) {
     const swipeThreshold = 50;
     const swipeDistance = touchStartX - touchEndX;
     
     if (Math.abs(swipeDistance) > swipeThreshold) {
-        const section = container.querySelector('.product-list').id.replace('-products', '');
+        const section = productList.id.replace('-products', '');
         const direction = swipeDistance > 0 ? 1 : -1;
         scrollProducts(section, direction);
     }
@@ -252,25 +256,10 @@ function handleSwipe(container) {
 
 // Función para mostrar las flechas iniciales cuando hay contenido disponible
 function showInitialNavigation() {
-    const sections = ['promotion', 'design-drawing', 'infantil', 'papeleria'];
-    
-    sections.forEach(section => {
-        const container = document.querySelector(`#${section}-products`).closest('.product-list-container');
-        if (!container) return;
-
-        const productList = container.querySelector('.product-list');
-        const nextBtn = container.querySelector('.product-nav-arrow.next');
-
-        if (!productList || !nextBtn) return;
-
-        const scrollWidth = container.scrollWidth;
-        const clientWidth = container.clientWidth;
-
-        // Si hay más contenido que el visible, mostrar la flecha derecha
-        if (scrollWidth > clientWidth) {
-            nextBtn.classList.add('visible');
-        }
-    });
+    // Los botones siempre están visibles, no necesitamos lógica de visibilidad
 }
 
- 
+// Función para inicializar el estado de los botones
+function initializeButtonStates() {
+    // Los botones siempre están visibles, no necesitamos lógica de visibilidad
+}
