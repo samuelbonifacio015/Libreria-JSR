@@ -152,6 +152,22 @@ body {
   #RESPONSIVE CAROUSEL
 \*-----------------------------------*/
 
+.slide img[loading="lazy"] {
+  opacity: 0;
+}
+
+.slide img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Optimización para diferentes densidades de pantalla */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .slide img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
 @media (min-width: 1440px) {
   .carousel {
     height: auto;

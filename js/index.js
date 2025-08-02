@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     startAutoplay();
-
 });
 
 //Funcion para volver al inicio
