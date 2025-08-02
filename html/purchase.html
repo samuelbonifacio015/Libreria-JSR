@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/purchase.css" />
     <link rel="stylesheet" href="/partials/navbar.css" />
+    <link rel="stylesheet" href="/partials/headernav.css" />
     <link rel="stylesheet" href="/partials/footer.css" />
     <script
       src="https://kit.fontawesome.com/a076d05399.js"
@@ -17,6 +18,9 @@
   <body>
     <!-- Navbar -->
     <div id="navbar-container"></div>
+
+    <!-- Header Nav -->
+    <div id="headernav-container"></div>
 
     <div class="purchase-container">
       <!-- Botón de volver -->
@@ -36,12 +40,12 @@
 
         <div class="steps">
           <div class="step active" id="step1">
-              <div class="step-number">1</div>
-              <span>VERIFICAR DATOS</span>
+            <div class="step-number">1</div>
+            <span>VERIFICAR DATOS</span>
           </div>
           <div class="step inactive" id="step2">
-              <div class="step-number">2</div>
-              <span>PROCESO DE PAGO</span>
+            <div class="step-number">2</div>
+            <span>PROCESO DE PAGO</span>
           </div>
         </div>
 
@@ -49,54 +53,78 @@
         <div class="main-content" id="step1Content">
           <div class="form-section">
             <h2 class="section-title">VERIFICAR DATOS</h2>
-            
+
             <!-- Formulario -->
             <form id="purchaseForm">
               <div class="form-row">
                 <div class="form-group">
                   <label for="customerName">Nombre</label>
-                  <input type="text" id="customerName" name="customerName" required />
+                  <input
+                    type="text"
+                    id="customerName"
+                    name="customerName"
+                    required
+                  />
                 </div>
                 <div class="form-group">
                   <label for="customerLastName">Apellido</label>
-                  <input type="text" id="customerLastName" name="customerLastName" required />
+                  <input
+                    type="text"
+                    id="customerLastName"
+                    name="customerLastName"
+                    required
+                  />
                 </div>
               </div>
-              
+
               <div class="form-group full-width">
                 <label for="customerEmail">Contacto</label>
-                <input type="email" id="customerEmail" name="customerEmail" placeholder="Correo electrónico (opcional)"/>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  name="customerEmail"
+                  placeholder="Correo electrónico (opcional)"
+                />
               </div>
-  
+
               <div class="form-group full-width">
                 <label for="customerPhone">Teléfono</label>
-                <input type="tel" id="customerPhone" name="customerPhone" required />
+                <input
+                  type="tel"
+                  id="customerPhone"
+                  name="customerPhone"
+                  required
+                />
               </div>
-  
+
               <div class="form-group full-width">
                 <label for="deliveryNotes">Mensaje</label>
-                <textarea id="deliveryNotes" name="deliveryNotes" placeholder="Mensaje (opcional)"></textarea>
+                <textarea
+                  id="deliveryNotes"
+                  name="deliveryNotes"
+                  placeholder="Mensaje (opcional)"
+                ></textarea>
               </div>
-  
+
               <button type="submit" class="continue-btn" id="continueToPayment">
                 <i class="fas fa-arrow-right"></i> Continuar
               </button>
             </form>
           </div>
-  
+
           <!-- Summary -->
           <div class="summary-section">
             <div class="order-summary">
               <h3 class="summary-title">RESUMEN DEL PEDIDO</h3>
-              
+
               <div id="orderIdDisplay" class="order-id"></div>
-  
+
               <div id="orderItems" class="order-items">
                 <!-- Los items se cargarán dinámicamente -->
               </div>
-  
-              <hr class="summary-divider">
-  
+
+              <hr class="summary-divider" />
+
               <div class="totals">
                 <div class="total-row">
                   <span>Subtotal:</span>
@@ -116,16 +144,25 @@
         </div>
 
         <!-- Paso 2: Proceso de Pago -->
-        <div class="main-content" id="step2Content" style="display: none;">
+        <div class="main-content" id="step2Content" style="display: none">
           <div class="payment-section">
             <h2 class="section-title">PROCESO DE PAGO</h2>
-            
+
             <div class="payment-instructions">
               <h3>Instrucciones:</h3>
               <ul>
-                <li>Verifique que la cantidad de productos sea correcta antes de proceder a finalizar el pedido.</li>
-                <li>Al hacer clic en "Finalizar el pedido" se le emitirá un código de pedido (ejemplo: Pedido: JSR-MDRXVJQ4-EA61V).</li>
-                <li>Al terminar el proceso se enviará un mensaje automáticamente a la tienda como notificación de que se ha completado el pedido.</li>
+                <li>
+                  Verifique que la cantidad de productos sea correcta antes de
+                  proceder a finalizar el pedido.
+                </li>
+                <li>
+                  Al hacer clic en "Finalizar el pedido" se le emitirá un código
+                  de pedido (ejemplo: Pedido: JSR-MDRXVJQ4-EA61V).
+                </li>
+                <li>
+                  Al terminar el proceso se enviará un mensaje automáticamente a
+                  la tienda como notificación de que se ha completado el pedido.
+                </li>
               </ul>
             </div>
 
@@ -158,9 +195,9 @@
               <span id="finalOrderId"></span>
             </div>
             <p class="order-instructions">
-              <strong>Próximos pasos:</strong><br>
-              • Recibirás una confirmación por correo electrónico.<br>
-              • Nuestro equipo se pondrá en contacto contigo pronto.<br>
+              <strong>Próximos pasos:</strong><br />
+              • Recibirás una confirmación por correo electrónico.<br />
+              • Nuestro equipo se pondrá en contacto contigo pronto.<br />
               • Puedes hacer seguimiento de tu pedido con el ID proporcionado.
             </p>
           </div>

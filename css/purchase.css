@@ -6,12 +6,11 @@
 
 body {
   font-family: "Inter", Arial, Helvetica, sans-serif;
-  background-color: #f3f3f3;
+  background-color: #eeeeee;
   padding: 20px;
   min-height: 100vh;
 }
 
-/* Ajustes para el navbar */
 #navbar-container {
   position: fixed;
   top: 0;
@@ -20,7 +19,6 @@ body {
   z-index: 1000;
 }
 
-/* Ajustar el padding del body cuando hay navbar fijo */
 @media (min-width: 1025px) {
   body {
     padding-top: 140px;
@@ -33,7 +31,6 @@ body {
   }
 }
 
-/* Ocultar carrito flotante en purchase.html */
 .floating-cart {
   display: none !important;
 }
@@ -44,7 +41,6 @@ body {
   padding: 20px;
 }
 
-/* Botón de volver */
 .back-button-container {
   margin-bottom: 20px;
 }
@@ -193,13 +189,19 @@ body {
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #333;
   font-weight: 500;
   font-size: 14px;
 }
 
-input, textarea {
+.purchaseForm label {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+input,
+textarea {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #ddd;
@@ -209,7 +211,8 @@ input, textarea {
   transition: border-color 0.3s ease;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
   border-color: #0033a0;
 }
@@ -253,7 +256,6 @@ textarea {
   cursor: wait;
 }
 
-/* Paso 2: Proceso de Pago */
 .payment-section {
   padding: 50px;
   background: white;
@@ -409,7 +411,7 @@ textarea {
 .item-image {
   width: 60px;
   height: 60px;
-  background: #6B8DD6;
+  background: #6b8dd6;
   border-radius: 4px;
   object-fit: cover;
 }
@@ -471,7 +473,6 @@ textarea {
   margin-top: 15px;
 }
 
-/* Modal de confirmación */
 .modal {
   display: none;
   position: fixed;
@@ -602,66 +603,75 @@ textarea {
   transform: translateY(-1px);
 }
 
-/* Responsive */
+@media (max-width: 2000px) and (min-width: 1325px) {
+  body {
+    padding-top: 120px;
+  }
+
+  .summary-section {
+    padding-left: 12rem;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     padding: 10px;
   }
-  
+
   .purchase-container {
     padding: 10px;
   }
-  
+
   .header {
     flex-direction: column;
     text-align: center;
     gap: 20px;
   }
-  
+
   .main-content {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .form-section {
     padding: 30px 20px;
   }
-  
+
   .payment-section {
     padding: 30px 20px;
   }
-  
+
   .summary-section {
     padding: 20px;
     justify-content: center;
   }
-  
+
   .form-row {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .steps {
     flex-direction: column;
     align-items: center;
     gap: 10px;
   }
-  
+
   .step {
     font-size: 12px;
     padding: 8px 15px;
   }
-  
+
   .order-summary {
     max-width: 100%;
     padding: 25px;
   }
-  
+
   .modal-content {
     width: 95%;
     margin: 20px;
   }
-  
+
   .modal-body {
     padding: 20px 15px;
   }
@@ -671,29 +681,29 @@ textarea {
   .logo-text {
     font-size: 18px;
   }
-  
+
   .logo img {
     width: 35px;
     height: 35px;
   }
-  
+
   .form-section {
     padding: 20px 15px;
   }
-  
+
   .payment-section {
     padding: 20px 15px;
   }
-  
+
   .order-summary {
     padding: 20px;
   }
-  
+
   .order-item {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .item-price {
     text-align: center;
     margin-top: 10px;
