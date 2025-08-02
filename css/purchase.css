@@ -616,6 +616,17 @@ textarea {
 @media (max-width: 768px) {
   body {
     padding: 10px;
+    padding-top: 25rem;
+  }
+
+  .back-btn {
+    margin: 0 auto;
+    display: block;
+  }
+
+  .continue-btn {
+    margin: 30px auto 0;
+    display: block;
   }
 
   .purchase-container {
@@ -707,5 +718,10 @@ textarea {
   .item-price {
     text-align: center;
     margin-top: 10px;
+  }
+
+  .item-image {
+    margin: 0 auto;
+    display: block;
   }
 }
