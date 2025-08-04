@@ -774,16 +774,6 @@ body {
   transform: translateX(5px);
 }
 
-.mobile-category.jsr-club .mobile-category-link {
-  background-color: var(--secondary-color);
-  color: var(--text-white);
-  font-weight: 700;
-}
-
-.mobile-category.jsr-club .mobile-category-link:hover {
-  background-color: var(--secondary-hover);
-}
-
 .mobile-dropdown {
   margin-bottom: var(--spacing-sm);
 }

@@ -164,6 +164,7 @@ body {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .slide img {
     image-rendering: -webkit-optimize-contrast;
+    image-rendering: -webkit-crisp-edges;
     image-rendering: crisp-edges;
   }
 }
@@ -1216,7 +1217,7 @@ body {
   #JSR CLUB PROMOTIONAL BANNER
 \*-----------------------------------*/
 
-.jsr-club-promo-banner {
+.jsr-promo-banner {
   background: linear-gradient(135deg, #19416f 0%, #00aeef 100%);
   padding: 3rem 0;
   margin: 3rem 0;
@@ -1224,7 +1225,7 @@ body {
   overflow: hidden;
 }
 
-.jsr-club-promo-banner::before {
+.jsr-promo-banner::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1381,13 +1382,6 @@ body {
   transform: translateX(5px);
 }
 
-.promo-trial {
-  margin-top: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   .promo-content {
@@ -1402,7 +1396,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .jsr-club-promo-banner {
+  .jsr-promo-banner {
     padding: 2rem 0;
     margin: 2rem 0;
   }
@@ -1732,7 +1726,7 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 
-  .jsr-club-promo-banner {
+  .jsr-promo-banner {
     margin: var(--spacing-xl) 0;
   }
 
