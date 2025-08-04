@@ -1685,6 +1685,10 @@ body {
     font-size: var(--font-lg);
   }
 
+  .mobile-actions {
+    gap: var(--spacing-xs);
+  }
+
   .mobile-search-container {
     border-radius: 25px;
     width: 50%;
@@ -1778,5 +1782,15 @@ body {
     padding: var(--spacing-md);
     font-size: var(--font-md);
     min-width: 140px;
+  }
+}
+
+/*-----------------------------------*\
+  #RESPONSIVE 1920px
+\*-----------------------------------*/
+
+@media (min-width: 1920px) {
+  .mobile-actions {
+    gap: var(--spacing-xs);
   }
 }
