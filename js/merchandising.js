@@ -117,13 +117,51 @@ function renderProducts(containerId, products) {
                     <span class="discounted">${product.priceDiscounted}</span>
                 </p>
                 <p class="availability ${availabilityClass}">${product.availability}</p>
-                <button class="add-to-cart">Añadir al carrito</button>
-                <button class="quick-view">Vista rápida</button>
+                <button class="add-to-cart" onclick="redirectToCatalog('${product.id}', 'add')">Añadir al carrito</button>
+                <button class="quick-view" onclick="redirectToCatalog('${product.id}', 'view')">Vista rápida</button>
             </div>
         `;
         
         container.innerHTML += productCard;
     });
+}
+
+// Función para redirigir a catalogo.html con parámetros
+function redirectToCatalog(productId, action) {
+    const currentPage = window.location.pathname;
+    
+    // Si estamos en index.html, redirigir a catalogo.html
+    if (currentPage.includes('index.html') || currentPage === '/' || currentPage === '') {
+        const catalogUrl = `/html/catalogo.html?product=${productId}&action=${action}`;
+        console.log('🔄 Redirigiendo a catálogo:', catalogUrl);
+        window.location.href = catalogUrl;
+    } else {
+        // Si ya estamos en catalogo.html, manejar la acción directamente
+        handleCatalogAction(productId, action);
+    }
+}
+
+// Función para manejar acciones en catalogo.html
+function handleCatalogAction(productId, action) {
+    if (action === 'add') {
+        // Buscar el producto en el catálogo y añadirlo al carrito
+        const productCard = document.querySelector(`[data-product-id="${productId}"]`);
+        if (productCard) {
+            const addToCartBtn = productCard.querySelector('.add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.click();
+            }
+        }
+    } else if (action === 'view') {
+        // Abrir vista rápida del producto
+        const productCard = document.querySelector(`[data-product-id="${productId}"]`);
+        if (productCard) {
+            const quickViewBtn = productCard.querySelector('.quick-view');
+            if (quickViewBtn) {
+                quickViewBtn.click();
+            }
+        }
+    }
 }
 
 // Funciones para navegación horizontal

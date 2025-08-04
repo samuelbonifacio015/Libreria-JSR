@@ -333,6 +333,23 @@
             }, 100);
         });
 
+        // Función para redirigir a catalogo.html con parámetros
+        window.redirectToCatalog = function(productId, action) {
+            const currentPage = window.location.pathname;
+            
+            // Si estamos en index.html, redirigir a catalogo.html
+            if (currentPage.includes('index.html') || currentPage === '/' || currentPage === '') {
+                const catalogUrl = `/html/catalogo.html?product=${productId}&action=${action}`;
+                console.log('🔄 Redirigiendo a catálogo:', catalogUrl);
+                window.location.href = catalogUrl;
+            } else {
+                // Si ya estamos en catalogo.html, manejar la acción directamente
+                if (window.handleCatalogAction) {
+                    window.handleCatalogAction(productId, action);
+                }
+            }
+        };
+
         // Función para probar rápidamente el carrito
         window.testCartQuick = function() {
             console.log('🧪 Probando carrito rápidamente...');
@@ -376,6 +393,7 @@
         console.log('🛒 Funciones de carrito disponibles:');
         console.log('- window.testCartQuick() - Agregar datos de prueba');
         console.log('- window.debugCart() - Debug del carrito (después de cargarse)');
+        console.log('- window.redirectToCatalog(productId, action) - Redirigir a catálogo');
     </script>
     
   </body>

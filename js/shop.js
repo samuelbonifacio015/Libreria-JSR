@@ -395,7 +395,31 @@ function setupFilterSystem() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Manejar parámetros de URL para acciones desde index.html
     const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product');
+    const action = urlParams.get('action');
+    
+    if (productId && action) {
+        console.log('🎯 Acción solicitada desde index.html:', { productId, action });
+        
+        // Esperar a que se carguen los productos antes de ejecutar la acción
+        const executeAction = () => {
+            if (allProducts.length > 0) {
+                handleCatalogAction(productId, action);
+                // Limpiar parámetros de URL después de ejecutar la acción
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            } else {
+                // Si los productos aún no están cargados, esperar un poco más
+                setTimeout(executeAction, 100);
+            }
+        };
+        
+        // Ejecutar la acción después de un breve delay para asegurar que los productos estén cargados
+        setTimeout(executeAction, 500);
+    }
+    
     const searchTerm = urlParams.get('search');
     const savedSearchTerm = sessionStorage.getItem('searchTerm');
     
@@ -523,6 +547,53 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleAddToCart = handleAddToCart;
     window.handleQuickView = handleQuickView;
 });
+
+// Función para manejar acciones en catalogo.html
+function handleCatalogAction(productId, action) {
+    console.log('🎯 Ejecutando acción en catálogo:', { productId, action });
+    
+    if (action === 'add') {
+        // Buscar el producto en el catálogo y añadirlo al carrito
+        const productCard = document.querySelector(`[data-product-id="${productId}"]`);
+        if (productCard) {
+            const addToCartBtn = productCard.querySelector('.add-to-cart');
+            if (addToCartBtn) {
+                console.log('✅ Producto encontrado, añadiendo al carrito...');
+                addToCartBtn.click();
+                
+                // Mostrar notificación de éxito
+                setTimeout(() => {
+                    showNotification('Producto añadido al carrito correctamente', 'success');
+                }, 100);
+            } else {
+                console.error('❌ Botón "Añadir al carrito" no encontrado');
+                showNotification('Error: No se pudo añadir el producto al carrito', 'error');
+            }
+        } else {
+            console.error('❌ Producto no encontrado en el catálogo:', productId);
+            showNotification('Error: Producto no encontrado en el catálogo', 'error');
+        }
+    } else if (action === 'view') {
+        // Abrir vista rápida del producto
+        const productCard = document.querySelector(`[data-product-id="${productId}"]`);
+        if (productCard) {
+            const quickViewBtn = productCard.querySelector('.quick-view');
+            if (quickViewBtn) {
+                console.log('✅ Producto encontrado, abriendo vista rápida...');
+                quickViewBtn.click();
+            } else {
+                console.error('❌ Botón "Vista rápida" no encontrado');
+                showNotification('Error: No se pudo abrir la vista rápida', 'error');
+            }
+        } else {
+            console.error('❌ Producto no encontrado en el catálogo:', productId);
+            showNotification('Error: Producto no encontrado en el catálogo', 'error');
+        }
+    }
+}
+
+// Hacer la función disponible globalmente
+window.handleCatalogAction = handleCatalogAction;
 
 // Funciones globales delegadas al JSR Cart System
 
