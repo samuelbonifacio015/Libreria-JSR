@@ -2,7 +2,7 @@
 
 # 📚 JSR - Librería Web 📚
 
-![JSR Logo](https://i.pinimg.com/750x/50/b6/55/50b6551e536c6b0048235f4d2392a108.jpg)
+<img src="https://i.pinimg.com/750x/50/b6/55/50b6551e536c6b0048235f4d2392a108.jpg" alt="JSR Logo" width="240" style="border-radius: 30px;">
 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://makeapullrequest.com)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
@@ -174,7 +174,3 @@
 
 ---
 
-**🌟 ¡Síguenos para más actualizaciones!**  
-*Proyecto en desarrollo activo. ¡Vuelve pronto para ver más mejoras!*
-
-</div>
