@@ -1568,9 +1568,10 @@ body {
   .sort-control select {
     width: 100%;
     min-width: unset;
-    max-width: none;
+    max-width: 70%;
     min-height: 44px;
     font-size: var(--font-md);
+    margin: 0 auto;
   }
 
   .filter-control {
@@ -1580,9 +1581,11 @@ body {
 
   .filter-btn {
     width: 100%;
+    max-width: 70%;
     justify-content: center;
     min-height: 44px;
     font-size: var(--font-md);
+    margin: 0 auto;
   }
 
   .view-control {
