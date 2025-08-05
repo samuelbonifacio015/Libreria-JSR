@@ -591,6 +591,14 @@ body {
   visibility: visible;
 }
 
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 /*-----------------------------------*\
   #WHATSAPP CONTACT
 \*-----------------------------------*/

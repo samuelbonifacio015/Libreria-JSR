@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Catalogo - JSR</title>
 
-    <link rel="icon" href="/img/JSR.ico">
+    <link rel="icon" href="/img/JSR.ico" />
 
     <link rel="stylesheet" href="/css/catalogo.css" />
     <link rel="stylesheet" href="/partials/navbar.css" />
@@ -14,15 +14,14 @@
     <link rel="stylesheet" href="/partials/headernav.css" />
     <link rel="stylesheet" href="/partials/modal.css" />
 
-     <!-- Iconos de FontAwesome -->
+    <!-- Iconos de FontAwesome -->
     <link
-     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-     rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
     />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <!--navbar-->
     <div id="navbar-placeholder"></div>
 
@@ -31,37 +30,138 @@
 
     <!--catalogo aside start-->
     <div class="catalogo-container">
-
       <aside class="catalogo-filter">
         <h2>Filtros</h2>
         <div class="filter-group">
           <h3>Marca <i class="fa-solid fa-angle-down"></i></h3>
           <ul>
-            <label><input type="checkbox" data-filter="brand" value="ARTESCO" />ARTESCO</label>
-            <label><input type="checkbox" data-filter="brand" value="ARTI CREATIVO" />ARTI CREATIVO</label>
-            <label><input type="checkbox" data-filter="brand" value="CASIO" />CASIO</label>
-            <label><input type="checkbox" data-filter="brand" value="CATRICE" />CATRICE</label>
-            <label><input type="checkbox" data-filter="brand" value="EDICIONES OBELISCO" />EDICIONES OBELISCO</label>
-            <label><input type="checkbox" data-filter="brand" value="FABER-CASTELL" />FABER-CASTELL</label>
-            <label><input type="checkbox" data-filter="brand" value="LOGITECH" />LOGITECH</label>
-            <label><input type="checkbox" data-filter="brand" value="MARVEL" />MARVEL</label>
-            <label><input type="checkbox" data-filter="brand" value="MILAN" />MILAN</label>
-            <label><input type="checkbox" data-filter="brand" value="PIGMA-MICRON" />PIGMA-MICRON</label>
-            <label><input type="checkbox" data-filter="brand" value="SONY" />SONY</label>
-            <label><input type="checkbox" data-filter="brand" value="STICK'N-NOTES" />STICK'N-NOTES</label>
-            <label><input type="checkbox" data-filter="brand" value="VINIFAN" />VINIFAN</label>
-            <label><input type="checkbox" data-filter="brand" value="XIAOMI" />XIAOMI</label>
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="ARTESCO"
+              />ARTESCO</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="ARTI CREATIVO"
+              />ARTI CREATIVO</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="CASIO"
+              />CASIO</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="CATRICE"
+              />CATRICE</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="EDICIONES OBELISCO"
+              />EDICIONES OBELISCO</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="FABER-CASTELL"
+              />FABER-CASTELL</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="LOGITECH"
+              />LOGITECH</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="MARVEL"
+              />MARVEL</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="MILAN"
+              />MILAN</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="PIGMA-MICRON"
+              />PIGMA-MICRON</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="SONY"
+              />SONY</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="STICK'N-NOTES"
+              />STICK'N-NOTES</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="VINIFAN"
+              />VINIFAN</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                data-filter="brand"
+                value="XIAOMI"
+              />XIAOMI</label
+            >
           </ul>
 
           <h3>Precio <i class="fa-solid fa-angle-down"></i></h3>
           <div class="price-filter">
             <div class="price-range">
               <div class="price-values">
-                <input type="number" class="min-price" min="0" max="169" value="0">
-                <input type="number" class="max-price" min="0" max="169" value="169">
+                <input
+                  type="number"
+                  class="min-price"
+                  min="0"
+                  max="169"
+                  value="0"
+                />
+                <input
+                  type="number"
+                  class="max-price"
+                  min="0"
+                  max="169"
+                  value="169"
+                />
               </div>
               <div class="slider-container">
-                <input type="range" class="slider" min="0" max="100" value="100">
+                <input
+                  type="range"
+                  class="slider"
+                  min="0"
+                  max="100"
+                  value="100"
+                />
               </div>
             </div>
           </div>
@@ -89,7 +189,11 @@
             </div>
 
             <div class="filter-control">
-              <button class="filter-btn" id="filterBtn" aria-label="Abrir filtros">
+              <button
+                class="filter-btn"
+                id="filterBtn"
+                aria-label="Abrir filtros"
+              >
                 <i class="fa-solid fa-filter"></i>
                 <span>Filtros</span>
               </button>
@@ -97,16 +201,23 @@
 
             <div class="view-control">
               <span>Ver</span>
-              <button class="grid-view active" data-view="grid" aria-label="Vista en cuadrícula">
+              <button
+                class="grid-view active"
+                data-view="grid"
+                aria-label="Vista en cuadrícula"
+              >
                 <i class="fa-solid fa-grip"></i>
               </button>
-              <button class="list-view" data-view="list" aria-label="Vista en lista">
+              <button
+                class="list-view"
+                data-view="list"
+                aria-label="Vista en lista"
+              >
                 <i class="fa-solid fa-list"></i>
               </button>
             </div>
-
           </div>
-        </div>        
+        </div>
         <div class="products-grid">
           <!--los archivos aqui seran generados por js-->
         </div>
@@ -118,14 +229,15 @@
           <a href="#" class="pagination-item">3</a>
           <div class="pagination-dots">...</div>
           <a href="#" class="pagination-item">5</a>
-          <a href="#" class="pagination-next">Siguiente <i class="fa-solid fa-angle-right"></i></a>
+          <a href="#" class="pagination-next"
+            >Siguiente <i class="fa-solid fa-angle-right"></i
+          ></a>
         </div>
 
         <button class="back-to-top" aria-label="Volver al inicio">
           <i class="fa-solid fa-chevron-up"></i>
         </button>
         <!-- pagination end -->
-
       </section>
     </div>
 
@@ -134,29 +246,117 @@
       <div class="filter-modal-content">
         <div class="filter-modal-header">
           <h3>Filtros</h3>
-          <button class="filter-modal-close" id="filterModalClose" aria-label="Cerrar filtros">
+          <button
+            class="filter-modal-close"
+            id="filterModalClose"
+            aria-label="Cerrar filtros"
+          >
             <i class="fa-solid fa-times"></i>
           </button>
         </div>
-        
+
         <div class="filter-modal-body">
           <div class="filter-section">
             <h4>Marca <i class="fa-solid fa-angle-down"></i></h4>
             <div class="filter-options">
-              <label><input type="checkbox" data-filter="brand" value="ARTESCO" />ARTESCO</label>
-              <label><input type="checkbox" data-filter="brand" value="ARTI CREATIVO" />ARTI CREATIVO</label>
-              <label><input type="checkbox" data-filter="brand" value="CASIO" />CASIO</label>
-              <label><input type="checkbox" data-filter="brand" value="CATRICE" />CATRICE</label>
-              <label><input type="checkbox" data-filter="brand" value="EDICIONES OBELISCO" />EDICIONES OBELISCO</label>
-              <label><input type="checkbox" data-filter="brand" value="FABER-CASTELL" />FABER-CASTELL</label>
-              <label><input type="checkbox" data-filter="brand" value="LOGITECH" />LOGITECH</label>
-              <label><input type="checkbox" data-filter="brand" value="MARVEL" />MARVEL</label>
-              <label><input type="checkbox" data-filter="brand" value="MILAN" />MILAN</label>
-              <label><input type="checkbox" data-filter="brand" value="PIGMA-MICRON" />PIGMA-MICRON</label>
-              <label><input type="checkbox" data-filter="brand" value="SONY" />SONY</label>
-              <label><input type="checkbox" data-filter="brand" value="STICK'N-NOTES" />STICK'N-NOTES</label>
-              <label><input type="checkbox" data-filter="brand" value="VINIFAN" />VINIFAN</label>
-              <label><input type="checkbox" data-filter="brand" value="XIAOMI" />XIAOMI</label>
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="ARTESCO"
+                />ARTESCO</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="ARTI CREATIVO"
+                />ARTI CREATIVO</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="CASIO"
+                />CASIO</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="CATRICE"
+                />CATRICE</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="EDICIONES OBELISCO"
+                />EDICIONES OBELISCO</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="FABER-CASTELL"
+                />FABER-CASTELL</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="LOGITECH"
+                />LOGITECH</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="MARVEL"
+                />MARVEL</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="MILAN"
+                />MILAN</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="PIGMA-MICRON"
+                />PIGMA-MICRON</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="SONY"
+                />SONY</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="STICK'N-NOTES"
+                />STICK'N-NOTES</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="VINIFAN"
+                />VINIFAN</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  data-filter="brand"
+                  value="XIAOMI"
+                />XIAOMI</label
+              >
             </div>
           </div>
 
@@ -165,11 +365,34 @@
             <div class="price-filter-modal">
               <div class="price-range-modal">
                 <div class="price-values-modal">
-                  <input type="number" class="min-price-modal" min="0" max="169" value="0" placeholder="Mínimo" aria-label="Precio mínimo">
-                  <input type="number" class="max-price-modal" min="0" max="169" value="169" placeholder="Máximo" aria-label="Precio máximo">
+                  <input
+                    type="number"
+                    class="min-price-modal"
+                    min="0"
+                    max="169"
+                    value="0"
+                    placeholder="Mínimo"
+                    aria-label="Precio mínimo"
+                  />
+                  <input
+                    type="number"
+                    class="max-price-modal"
+                    min="0"
+                    max="169"
+                    value="169"
+                    placeholder="Máximo"
+                    aria-label="Precio máximo"
+                  />
                 </div>
                 <div class="slider-container-modal">
-                  <input type="range" class="slider-modal" min="0" max="100" value="100" aria-label="Rango de precio">
+                  <input
+                    type="range"
+                    class="slider-modal"
+                    min="0"
+                    max="100"
+                    value="100"
+                    aria-label="Rango de precio"
+                  />
                 </div>
               </div>
             </div>
@@ -184,10 +407,20 @@
     </div>
     <!--whatsapp contact-->
     <div class="whatsapp-contact">
-      <a href="https://wa.me/999451887" target="_blank" rel="noopener" class="whatsapp-message">
+      <a
+        href="https://wa.me/51999451887?text=Hola!%20deseo%20hacer%20un%20pedido%20desde%20la%20página%20web"
+        target="_blank"
+        rel="noopener"
+        class="whatsapp-message"
+      >
         Realiza tu pedido aquí 🚀
       </a>
-      <a href="https://wa.me/999451887" target="_blank" rel="noopener" class="whatsapp-icon">
+      <a
+        href="https://wa.me/51999451887?text=Hola!%20deseo%20hacer%20un%20pedido%20desde%20la%20página%20web"
+        target="_blank"
+        rel="noopener"
+        class="whatsapp-icon"
+      >
         <i class="fab fa-whatsapp"></i>
       </a>
     </div>
@@ -229,54 +462,54 @@
     <script src="../js/mobile.js"></script>
     <script src="../partials/modal.js"></script>
     <script>
-        // Script para probar el carrito
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('navbarLoaded', function() {
-                console.log('Navbar cargado en catálogo');
-                
-                // Debug del carrito después de 2 segundos
-                setTimeout(() => {
-                    if (window.debugCart) {
-                        window.debugCart();
-                    }
-                }, 2000);
-            });
-            
-            // Función de prueba para añadir productos
-            window.testAddToCart = function() {
-                const testProduct = {
-                    name: 'Producto de Prueba',
-                    brand: 'Marca Test',
-                    price: 25.99,
-                    image: '/img/products/default.jpg',
-                    quantity: 1
-                };
-                
-                console.log('🧪 Probando añadir producto de prueba:', testProduct);
-                
-                if (window.addToCart) {
-                    window.addToCart(testProduct);
-                } else {
-                    console.error('❌ Función addToCart no disponible');
-                }
-            };
+      // Script para probar el carrito
+      document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("navbarLoaded", function () {
+          console.log("Navbar cargado en catálogo");
+
+          // Debug del carrito después de 2 segundos
+          setTimeout(() => {
+            if (window.debugCart) {
+              window.debugCart();
+            }
+          }, 2000);
         });
 
-        // Función para cambiar cantidad en el modal
-        function changeQuantity(change) {
-            const quantityInput = document.getElementById('modalQuantity');
-            if (quantityInput) {
-                let currentValue = parseInt(quantityInput.value) || 1;
-                let newValue = currentValue + change;
-                
-                // Asegurar que la cantidad no sea menor a 1
-                if (newValue < 1) {
-                    newValue = 1;
-                }
-                
-                quantityInput.value = newValue;
-            }
+        // Función de prueba para añadir productos
+        window.testAddToCart = function () {
+          const testProduct = {
+            name: "Producto de Prueba",
+            brand: "Marca Test",
+            price: 25.99,
+            image: "/img/products/default.jpg",
+            quantity: 1,
+          };
+
+          console.log("🧪 Probando añadir producto de prueba:", testProduct);
+
+          if (window.addToCart) {
+            window.addToCart(testProduct);
+          } else {
+            console.error("❌ Función addToCart no disponible");
+          }
+        };
+      });
+
+      // Función para cambiar cantidad en el modal
+      function changeQuantity(change) {
+        const quantityInput = document.getElementById("modalQuantity");
+        if (quantityInput) {
+          let currentValue = parseInt(quantityInput.value) || 1;
+          let newValue = currentValue + change;
+
+          // Asegurar que la cantidad no sea menor a 1
+          if (newValue < 1) {
+            newValue = 1;
+          }
+
+          quantityInput.value = newValue;
         }
+      }
     </script>
-</body>
+  </body>
 </html>
