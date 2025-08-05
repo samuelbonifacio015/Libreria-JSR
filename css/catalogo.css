@@ -1145,6 +1145,350 @@ body {
 }
 
 /*-----------------------------------*\
+  #FILTERS RESPONSIVE
+\*-----------------------------------*/
+
+.filter-control {
+  display: none;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-color);
+  min-height: 36px;
+}
+
+.filter-btn:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.filter-btn i {
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+.filter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.filter-modal.active {
+  display: flex;
+}
+
+.filter-modal-content {
+  background-color: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  width: 100%;
+  max-width: 400px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.filter-modal-header h3 {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  margin: 0;
+}
+
+.filter-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-white);
+  font-size: var(--font-lg);
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.filter-modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  max-height: 60vh;
+}
+
+.filter-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.filter-section h4 {
+  font-size: var(--font-md);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border-color);
+  transition: color var(--transition-normal);
+}
+
+.filter-section h4:hover {
+  color: var(--secondary-color);
+}
+
+.filter-section h4 i {
+  transition: transform var(--transition-normal);
+  color: var(--secondary-color);
+}
+
+.filter-section h4 i.rotated {
+  transform: rotate(180deg);
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: var(--spacing-sm);
+}
+
+.filter-options label {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-sm);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-normal);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid transparent;
+}
+
+.filter-options label:hover {
+  background-color: var(--bg-light);
+  border-color: var(--border-color);
+}
+
+.filter-options input[type="checkbox"] {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  accent-color: var(--secondary-color);
+  transform: scale(1.2);
+  min-width: 18px;
+  min-height: 18px;
+}
+
+.price-filter-modal {
+  margin-top: var(--spacing-md);
+}
+
+.price-range-modal {
+  width: 100%;
+}
+
+.price-values-modal {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-sm);
+}
+
+.price-values-modal input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  text-align: center;
+  font-weight: 500;
+  font-size: var(--font-sm);
+  transition: border-color var(--transition-normal);
+}
+
+.price-values-modal input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(0, 174, 239, 0.1);
+}
+
+.slider-container-modal {
+  padding: 0 var(--spacing-xs);
+  margin-top: var(--spacing-md);
+}
+
+.slider-modal {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: var(--spacing-xs);
+  outline: none;
+}
+
+.slider-modal:hover {
+  opacity: 1;
+}
+
+.slider-modal::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.slider-modal::-webkit-slider-thumb:hover {
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.slider-modal::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.slider-modal::-moz-range-thumb:hover {
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.filter-modal-footer {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-light);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.filter-apply-btn,
+.filter-clear-btn {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-height: 44px;
+}
+
+.filter-apply-btn {
+  background-color: var(--secondary-color);
+  color: var(--text-white);
+}
+
+.filter-apply-btn:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.filter-clear-btn {
+  background-color: var(--bg-white);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.filter-clear-btn:hover {
+  background-color: var(--border-color);
+  transform: translateY(-1px);
+}
+
+/* Estilos para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .filter-btn {
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .filter-options label {
+    min-height: 44px;
+    padding: var(--spacing-md);
+  }
+
+  .filter-options input[type="checkbox"] {
+    transform: scale(1.4);
+    min-width: 20px;
+    min-height: 20px;
+  }
+
+  .price-values-modal input {
+    min-height: 44px;
+    font-size: var(--font-md);
+  }
+
+  .slider-modal::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  .slider-modal::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/*-----------------------------------*\
   #RESPONSIVE
 \*-----------------------------------*/
 
@@ -1229,6 +1573,18 @@ body {
     font-size: var(--font-md);
   }
 
+  .filter-control {
+    display: block;
+    width: 100%;
+  }
+
+  .filter-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+    font-size: var(--font-md);
+  }
+
   .view-control {
     justify-content: center;
     width: 100%;
@@ -1275,6 +1631,11 @@ body {
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
+  .filter-btn {
+    min-height: 48px;
+    font-size: var(--font-md);
+  }
+
   .view-control button {
     min-width: 48px;
     height: 48px;
@@ -1282,5 +1643,18 @@ body {
 
   .view-control button i {
     font-size: 16px;
+  }
+
+  .filter-modal {
+    padding: var(--spacing-sm);
+  }
+
+  .filter-modal-content {
+    max-width: 100%;
+    max-height: 90vh;
+  }
+
+  .filter-modal-body {
+    max-height: 50vh;
   }
 }
