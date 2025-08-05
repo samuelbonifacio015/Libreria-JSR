@@ -101,10 +101,10 @@ function renderProducts(products, container) {
                         <span class="discounted">${product.priceDiscounted}</span>
                     </p>
                     <p class="availability ${availabilityClass}">${product.availability}</p>
-                    <div class="product-actions">
-                        <button class="add-to-cart">Añadir al carrito</button>
-                        <button class="quick-view">Vista rápida</button>
-                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="add-to-cart">Añadir al carrito</button>
+                    <button class="quick-view">Vista rápida</button>
                 </div>
             </div>  
             `;
@@ -873,7 +873,6 @@ function handleAddToCart(e) {
     }
 }
 
-// Funciones para la vista rápida
 function handleQuickView(e) {
     const productCard = e.target.closest('.product-card');
     if (productCard) {
@@ -969,14 +968,8 @@ function applyViewStyles(view) {
     
     if (view === 'list') {
         // Estilos para vista de lista (columna)
-        productsGrid.style.setProperty('display', 'grid', 'important');
-        productsGrid.style.setProperty('justify-content', 'center', 'important');
-        productsGrid.style.setProperty(
-            'grid-template-columns',
-            'minmax(300px, 1fr)',
-            'important'
-        );
-        productsGrid.style.removeProperty('max-width');
+        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+        productsGrid.style.setProperty('max-width', '100%', 'important');
         
         // Aplicar estilos a las tarjetas de producto para vista de lista
         productCards.forEach(card => {
@@ -985,18 +978,19 @@ function applyViewStyles(view) {
             card.style.setProperty('flex-direction', 'row', 'important');
             card.style.setProperty('align-items', 'center', 'important');
             card.style.setProperty('text-align', 'left', 'important');
-            card.style.setProperty('padding', '15px', 'important');
-
-            card.style.setProperty('max-width', '360px', 'important');
-            card.style.setProperty('width', '100%', 'important');
+            card.style.setProperty('min-height', 'auto', 'important');
+            card.style.setProperty('padding', '20px', 'important');
             
             // Estilos para la imagen en vista de lista
             const img = card.querySelector('img');
             if (img) {
-                img.style.setProperty('width', '120px', 'important');
-                img.style.setProperty('height', '120px', 'important');
+                img.style.setProperty('width', '150px', 'important');
+                img.style.setProperty('height', '150px', 'important');
+                img.style.setProperty('margin-bottom', '0', 'important');
+                img.style.setProperty('flex-shrink', '0', 'important');
+                img.style.setProperty('object-fit', 'contain', 'important');
             }
-                
+            
             // Estilos para el contenido en vista de lista
             const productInfo = card.querySelector('.product-info');
             if (productInfo) {
@@ -1010,10 +1004,11 @@ function applyViewStyles(view) {
             const productActions = card.querySelector('.product-actions');
             if (productActions) {
                 productActions.style.setProperty('display', 'flex', 'important');
-                productActions.style.setProperty('flex-direction', 'row', 'important');
+                productActions.style.setProperty('flex-direction', 'column', 'important');
                 productActions.style.setProperty('gap', '10px', 'important');
-                productActions.style.setProperty('margin-top', '15px', 'important');
-                productActions.style.setProperty('justify-content', 'flex-start', 'important');
+                productActions.style.setProperty('min-width', '150px', 'important');
+                productActions.style.setProperty('flex-shrink', '0', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
             }
             
             // Estilos para los botones individuales
@@ -1052,8 +1047,8 @@ function applyViewStyles(view) {
                 productName.style.setProperty('line-height', '1.3', 'important');
             }
             if (reviews) {
-                reviews.style.setProperty('justify-content', 'center', 'important');
-                reviews.style.setProperty('margin', '5px 0', 'important');
+                reviews.style.setProperty('justify-content', 'flex-start', 'important');
+                reviews.style.setProperty('margin', '8px 0', 'important');
             }
             if (price) {
                 price.style.setProperty('margin', '10px 0', 'important');
@@ -1062,7 +1057,8 @@ function applyViewStyles(view) {
                 price.style.setProperty('gap', '5px', 'important');
             }
             if (availability) {
-                availability.style.setProperty('justify-content', 'center', 'important');
+                availability.style.setProperty('justify-content', 'flex-start', 'important');
+                availability.style.setProperty('margin', '8px 0', 'important');
             }
         });
         
@@ -1074,7 +1070,6 @@ function applyViewStyles(view) {
         productsGrid.style.setProperty('grid-template-columns', 'repeat(auto-fill, minmax(230px, 1fr))', 'important');
         productsGrid.style.removeProperty('gap');
         productsGrid.style.removeProperty('max-width');
-        productsGrid.style.removeProperty('overflow');
         
         // Restaurar estilos originales de las tarjetas
         productCards.forEach(card => {
@@ -1086,8 +1081,6 @@ function applyViewStyles(view) {
             card.style.removeProperty('min-height');
             card.style.removeProperty('padding');
             card.style.removeProperty('gap');
-            card.style.removeProperty('overflow');
-            card.style.removeProperty('min-width');
             
             // Restaurar imagen
             const img = card.querySelector('img');
@@ -1107,8 +1100,6 @@ function applyViewStyles(view) {
                 productInfo.style.removeProperty('flex-direction');
                 productInfo.style.removeProperty('gap');
                 productInfo.style.removeProperty('justify-content');
-                productInfo.style.removeProperty('min-width');
-                productInfo.style.removeProperty('overflow');
             }
             
             // Restaurar product-actions
@@ -1120,9 +1111,6 @@ function applyViewStyles(view) {
                 productActions.style.removeProperty('min-width');
                 productActions.style.removeProperty('flex-shrink');
                 productActions.style.removeProperty('justify-content');
-                productActions.style.removeProperty('margin-top');
-                productActions.style.removeProperty('align-items');
-                productActions.style.removeProperty('flex-wrap');
             }
             
             // Restaurar elementos individuales
@@ -1155,111 +1143,29 @@ function applyListResponsiveStyles() {
         // Estilos para móviles en vista de lista
         productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
         productsGrid.style.removeProperty('gap');
-        productsGrid.style.setProperty('overflow', 'hidden', 'important');
-        productsGrid.style.setProperty('max-width', '100%', 'important');
         
         productCards.forEach(card => {
-            card.style.setProperty('flex-direction', 'row', 'important');
-            card.style.setProperty('text-align', 'left', 'important');
+            card.style.setProperty('flex-direction', 'column', 'important');
+            card.style.setProperty('text-align', 'center', 'important');
             card.style.setProperty('padding', '15px', 'important');
             card.style.setProperty('gap', '15px', 'important');
-            card.style.setProperty('align-items', 'flex-start', 'important');
-            card.style.setProperty('overflow', 'hidden', 'important');
-            card.style.setProperty('min-width', '0', 'important');
             
             const img = card.querySelector('img');
             if (img) {
-                img.style.setProperty('width', '80px', 'important');
-                img.style.setProperty('height', '80px', 'important');
-                img.style.setProperty('object-fit', 'contain', 'important');
-                img.style.setProperty('flex-shrink', '0', 'important');
+                img.style.setProperty('width', '120px', 'important');
+                img.style.setProperty('height', '120px', 'important');
             }
             
             const productInfo = card.querySelector('.product-info');
             if (productInfo) {
-                productInfo.style.setProperty('flex', '1', 'important');
-                productInfo.style.setProperty('display', 'flex', 'important');
-                productInfo.style.setProperty('flex-direction', 'column', 'important');
-                productInfo.style.setProperty('gap', '8px', 'important');
-                productInfo.style.setProperty('justify-content', 'flex-start', 'important');
-                productInfo.style.setProperty('min-width', '0', 'important');
-                productInfo.style.setProperty('overflow', 'hidden', 'important');
-            }
-            
-            const brand = card.querySelector('.brand');
-            if (brand) {
-                brand.style.setProperty('font-size', '12px', 'important');
-                brand.style.setProperty('font-weight', 'bold', 'important');
-                brand.style.setProperty('margin-bottom', '4px', 'important');
-                brand.style.setProperty('overflow', 'hidden', 'important');
-                brand.style.setProperty('text-overflow', 'ellipsis', 'important');
-                brand.style.setProperty('white-space', 'nowrap', 'important');
-                brand.style.setProperty('max-width', '100%', 'important');
-            }
-            
-            const productName = card.querySelector('.product-name');
-            if (productName) {
-                productName.style.setProperty('font-size', '13px', 'important');
-                productName.style.setProperty('line-height', '1.3', 'important');
-                productName.style.setProperty('margin-bottom', '8px', 'important');
-                productName.style.setProperty('overflow', 'hidden', 'important');
-                productName.style.setProperty('text-overflow', 'ellipsis', 'important');
-                productName.style.setProperty('white-space', 'nowrap', 'important');
-                productName.style.setProperty('max-width', '100%', 'important');
-            }
-            
-            const price = card.querySelector('.price');
-            if (price) {
-                price.style.setProperty('margin', '8px 0', 'important');
-                price.style.setProperty('overflow', 'hidden', 'important');
-                price.style.setProperty('text-overflow', 'ellipsis', 'important');
-                price.style.setProperty('white-space', 'nowrap', 'important');
-            }
-            
-            const discountedPrice = card.querySelector('.price .discounted');
-            if (discountedPrice) {
-                discountedPrice.style.setProperty('font-size', '16px', 'important');
-                discountedPrice.style.setProperty('overflow', 'hidden', 'important');
-                discountedPrice.style.setProperty('text-overflow', 'ellipsis', 'important');
-                discountedPrice.style.setProperty('white-space', 'nowrap', 'important');
-            }
-            
-            const originalPrice = card.querySelector('.price .original');
-            if (originalPrice) {
-                originalPrice.style.setProperty('font-size', '12px', 'important');
-                originalPrice.style.setProperty('overflow', 'hidden', 'important');
-                originalPrice.style.setProperty('text-overflow', 'ellipsis', 'important');
-                originalPrice.style.setProperty('white-space', 'nowrap', 'important');
+                productInfo.style.setProperty('justify-content', 'center', 'important');
             }
             
             const productActions = card.querySelector('.product-actions');
             if (productActions) {
                 productActions.style.setProperty('flex-direction', 'row', 'important');
-                productActions.style.setProperty('gap', '8px', 'important');
-                productActions.style.setProperty('justify-content', 'flex-start', 'important');
-                productActions.style.setProperty('align-items', 'center', 'important');
-                productActions.style.setProperty('margin-top', '10px', 'important');
-                productActions.style.setProperty('flex-wrap', 'wrap', 'important');
-            }
-            
-            const addToCartBtn = card.querySelector('.add-to-cart');
-            if (addToCartBtn) {
-                addToCartBtn.style.setProperty('font-size', '12px', 'important');
-                addToCartBtn.style.setProperty('padding', '8px 12px', 'important');
-                addToCartBtn.style.setProperty('overflow', 'hidden', 'important');
-                addToCartBtn.style.setProperty('text-overflow', 'ellipsis', 'important');
-                addToCartBtn.style.setProperty('white-space', 'nowrap', 'important');
-                addToCartBtn.style.setProperty('min-width', '0', 'important');
-            }
-            
-            const quickViewBtn = card.querySelector('.quick-view');
-            if (quickViewBtn) {
-                quickViewBtn.style.setProperty('font-size', '12px', 'important');
-                quickViewBtn.style.setProperty('padding', '8px 12px', 'important');
-                quickViewBtn.style.setProperty('overflow', 'hidden', 'important');
-                quickViewBtn.style.setProperty('text-overflow', 'ellipsis', 'important');
-                quickViewBtn.style.setProperty('white-space', 'nowrap', 'important');
-                quickViewBtn.style.setProperty('min-width', '0', 'important');
+                productActions.style.setProperty('min-width', 'auto', 'important');
+                productActions.style.setProperty('justify-content', 'center', 'important');
             }
         });
     } else if (window.innerWidth <= 1024) {
@@ -1332,18 +1238,12 @@ function restoreGridResponsiveStyles() {
     if (window.innerWidth <= 768) {
         productsGrid.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
         productsGrid.style.removeProperty('gap');
-        productsGrid.style.removeProperty('overflow');
-        productsGrid.style.removeProperty('max-width');
     } else if (window.innerWidth <= 1024) {
         productsGrid.style.setProperty('grid-template-columns', 'repeat(3, 1fr)', 'important');
         productsGrid.style.removeProperty('gap');
-        productsGrid.style.removeProperty('overflow');
-        productsGrid.style.removeProperty('max-width');
     } else {
         productsGrid.style.setProperty('grid-template-columns', 'repeat(auto-fill, minmax(230px, 1fr))', 'important');
         productsGrid.style.removeProperty('gap');
-        productsGrid.style.removeProperty('overflow');
-        productsGrid.style.removeProperty('max-width');
     }
     
     // Restaurar estilos originales de las tarjetas
@@ -1358,8 +1258,6 @@ function restoreGridResponsiveStyles() {
         card.style.removeProperty('padding');
         card.style.removeProperty('gap');
         card.style.removeProperty('transition');
-        card.style.removeProperty('overflow');
-        card.style.removeProperty('min-width');
         
         // Restaurar imagen
         const img = card.querySelector('img');
@@ -1379,8 +1277,6 @@ function restoreGridResponsiveStyles() {
             productInfo.style.removeProperty('flex-direction');
             productInfo.style.removeProperty('gap');
             productInfo.style.removeProperty('justify-content');
-            productInfo.style.removeProperty('min-width');
-            productInfo.style.removeProperty('overflow');
         }
         
         // Restaurar product-actions
@@ -1392,9 +1288,6 @@ function restoreGridResponsiveStyles() {
             productActions.style.removeProperty('min-width');
             productActions.style.removeProperty('flex-shrink');
             productActions.style.removeProperty('justify-content');
-            productActions.style.removeProperty('margin-top');
-            productActions.style.removeProperty('align-items');
-            productActions.style.removeProperty('flex-wrap');
         }
         
         // Restaurar elementos individuales
@@ -1410,19 +1303,11 @@ function restoreGridResponsiveStyles() {
             brand.style.removeProperty('font-size');
             brand.style.removeProperty('font-weight');
             brand.style.removeProperty('color');
-            brand.style.removeProperty('overflow');
-            brand.style.removeProperty('text-overflow');
-            brand.style.removeProperty('white-space');
-            brand.style.removeProperty('max-width');
         }
         if (productName) {
             productName.style.removeProperty('font-size');
             productName.style.removeProperty('font-weight');
             productName.style.removeProperty('line-height');
-            productName.style.removeProperty('overflow');
-            productName.style.removeProperty('text-overflow');
-            productName.style.removeProperty('white-space');
-            productName.style.removeProperty('max-width');
         }
         if (reviews) {
             reviews.style.removeProperty('justify-content');
@@ -1433,27 +1318,6 @@ function restoreGridResponsiveStyles() {
             price.style.removeProperty('display');
             price.style.removeProperty('flex-direction');
             price.style.removeProperty('gap');
-            price.style.removeProperty('overflow');
-            price.style.removeProperty('text-overflow');
-            price.style.removeProperty('white-space');
-            
-            // Limpiar estilos de elementos de precio específicos
-            const discountedPrice = price.querySelector('.discounted');
-            const originalPrice = price.querySelector('.original');
-            
-            if (discountedPrice) {
-                discountedPrice.style.removeProperty('font-size');
-                discountedPrice.style.removeProperty('overflow');
-                discountedPrice.style.removeProperty('text-overflow');
-                discountedPrice.style.removeProperty('white-space');
-            }
-            
-            if (originalPrice) {
-                originalPrice.style.removeProperty('font-size');
-                originalPrice.style.removeProperty('overflow');
-                originalPrice.style.removeProperty('text-overflow');
-                originalPrice.style.removeProperty('white-space');
-            }
         }
         if (availability) {
             availability.style.removeProperty('justify-content');
@@ -1464,20 +1328,12 @@ function restoreGridResponsiveStyles() {
             addToCartBtn.style.removeProperty('font-size');
             addToCartBtn.style.removeProperty('font-weight');
             addToCartBtn.style.removeProperty('border-radius');
-            addToCartBtn.style.removeProperty('overflow');
-            addToCartBtn.style.removeProperty('text-overflow');
-            addToCartBtn.style.removeProperty('white-space');
-            addToCartBtn.style.removeProperty('min-width');
         }
         if (quickViewBtn) {
             quickViewBtn.style.removeProperty('padding');
             quickViewBtn.style.removeProperty('font-size');
             quickViewBtn.style.removeProperty('font-weight');
             quickViewBtn.style.removeProperty('border-radius');
-            quickViewBtn.style.removeProperty('overflow');
-            quickViewBtn.style.removeProperty('text-overflow');
-            quickViewBtn.style.removeProperty('white-space');
-            quickViewBtn.style.removeProperty('min-width');
         }
     });
 }
@@ -1850,4 +1706,3 @@ function setupCollapsibleSections() {
         });
     });
 }
-
