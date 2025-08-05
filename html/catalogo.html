@@ -80,7 +80,7 @@
           <div class="products-controls">
             <div class="sort-control">
               <label>Ordenar por: </label>
-              <select id="sortSelect" aria-label="Ordenar productos">
+              <select id="sortSelect">
                 <option value="popular">Más vendidos</option>
                 <option value="price-asc">Precio: menor a mayor</option>
                 <option value="price-desc">Precio: mayor a menor</option>
@@ -89,13 +89,6 @@
                 <option value="newest">Más recientes</option>
                 <option value="rating">Mejor valorados</option>
               </select>
-            </div>
-
-            <div class="filter-control">
-              <button class="filter-btn" id="filterBtn" aria-label="Abrir filtros">
-                <i class="fa-solid fa-filter"></i>
-                <span>Filtros</span>
-              </button>
             </div>
 
             <div class="view-control">
@@ -132,59 +125,6 @@
       </section>
     </div>
 
-    <!-- Modal de filtros responsive -->
-    <div class="filter-modal" id="filterModal">
-      <div class="filter-modal-content">
-        <div class="filter-modal-header">
-          <h3>Filtros</h3>
-          <button class="filter-modal-close" id="filterModalClose" aria-label="Cerrar filtros">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
-        
-        <div class="filter-modal-body">
-          <div class="filter-section">
-            <h4>Marca <i class="fa-solid fa-angle-down"></i></h4>
-            <div class="filter-options">
-              <label><input type="checkbox" data-filter="brand" value="ARTESCO" />ARTESCO</label>
-              <label><input type="checkbox" data-filter="brand" value="ARTI CREATIVO" />ARTI CREATIVO</label>
-              <label><input type="checkbox" data-filter="brand" value="CASIO" />CASIO</label>
-              <label><input type="checkbox" data-filter="brand" value="CATRICE" />CATRICE</label>
-              <label><input type="checkbox" data-filter="brand" value="EDICIONES OBELISCO" />EDICIONES OBELISCO</label>
-              <label><input type="checkbox" data-filter="brand" value="FABER-CASTELL" />FABER-CASTELL</label>
-              <label><input type="checkbox" data-filter="brand" value="LOGITECH" />LOGITECH</label>
-              <label><input type="checkbox" data-filter="brand" value="MARVEL" />MARVEL</label>
-              <label><input type="checkbox" data-filter="brand" value="MILAN" />MILAN</label>
-              <label><input type="checkbox" data-filter="brand" value="PIGMA-MICRON" />PIGMA-MICRON</label>
-              <label><input type="checkbox" data-filter="brand" value="SONY" />SONY</label>
-              <label><input type="checkbox" data-filter="brand" value="STICK'N-NOTES" />STICK'N-NOTES</label>
-              <label><input type="checkbox" data-filter="brand" value="VINIFAN" />VINIFAN</label>
-              <label><input type="checkbox" data-filter="brand" value="XIAOMI" />XIAOMI</label>
-            </div>
-          </div>
-
-          <div class="filter-section">
-            <h4>Precio <i class="fa-solid fa-angle-down"></i></h4>
-            <div class="price-filter-modal">
-              <div class="price-range-modal">
-                <div class="price-values-modal">
-                  <input type="number" class="min-price-modal" min="0" max="169" value="0" placeholder="Mínimo" aria-label="Precio mínimo">
-                  <input type="number" class="max-price-modal" min="0" max="169" value="169" placeholder="Máximo" aria-label="Precio máximo">
-                </div>
-                <div class="slider-container-modal">
-                  <input type="range" class="slider-modal" min="0" max="100" value="100" aria-label="Rango de precio">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="filter-modal-footer">
-          <button class="filter-apply-btn" id="filterApplyBtn">Aplicar Filtros</button>
-          <button class="filter-clear-btn" id="filterClearBtn">Limpiar</button>
-        </div>
-      </div>
-    </div>
     <!--whatsapp contact-->
     <div class="whatsapp-contact">
       <a href="https://wa.me/999451887" target="_blank" rel="noopener" class="whatsapp-message">
