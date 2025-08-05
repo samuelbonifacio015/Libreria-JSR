@@ -362,5 +362,57 @@
     "availability": "Disponible",
     "reviews": "0 reseñas",
     "category": "PAPELES ADHESIVOS"
+  },
+  {
+    "id": "colores",
+    "discount": "Ahorra 15%",
+    "img": "/img/products/artesco-coloresx12.jpg",
+    "alt": "Colores Artesco",
+    "brand": "ARTESCO",
+    "productName": "COLORES ARTE Y DISEÑO | ARTESCO | SET DE 12",
+    "priceOriginal": "S/. 14.50",
+    "priceDiscounted": "S/. 12.00",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "ARTE Y DISEÑO"
+  },
+  {
+    "id": "plumones",
+    "discount": "Ahorra 18%",
+    "img": "/img/products/plumones-delgados-max-45-x-12-artesco.jpg",
+    "alt": "Plumones Artesco",
+    "brand": "ARTESCO",
+    "productName": "PLUMONES DELGADOS MAX | ARTESCO | SET DE 12",
+    "priceOriginal": "S/. 11.50",
+    "priceDiscounted": "S/. 9.00",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "PLUMONES INDELEBLES"
+  },
+  {
+    "id": "plumones",
+    "discount": "Ahorra 18%",
+    "img": "/img/products/plumones-gruesos-aquamax-47-x6-artesco.jpg",
+    "alt": "Plumones Artesco",
+    "brand": "ARTESCO",
+    "productName": "PLUMONES GRUESOS AQUAMAX | ARTESCO | SET DE 12",
+    "priceOriginal": "S/. 14.50",
+    "priceDiscounted": "S/. 12.00",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "PLUMONES INDELEBLES"
+  },
+  {
+    "id": "crayones",
+    "discount": "Ahorra 18%",
+    "img": "/img/products/crayones-x12-undsjumbo-triangulares-artesco.jpg",
+    "alt": "Crayones Artesco",
+    "brand": "ARTESCO",
+    "productName": "CRAYONES X12 UNDS | JUMBO | TRIANGULARES",
+    "priceOriginal": "S/. 8.50",
+    "priceDiscounted": "S/. 6.00",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "CRAYONES Y ÓLEOS"
   }
 ]
