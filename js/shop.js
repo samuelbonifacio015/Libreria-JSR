@@ -873,6 +873,7 @@ function handleAddToCart(e) {
     }
 }
 
+// Funciones para la vista rápida
 function handleQuickView(e) {
     const productCard = e.target.closest('.product-card');
     if (productCard) {
@@ -968,8 +969,14 @@ function applyViewStyles(view) {
     
     if (view === 'list') {
         // Estilos para vista de lista (columna)
-        productsGrid.style.setProperty('grid-template-columns', '1fr', 'important');
-        productsGrid.style.setProperty('max-width', '100%', 'important');
+        productsGrid.style.setProperty('display', 'grid', 'important');
+        productsGrid.style.setProperty('justify-content', 'center', 'important');
+        productsGrid.style.setProperty(
+            'grid-template-columns',
+            'minmax(300px, 1fr)',
+            'important'
+        );
+        productsGrid.style.removeProperty('max-width');
         
         // Aplicar estilos a las tarjetas de producto para vista de lista
         productCards.forEach(card => {
@@ -978,19 +985,18 @@ function applyViewStyles(view) {
             card.style.setProperty('flex-direction', 'row', 'important');
             card.style.setProperty('align-items', 'center', 'important');
             card.style.setProperty('text-align', 'left', 'important');
-            card.style.setProperty('min-height', 'auto', 'important');
-            card.style.setProperty('padding', '20px', 'important');
+            card.style.setProperty('padding', '15px', 'important');
+
+            card.style.setProperty('max-width', '360px', 'important');
+            card.style.setProperty('width', '100%', 'important');
             
             // Estilos para la imagen en vista de lista
             const img = card.querySelector('img');
             if (img) {
-                img.style.setProperty('width', '150px', 'important');
-                img.style.setProperty('height', '150px', 'important');
-                img.style.setProperty('margin-bottom', '0', 'important');
-                img.style.setProperty('flex-shrink', '0', 'important');
-                img.style.setProperty('object-fit', 'contain', 'important');
+                img.style.setProperty('width', '120px', 'important');
+                img.style.setProperty('height', '120px', 'important');
             }
-            
+                
             // Estilos para el contenido en vista de lista
             const productInfo = card.querySelector('.product-info');
             if (productInfo) {
@@ -1047,8 +1053,8 @@ function applyViewStyles(view) {
                 productName.style.setProperty('line-height', '1.3', 'important');
             }
             if (reviews) {
-                reviews.style.setProperty('justify-content', 'flex-start', 'important');
-                reviews.style.setProperty('margin', '8px 0', 'important');
+                reviews.style.setProperty('justify-content', 'center', 'important');
+                reviews.style.setProperty('margin', '5px 0', 'important');
             }
             if (price) {
                 price.style.setProperty('margin', '10px 0', 'important');
@@ -1057,8 +1063,7 @@ function applyViewStyles(view) {
                 price.style.setProperty('gap', '5px', 'important');
             }
             if (availability) {
-                availability.style.setProperty('justify-content', 'flex-start', 'important');
-                availability.style.setProperty('margin', '8px 0', 'important');
+                availability.style.setProperty('justify-content', 'center', 'important');
             }
         });
         
