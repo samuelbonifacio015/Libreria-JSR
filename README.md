@@ -114,28 +114,6 @@
 
 <div align="center">
 
-## 🚀 Instalación y Uso
-
-</div>
-
-1. **Clona el repositorio:**
-   ```bash
-   git clone https://github.com/samuelbonifacio015/Libreria-JSR.git
-   ```
-
-2. **Navega al directorio del proyecto:**
-   ```bash
-   cd Libreria-JSR
-   ```
-
-3. **Abre el archivo index.html en tu navegador:**
-   - Doble clic en `index.html` o
-   - Usa un servidor local como Live Server en VSCode
-
-4. **¡Explora y disfruta de la aplicación!**
-
-<div align="center">
-
 ## 🤝 Contribuciones
 
 </div>
