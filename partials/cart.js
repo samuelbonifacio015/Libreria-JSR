@@ -357,6 +357,7 @@
         getProductName(container) {
             const selectors = [
                 '.product-name',
+                '.product-title', // Añadir soporte para el modal
                 '.name', 
                 'h3',
                 'h4',
