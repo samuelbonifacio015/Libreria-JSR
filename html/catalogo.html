@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/partials/navbar.css" />
     <link rel="stylesheet" href="/partials/footer.css" />
     <link rel="stylesheet" href="/partials/headernav.css" />
+    <link rel="stylesheet" href="/partials/modal.css" />
 
      <!-- Iconos de FontAwesome -->
     <link
@@ -230,6 +231,7 @@
     <script src="../js/catalogo.js"></script>
     <script src="../js/cart.js"></script>
     <script src="../js/mobile.js"></script>
+    <script src="../partials/modal.js"></script>
     <script>
         // Script para probar el carrito
         document.addEventListener('DOMContentLoaded', function() {
@@ -263,6 +265,22 @@
                 }
             };
         });
+
+        // Función para cambiar cantidad en el modal
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('modalQuantity');
+            if (quantityInput) {
+                let currentValue = parseInt(quantityInput.value) || 1;
+                let newValue = currentValue + change;
+                
+                // Asegurar que la cantidad no sea menor a 1
+                if (newValue < 1) {
+                    newValue = 1;
+                }
+                
+                quantityInput.value = newValue;
+            }
+        }
     </script>
 </body>
 </html>

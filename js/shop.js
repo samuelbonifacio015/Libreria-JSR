@@ -420,6 +420,46 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(executeAction, 500);
     }
     
+    // Función auxiliar para cargar products.json de manera robusta
+    async function loadProductsData() {
+        if (window.productsData) {
+            return window.productsData;
+        }
+        
+        try {
+            const response = await fetch('../partials/products.json');
+            const data = await response.json();
+            window.productsData = data;
+            console.log('✅ products.json cargado correctamente:', data.length, 'productos');
+            return data;
+        } catch (error) {
+            console.error('❌ Error al cargar products.json:', error);
+            return null;
+        }
+    }
+
+    // Función de prueba para verificar el regex de precios
+    function testPriceExtraction() {
+        const testPrices = [
+            "S/. 102.00",
+            "S/. 55.00", 
+            "S/. 22.50",
+            "S/. 7.00",
+            "S/. 63.00",
+            "S/. 33.00"
+        ];
+        
+        console.log('🧪 Probando extracción de precios:');
+        testPrices.forEach(priceStr => {
+            const priceMatch = priceStr.match(/(\d+(?:\.\d+)?)/);
+            const price = priceMatch ? parseFloat(priceMatch[0]) : 0;
+            console.log(`  "${priceStr}" -> ${price} (${typeof price})`);
+        });
+    }
+
+    // Ejecutar prueba al cargar
+    testPriceExtraction();
+
     const searchTerm = urlParams.get('search');
     const savedSearchTerm = sessionStorage.getItem('searchTerm');
     
@@ -429,6 +469,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 allProducts = data;
                 filteredProducts = [...data];
+                window.productsData = data; // Asignar también a window.productsData
                 loadProducts();
                 
                 // Aplicar estilos después de cargar productos
@@ -523,15 +564,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Cargar products.json si no está disponible
                 if (!window.productsData) {
-                    fetch('/partials/products.json')
-                        .then(response => response.json())
-                        .then(productsData => {
-                            window.productsData = productsData;
-                            addProductFromModal(productName, productBrand, modalMainImage.src, modalQuantity, quickViewModal);
-                        })
-                        .catch(error => {
-                            console.error('Error al cargar products.json:', error);
-                        });
+                    console.log('📥 Cargando products.json desde modal...');
+                    loadProductsData().then(() => {
+                        addProductFromModal(productName, productBrand, modalMainImage.src, modalQuantity, quickViewModal);
+                    }).catch(error => {
+                        console.error('❌ Error al cargar products.json:', error);
+                    });
                 } else {
                     addProductFromModal(productName, productBrand, modalMainImage.src, modalQuantity, quickViewModal);
                 }
@@ -539,6 +577,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function addProductFromModal(productName, productBrand, imageSrc, modalQuantity, quickViewModal) {
+            console.log('🔍 Buscando producto en products.json:', { productName, productBrand });
+            
+            // Asegurar que productsData esté cargado
+            if (!window.productsData) {
+                console.log('📥 Cargando products.json...');
+                loadProductsData().then(() => {
+                    // Recursivamente llamar a la función una vez que los datos estén cargados
+                    addProductFromModal(productName, productBrand, imageSrc, modalQuantity, quickViewModal);
+                });
+                return;
+            }
+            
             // Buscar el producto en products.json
             const product = window.productsData.find(p => 
                 p.productName.toLowerCase().includes(productName.toLowerCase()) &&
@@ -546,8 +596,25 @@ document.addEventListener('DOMContentLoaded', function() {
             );
 
             if (product) {
-                // Extraer precio directamente desde priceDiscounted sin ningún método de conversión
-                const price = product.priceDiscounted;
+                console.log('✅ Producto encontrado en JSON:', product);
+                
+                // Extraer precio correctamente usando regex para convertir string a número
+                const priceMatch = product.priceDiscounted.match(/(\d+(?:\.\d+)?)/);
+                const price = priceMatch ? parseFloat(priceMatch[0]) : 0;
+
+                console.log('💰 Modal: Procesando precio:', {
+                    original: product.priceDiscounted,
+                    regexMatch: priceMatch,
+                    extracted: price,
+                    priceType: typeof price,
+                    isValid: !isNaN(price) && price > 0
+                });
+
+                // Validar que el precio sea válido
+                if (isNaN(price) || price <= 0) {
+                    console.error('❌ Precio inválido extraído:', price);
+                    return;
+                }
 
                 const productData = {
                     name: product.productName,
@@ -557,15 +624,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     quantity: parseInt(modalQuantity ? modalQuantity.value : 1) || 1
                 };
 
-                console.log('Añadiendo producto desde modal (JSON):', productData);
+                console.log('🛒 Añadiendo producto desde modal (JSON):', productData);
 
                 if (window.addToCart) {
                     window.addToCart(productData);
                 } else {
-                    console.error('Función addToCart no disponible en modal');
+                    console.error('❌ Función addToCart no disponible en modal');
                 }
             } else {
-                console.error('Producto no encontrado en products.json:', { productName, productBrand });
+                console.error('❌ Producto no encontrado en products.json:', { 
+                    productName, 
+                    productBrand,
+                    availableProducts: window.productsData ? window.productsData.length : 'No cargado'
+                });
             }
 
             if (quickViewModal) {
