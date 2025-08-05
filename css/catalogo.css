@@ -62,27 +62,8 @@ body {
   #ASIDE
 \*-----------------------------------*/
 
-.index-page {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin: var(--spacing-lg) auto;
-  max-width: calc(var(--container-narrow) * 1.2);
-}
-
-.index-page h4 {
-  font-size: var(--font-xs);
-  margin: 0;
-  text-align: left;
-  color: var(--text-color);
-}
-
-.index-page i {
-  font-size: var(--font-xs);
-  color: var(--text-color);
-}
-
 .catalogo-container {
+  padding-top: 40px;
   display: flex;
   max-width: calc(var(--container-narrow) * 1.2);
   margin: var(--spacing-lg) auto;
@@ -1497,20 +1478,9 @@ body {
     max-width: 100%;
   }
 
-  .index-page {
-    padding-top: 20px;
-    padding-left: var(--spacing-lg);
-  }
 }
 
 @media (max-width: 1024px) {
-  .index-page {
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 0;
-    width: 100%;
-  }
 
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1527,13 +1497,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .index-page {
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 0;
-    width: 100%;
-  }
 
   .products h2 {
     text-align: center;

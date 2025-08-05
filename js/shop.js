@@ -1733,6 +1733,9 @@ function setupModalFilterSystem() {
             if (sidebarCheckbox) {
                 sidebarCheckbox.checked = this.checked;
             }
+            
+            // Aplicar filtros en tiempo real
+            applyFiltersWithDebounce();
         });
     });
     
@@ -1754,6 +1757,9 @@ function setupModalFilterSystem() {
             if (sidebarMinPrice) {
                 sidebarMinPrice.value = this.value;
             }
+            
+            // Aplicar filtros en tiempo real
+            applyFiltersWithDebounce();
         });
     }
     
@@ -1770,6 +1776,9 @@ function setupModalFilterSystem() {
             if (sidebarMaxPrice) {
                 sidebarMaxPrice.value = this.value;
             }
+            
+            // Aplicar filtros en tiempo real
+            applyFiltersWithDebounce();
         });
     }
     
@@ -1792,6 +1801,9 @@ function setupModalFilterSystem() {
             if (sidebarMaxPrice) {
                 sidebarMaxPrice.value = calculatedMax;
             }
+            
+            // Aplicar filtros en tiempo real
+            applyFiltersWithDebounce();
         });
     }
 }
