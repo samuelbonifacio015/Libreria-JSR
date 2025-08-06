@@ -613,25 +613,6 @@ body {
   z-index: 1000;
 }
 
-.whatsapp-api {
-  background-color: var(--bg-white);
-  color: #000;
-  padding: 10px 15px;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  font-size: var(--font-sm);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: transform 0.3s ease;
-}
-
-.whatsapp-api:hover {
-  transform: scale(1.15);
-  color: #00aeef;
-}
-
 .whatsapp-icon {
   background-color: #25d366;
   color: var(--bg-white);
@@ -1666,10 +1647,6 @@ body {
 
   .product-card .brand {
     font-weight: bold;
-  }
-
-  .whatsapp-api {
-    display: none;
   }
 }
 
