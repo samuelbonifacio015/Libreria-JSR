@@ -30,6 +30,121 @@
       </div>
     </div>
 
+    <!-- Contact Form Section -->
+    <section id="contacto" class="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2>Contáctanos</h2>
+          <p>
+            ¿Tienes un proyecto en mente? Cuéntanos los detalles y te ayudaremos
+            a hacerlo realidad con la mejor calidad y al mejor precio.
+          </p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-form">
+            <div class="form-header">
+              <h3>💬 Solicitar Cotización</h3>
+            </div>
+            <form id="contactForm" onsubmit="handleFormSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nombre">Nombre Completo *</label>
+                  <input type="text" id="nombre" name="nombre" required />
+                </div>
+                <div class="form-group">
+                  <label for="telefono">Teléfono *</label>
+                  <input type="tel" id="telefono" name="telefono" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" />
+              </div>
+              <div class="form-group">
+                <label for="servicio">Tipo de Servicio *</label>
+                <select id="servicio" name="servicio" required>
+                  <option value="">Selecciona el servicio que necesitas</option>
+                  <option value="Impresión Digital">Impresión Digital</option>
+                  <option value="Gran Formato">Gran Formato</option>
+                  <option value="Encuadernación">Encuadernación</option>
+                  <option value="Diseño Gráfico">Diseño Gráfico</option>
+                  <option value="Fotocopias">Fotocopias</option>
+                  <option value="Escaneo">Escaneo</option>
+                  <option value="Invitaciones">Invitaciones</option>
+                  <option value="Material Corporativo">
+                    Material Corporativo
+                  </option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="mensaje">Descripción del Proyecto</label>
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows="4"
+                  placeholder="Cuéntanos los detalles de tu proyecto: cantidad, tamaño, colores, fechas de entrega, etc."
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">
+                💬 Enviar por WhatsApp
+              </button>
+            </form>
+          </div>
+          <div class="contact-info">
+            <div class="info-card">
+              <h3>Información de Contacto</h3>
+              <div class="info-item">
+                <div class="info-icon">📞</div>
+                <div>
+                  <h4>Teléfono</h4>
+                  <p>+506 2222-3333</p>
+                  <p>WhatsApp: +506 8888-9999</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon">📧</div>
+                <div>
+                  <h4>Email</h4>
+                  <p>info@jsrlibreria.com</p>
+                  <p>ventas@jsrlibreria.com</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div>
+                  <h4>Ubicación</h4>
+                  <p>
+                    Centro Comercial Plaza Mayor<br />
+                    Local 15, Segundo Piso<br />
+                    San José, Costa Rica
+                  </p>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon">🕒</div>
+                <div>
+                  <h4>Horarios</h4>
+                  <p>
+                    Lunes a Viernes: 8:00 AM - 6:00 PM<br />
+                    Sábados: 8:00 AM - 4:00 PM<br />
+                    Domingos: Cerrado
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="map-placeholder">
+              <div class="map-content">
+                <span class="map-icon">📍</span>
+                <p>Mapa de Ubicación</p>
+                <p>Centro Comercial Plaza Mayor</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="contact-section"></div>
   </body>
 </html>
