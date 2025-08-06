@@ -82,7 +82,6 @@
             );
 
             if (missingElements.length > 0) {
-                console.warn('JSR Cart: Elementos faltantes:', missingElements);
                 return false;
             }
 
@@ -98,11 +97,9 @@
                 return true;
             }
 
-            console.log('🔄 Inicializando JSR Cart System...');
 
             // Reintentar si faltan elementos
             if (!this.validateElements()) {
-                console.warn('JSR Cart: Elementos no encontrados, reintentando...');
                 setTimeout(() => this.initialize(), CART_CONFIG.retryDelay);
                 return false;
             }

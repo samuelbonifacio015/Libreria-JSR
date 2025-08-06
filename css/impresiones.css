@@ -42,6 +42,26 @@ body {
   color: var(--impresiones-foreground);
 }
 
+.floating-cart {
+  display: none !important;
+}
+
+/*-----------------------------------*\
+  #HERO SECTION
+\*-----------------------------------*/
+
+.hero-content img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  transition: all var(--impresiones-transition);
+}
+
+.hero-content img:hover {
+  transform: scale(1.02);
+}
+
 /*-----------------------------------*\
   #SERVICES
 \*-----------------------------------*/
@@ -53,7 +73,6 @@ body {
 
 .services-section-header {
   text-align: center;
-  margin-bottom: 4rem;
   padding: 2rem 0;
 }
 
@@ -669,8 +688,19 @@ body {
   margin-top: 1rem;
 }
 
-/* Responsive Design */
+/*-----------------------------------*\
+  #RESPONSIVE DESIGN
+\*-----------------------------------*/
+
 @media (max-width: 768px) {
+  .hero-content {
+    min-height: 200px;
+  }
+  
+  .hero-content img {
+    max-height: 250px;
+  }
+  
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
