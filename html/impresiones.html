@@ -30,10 +30,151 @@
       </div>
     </div>
 
+    <!-- Services Section -->
+    <section id="servicios" class="services">
+      <div class="container">
+        <div class="services-section-header">
+          <h2>Nuestros Servicios</h2>
+          <p>
+            Ofrecemos una amplia gama de servicios de impresión para cubrir
+            todas tus necesidades profesionales y personales.
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-image">
+              <img
+                src="src/assets/digital-printing.jpg"
+                alt="Impresión Digital"
+              />
+              <div class="service-overlay"></div>
+              <div class="service-icon">🖨️</div>
+            </div>
+            <div class="service-content">
+              <h3>Impresión Digital</h3>
+              <p>
+                Impresión a color y blanco y negro de alta calidad. Ideal para
+                documentos, folletos y materiales promocionales.
+              </p>
+              <ul>
+                <li>Alta resolución</li>
+                <li>Colores vibrantes</li>
+                <li>Entrega rápida</li>
+              </ul>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-image">
+              <img src="src/assets/large-format.jpg" alt="Gran Formato" />
+              <div class="service-overlay"></div>
+              <div class="service-icon">📏</div>
+            </div>
+            <div class="service-content">
+              <h3>Gran Formato</h3>
+              <p>
+                Banners, posters y señalización de gran tamaño. Perfectos para
+                publicidad exterior e interior.
+              </p>
+              <ul>
+                <li>Materiales resistentes</li>
+                <li>Diseños llamativos</li>
+                <li>Instalación disponible</li>
+              </ul>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-image">
+              <img src="src/assets/bookbinding.jpg" alt="Encuadernación" />
+              <div class="service-overlay"></div>
+              <div class="service-icon">📚</div>
+            </div>
+            <div class="service-content">
+              <h3>Encuadernación</h3>
+              <p>
+                Acabados profesionales para tus documentos. Encuadernación en
+                espiral, térmica y cosida.
+              </p>
+              <ul>
+                <li>Múltiples opciones</li>
+                <li>Acabado profesional</li>
+                <li>Durabilidad garantizada</li>
+              </ul>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-image">
+              <img src="src/assets/graphic-design.jpg" alt="Diseño Gráfico" />
+              <div class="service-overlay"></div>
+              <div class="service-icon">🎨</div>
+            </div>
+            <div class="service-content">
+              <h3>Diseño Gráfico</h3>
+              <p>
+                Creación y diseño de materiales publicitarios. Logos, tarjetas y
+                identidad corporativa.
+              </p>
+              <ul>
+                <li>Diseños únicos</li>
+                <li>Asesoría creativa</li>
+                <li>Formatos profesionales</li>
+              </ul>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-image">
+              <img src="src/assets/digital-printing.jpg" alt="Fotocopias" />
+              <div class="service-overlay"></div>
+              <div class="service-icon">📄</div>
+            </div>
+            <div class="service-content">
+              <h3>Fotocopias</h3>
+              <p>
+                Servicio de fotocopiado rápido y económico. Disponible en
+                diferentes tamaños y calidades.
+              </p>
+              <ul>
+                <li>Precios competitivos</li>
+                <li>Servicio express</li>
+                <li>Múltiples formatos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="service-card">
+            <div class="service-image">
+              <img src="src/assets/digital-printing.jpg" alt="Escaneo" />
+              <div class="service-overlay"></div>
+              <div class="service-icon">📱</div>
+            </div>
+            <div class="service-content">
+              <h3>Escaneo</h3>
+              <p>
+                Digitalización de documentos en alta resolución. Convertimos tus
+                archivos físicos a formato digital.
+              </p>
+              <ul>
+                <li>Alta resolución</li>
+                <li>Múltiples formatos</li>
+                <li>Edición incluida</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="services-cta">
+          <p>
+            ¿No encuentras lo que buscas? Contáctanos para servicios
+            personalizados.
+          </p>
+          <button class="btn btn-primary" onclick="scrollToSection('contacto')">
+            Consultar Otros Servicios
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Form Section -->
     <section id="contacto" class="contact">
       <div class="container">
-        <div class="section-header">
+        <div class="contact-section-header">
           <h2>Contáctanos</h2>
           <p>
             ¿Tienes un proyecto en mente? Cuéntanos los detalles y te ayudaremos
@@ -78,7 +219,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="mensaje">Descripción del Proyecto</label>
+                <label for="mensaje">Descripción</label>
                 <textarea
                   id="mensaje"
                   name="mensaje"
@@ -98,16 +239,14 @@
                 <div class="info-icon">📞</div>
                 <div>
                   <h4>Teléfono</h4>
-                  <p>+506 2222-3333</p>
-                  <p>WhatsApp: +506 8888-9999</p>
+                  <p>WhatsApp: +51 999451887</p>
                 </div>
               </div>
               <div class="info-item">
                 <div class="info-icon">📧</div>
                 <div>
                   <h4>Email</h4>
-                  <p>info@jsrlibreria.com</p>
-                  <p>ventas@jsrlibreria.com</p>
+                  <p>jsrlibrerias@gmail.com</p>
                 </div>
               </div>
               <div class="info-item">
@@ -115,9 +254,9 @@
                 <div>
                   <h4>Ubicación</h4>
                   <p>
-                    Centro Comercial Plaza Mayor<br />
-                    Local 15, Segundo Piso<br />
-                    San José, Costa Rica
+                    Jr. Tacna 3100, <br />
+                    San Martín de Porres<br />
+                    Lima, Perú
                   </p>
                 </div>
               </div>
@@ -126,18 +265,10 @@
                 <div>
                   <h4>Horarios</h4>
                   <p>
-                    Lunes a Viernes: 8:00 AM - 6:00 PM<br />
-                    Sábados: 8:00 AM - 4:00 PM<br />
-                    Domingos: Cerrado
+                    Lunes - Sábado: 08:30am - 7:30pm<br />
+                    Domingos: 09:00am - 7:00pm<br />
                   </p>
                 </div>
-              </div>
-            </div>
-            <div class="map-placeholder">
-              <div class="map-content">
-                <span class="map-icon">📍</span>
-                <p>Mapa de Ubicación</p>
-                <p>Centro Comercial Plaza Mayor</p>
               </div>
             </div>
           </div>
@@ -145,6 +276,5 @@
       </div>
     </section>
 
-    <div class="contact-section"></div>
   </body>
 </html>
