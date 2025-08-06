@@ -5,12 +5,21 @@ let filterTimeout = null;
 let currentView = 'grid';
 let currentSort = 'popular';
 
+// Variables para paginación
+let currentPage = 1;
+let productsPerPage = 15;
+let totalPages = 1;
+let paginatedProducts = [];
+
 // Función para cargar y mostrar productos con efectos de transición
 function loadProducts(products = null) {
     const productsContainer = document.querySelector('.products-grid');
     if (!productsContainer) return;
     
     const productsToShow = products || allProducts;
+    
+    // Calcular paginación
+    calculatePagination(productsToShow);
     
     // Mostrar indicador de carga
     showLoadingState();
@@ -25,16 +34,17 @@ function loadProducts(products = null) {
         // Esperar a que termine la transición de fade out
         setTimeout(() => {
             productsContainer.innerHTML = '';
-            renderProducts(productsToShow, productsContainer);
+            renderProducts(paginatedProducts, productsContainer);
             hideLoadingState();
         }, 300);
     } else {
         // Si no hay productos existentes, renderizar directamente
-        renderProducts(productsToShow, productsContainer);
+        renderProducts(paginatedProducts, productsContainer);
         hideLoadingState();
     }
     
     updateProductsCount(productsToShow.length);
+    updatePagination();
     setupEventListeners();
     
     // Aplicar estilos de vista después de cargar productos
@@ -74,6 +84,21 @@ function hideLoadingState() {
 
 // Función para renderizar productos con efecto de fade in
 function renderProducts(products, container) {
+    // Limpiar contenedor
+    container.innerHTML = '';
+    
+    // Si no hay productos, mostrar mensaje
+    if (!products || products.length === 0) {
+        container.innerHTML = `
+            <div class="no-products-message">
+                <i class="fa-solid fa-search"></i>
+                <h3>No se encontraron productos</h3>
+                <p>Intenta ajustar los filtros o buscar con otros criterios</p>
+            </div>
+        `;
+        return;
+    }
+    
     products.forEach((product, index) => {
         const isAvailable = product.availability.toLowerCase().includes('disponible');
         const availabilityClass = isAvailable ? '' : 'out-of-stock';
@@ -147,12 +172,167 @@ function renderProducts(products, container) {
     });
 }
 
+// Función para calcular la paginación
+function calculatePagination(products) {
+    totalPages = Math.ceil(products.length / productsPerPage);
+    
+    // Asegurar que currentPage esté dentro del rango válido
+    if (currentPage > totalPages) {
+        currentPage = totalPages;
+    }
+    if (currentPage < 1) {
+        currentPage = 1;
+    }
+    
+    // Calcular el rango de productos para la página actual
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    
+    paginatedProducts = products.slice(startIndex, endIndex);
+}
+
 // Función para actualizar el contador de productos
 function updateProductsCount(count) {
     const productsCount = document.querySelector('.products-count');
     if (productsCount) {
-        productsCount.textContent = `Mostrando 1 - ${count} de ${count} productos`;
+        const startIndex = (currentPage - 1) * productsPerPage + 1;
+        const endIndex = Math.min(currentPage * productsPerPage, count);
+        productsCount.textContent = `Mostrando ${startIndex} - ${endIndex} de ${count} productos`;
     }
+}
+
+// Función para actualizar la paginación
+function updatePagination() {
+    const paginationContainer = document.querySelector('.pagination');
+    if (!paginationContainer) return;
+    
+    // Limpiar paginación existente
+    paginationContainer.innerHTML = '';
+    
+    // Verificar si hay productos para mostrar
+    const productsToShow = filteredProducts.length > 0 ? filteredProducts : allProducts;
+    
+    if (productsToShow.length === 0) {
+        paginationContainer.style.display = 'none';
+        return;
+    }
+    
+    if (totalPages <= 1) {
+        paginationContainer.style.display = 'none';
+        return;
+    }
+    
+    paginationContainer.style.display = 'flex';
+    
+    // Botón "Anterior"
+    if (currentPage > 1) {
+        const prevButton = document.createElement('a');
+        prevButton.href = '#';
+        prevButton.className = 'pagination-item';
+        prevButton.innerHTML = '<i class="fa-solid fa-angle-left"></i> Anterior';
+        prevButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToPage(currentPage - 1);
+        });
+        paginationContainer.appendChild(prevButton);
+    }
+    
+    // Números de página
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Ajustar startPage si endPage está en el límite
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // Página 1
+    if (startPage > 1) {
+        const page1Button = document.createElement('a');
+        page1Button.href = '#';
+        page1Button.className = 'pagination-item';
+        page1Button.textContent = '1';
+        page1Button.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToPage(1);
+        });
+        paginationContainer.appendChild(page1Button);
+        
+        if (startPage > 2) {
+            const dots = document.createElement('div');
+            dots.className = 'pagination-dots';
+            dots.textContent = '...';
+            paginationContainer.appendChild(dots);
+        }
+    }
+    
+    // Páginas intermedias
+    for (let i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('a');
+        pageButton.href = '#';
+        pageButton.className = 'pagination-item';
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        }
+        pageButton.textContent = i;
+        pageButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToPage(i);
+        });
+        paginationContainer.appendChild(pageButton);
+    }
+    
+    // Página final
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            const dots = document.createElement('div');
+            dots.className = 'pagination-dots';
+            dots.textContent = '...';
+            paginationContainer.appendChild(dots);
+        }
+        
+        const lastPageButton = document.createElement('a');
+        lastPageButton.href = '#';
+        lastPageButton.className = 'pagination-item';
+        lastPageButton.textContent = totalPages;
+        lastPageButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToPage(totalPages);
+        });
+        paginationContainer.appendChild(lastPageButton);
+    }
+    
+    // Botón "Siguiente"
+    if (currentPage < totalPages) {
+        const nextButton = document.createElement('a');
+        nextButton.href = '#';
+        nextButton.className = 'pagination-item';
+        nextButton.innerHTML = 'Siguiente <i class="fa-solid fa-angle-right"></i>';
+        nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToPage(currentPage + 1);
+        });
+        paginationContainer.appendChild(nextButton);
+    }
+}
+
+// Función para ir a una página específica
+function goToPage(page) {
+    if (page < 1 || page > totalPages) return;
+    
+    currentPage = page;
+    
+    // Recalcular paginación con los productos filtrados actuales
+    calculatePagination(filteredProducts.length > 0 ? filteredProducts : allProducts);
+    
+    // Recargar productos
+    loadProducts();
+    
+    // Scroll suave hacia arriba
+    document.querySelector('.products').scrollIntoView({
+        behavior: 'smooth'
+    });
 }
 
 // Función para aplicar filtros con debounce
@@ -177,6 +357,9 @@ function applyFilters() {
         
         return brandMatch && priceMatch;
     });
+    
+    // Resetear a la primera página cuando se aplican filtros
+    currentPage = 1;
     
     // Aplicar ordenamiento después del filtrado
     sortProducts();
@@ -339,6 +522,8 @@ function changeView(view) {
 // Función para cambiar ordenamiento
 function changeSort(sortType) {
     currentSort = sortType;
+    // Resetear a la primera página cuando se cambia el ordenamiento
+    currentPage = 1;
     sortProducts();
     loadProducts(filteredProducts);
     
@@ -788,53 +973,8 @@ window.setupFilters = function() {
 };
 
 window.setupPagination = function() {
-    const paginationItems = document.querySelectorAll('.pagination-item');
-    const paginationNext = document.querySelector('.pagination-next');
-    
-    if (paginationItems.length) {
-        paginationItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                paginationItems.forEach(i => i.classList.remove('active'));
-                
-                this.classList.add('active');
-                
-                console.log(`Cargar página ${this.textContent}`);
-                
-                document.querySelector('.products').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    }
-    
-    if (paginationNext) {
-        paginationNext.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const activePage = document.querySelector('.pagination-item.active');
-            if (!activePage) return;
-            
-            const nextPage = parseInt(activePage.textContent) + 1;
-            
-            const nextElement = Array.from(paginationItems).find(item => 
-                parseInt(item.textContent) === nextPage
-            );
-            
-            if (nextElement) {
-                paginationItems.forEach(i => i.classList.remove('active'));
-                
-                nextElement.classList.add('active');
-                
-                console.log(`Cargar página ${nextPage}`);
-                
-                document.querySelector('.products').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    }
+    // La paginación ahora se maneja dinámicamente en updatePagination()
+    console.log('Paginación configurada dinámicamente');
 };
 
 window.setupProductControls = function() {
