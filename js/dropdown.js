@@ -68,6 +68,13 @@ class DropdownNavigation {
         console.log('=== NAVEGANDO A CATEGORÍA ===');
         console.log('Categoría original:', category);
         
+        // Excepción para "LOS MÁS VENDIDOS" - ir directamente al catálogo
+        if (category === 'LOS MÁS VENDIDOS') {
+            console.log('Excepción: LOS MÁS VENDIDOS - redirigiendo directamente al catálogo');
+            window.location.href = '/html/catalogo.html';
+            return;
+        }
+        
         // Mapear categorías del dropdown a términos de búsqueda
         const categoryMapping = this.getCategoryMapping(category);
         console.log('Categoría mapeada:', categoryMapping);
