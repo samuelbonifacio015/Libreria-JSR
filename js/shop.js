@@ -1044,42 +1044,166 @@ function handleCatalogAction(productId, action) {
     console.log('🎯 Ejecutando acción en catálogo:', { productId, action });
     
     if (action === 'add') {
-        // Buscar el producto en el catálogo y añadirlo al carrito
+        // Primero intentar encontrar el producto en el DOM (si está visible)
         const productCard = document.querySelector(`[data-product-id="${productId}"]`);
         if (productCard) {
             const addToCartBtn = productCard.querySelector('.add-to-cart');
             if (addToCartBtn) {
-                console.log('✅ Producto encontrado, añadiendo al carrito...');
+                console.log('✅ Producto encontrado en DOM, añadiendo al carrito...');
                 addToCartBtn.click();
                 
                 // Mostrar notificación de éxito
                 setTimeout(() => {
                     showNotification('Producto añadido al carrito correctamente', 'success');
                 }, 100);
-            } else {
-                console.error('❌ Botón "Añadir al carrito" no encontrado');
-                showNotification('Error: No se pudo añadir el producto al carrito', 'error');
+                return;
             }
-        } else {
-            console.error('❌ Producto no encontrado en el catálogo:', productId);
-            showNotification('Error: Producto no encontrado en el catálogo', 'error');
         }
+        
+        // Si no está en el DOM, buscar en products.json y añadir directamente
+        console.log('🔍 Producto no visible en DOM, buscando en products.json...');
+        addProductFromCatalog(productId);
+        
     } else if (action === 'view') {
-        // Abrir vista rápida del producto
+        // Primero intentar encontrar el producto en el DOM (si está visible)
         const productCard = document.querySelector(`[data-product-id="${productId}"]`);
         if (productCard) {
             const quickViewBtn = productCard.querySelector('.quick-view');
             if (quickViewBtn) {
-                console.log('✅ Producto encontrado, abriendo vista rápida...');
+                console.log('✅ Producto encontrado en DOM, abriendo vista rápida...');
                 quickViewBtn.click();
+                return;
+            }
+        }
+        
+        // Si no está en el DOM, buscar en products.json y abrir modal
+        console.log('🔍 Producto no visible en DOM, buscando en products.json...');
+        openQuickViewFromCatalog(productId);
+    }
+}
+
+// Función para añadir producto directamente desde products.json
+function addProductFromCatalog(productId) {
+    if (!window.productsData) {
+        console.log('📥 Cargando products.json...');
+        window.loadProductsData().then(() => {
+            addProductFromCatalog(productId);
+        }).catch(error => {
+            console.error('❌ Error al cargar products.json:', error);
+            showNotification('Error: No se pudo cargar los datos del producto', 'error');
+        });
+        return;
+    }
+    
+    // Buscar el producto en products.json
+    const product = window.productsData.find(p => p.id === productId);
+    
+    if (product) {
+        console.log('✅ Producto encontrado en products.json:', product);
+        
+        // Extraer precio correctamente
+        const priceText = product.priceDiscounted;
+        const cleanedText = priceText.replace(/[^\d.]/g, '').replace(/^\./, '');
+        const price = parseFloat(cleanedText);
+        
+        if (isNaN(price) || price <= 0) {
+            console.error('❌ Precio inválido extraído:', price);
+            showNotification('Error: Precio del producto inválido', 'error');
+            return;
+        }
+        
+        const productData = {
+            name: product.productName,
+            brand: product.brand,
+            price: price,
+            image: product.img,
+            quantity: 1
+        };
+        
+        console.log('🛒 Añadiendo producto desde catálogo:', productData);
+        
+        // Añadir al carrito usando la función disponible
+        if (window.addToCart) {
+            window.addToCart(productData);
+            showNotification('Producto añadido al carrito correctamente', 'success');
+        } else if (window.JSRCart && window.JSRCart.addToCart) {
+            window.JSRCart.addToCart(productData);
+            showNotification('Producto añadido al carrito correctamente', 'success');
+        } else if (window.JSRCart && window.JSRCart.getInstance) {
+            const cartInstance = window.JSRCart.getInstance();
+            if (cartInstance && cartInstance.addToCart) {
+                cartInstance.addToCart(productData);
+                showNotification('Producto añadido al carrito correctamente', 'success');
             } else {
-                console.error('❌ Botón "Vista rápida" no encontrado');
-                showNotification('Error: No se pudo abrir la vista rápida', 'error');
+                console.error('❌ No se pudo añadir al carrito');
+                showNotification('Error: No se pudo añadir al carrito', 'error');
             }
         } else {
-            console.error('❌ Producto no encontrado en el catálogo:', productId);
-            showNotification('Error: Producto no encontrado en el catálogo', 'error');
+            console.error('❌ Función addToCart no disponible');
+            showNotification('Error: Carrito no disponible', 'error');
         }
+    } else {
+        console.error('❌ Producto no encontrado en products.json:', productId);
+        showNotification('Error: Producto no encontrado en el catálogo', 'error');
+    }
+}
+
+// Función para abrir vista rápida desde products.json
+function openQuickViewFromCatalog(productId) {
+    if (!window.productsData) {
+        console.log('📥 Cargando products.json...');
+        window.loadProductsData().then(() => {
+            openQuickViewFromCatalog(productId);
+        }).catch(error => {
+            console.error('❌ Error al cargar products.json:', error);
+            showNotification('Error: No se pudo cargar los datos del producto', 'error');
+        });
+        return;
+    }
+    
+    // Buscar el producto en products.json
+    const product = window.productsData.find(p => p.id === productId);
+    
+    if (product) {
+        console.log('✅ Producto encontrado en products.json para vista rápida:', product);
+        
+        // Abrir modal con los datos del producto
+        const modalMainImage = document.getElementById('modalMainImage');
+        const modalProductTitle = document.getElementById('modalProductTitle');
+        const modalBrand = document.getElementById('modalBrand');
+        const modalDiscount = document.getElementById('modalDiscount');
+        const modalOriginalPrice = document.getElementById('modalOriginalPrice');
+        const modalDiscountedPrice = document.getElementById('modalDiscountedPrice');
+        const modalQuantity = document.getElementById('modalQuantity');
+        const modalThumbnails = document.getElementById('modalThumbnails');
+        const quickViewModal = document.getElementById('quickViewModal');
+        
+        if (modalMainImage) modalMainImage.src = product.img;
+        if (modalProductTitle) modalProductTitle.textContent = product.productName;
+        if (modalBrand) modalBrand.textContent = product.brand;
+        if (modalDiscount) modalDiscount.textContent = product.discount;
+        if (modalOriginalPrice) modalOriginalPrice.textContent = product.priceOriginal;
+        if (modalDiscountedPrice) modalDiscountedPrice.textContent = product.priceDiscounted;
+        if (modalQuantity) modalQuantity.value = 1;
+        
+        if (modalThumbnails) {
+            modalThumbnails.innerHTML = '';
+            for (let i = 0; i < 4; i++) {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = product.img;
+                thumbnail.alt = 'Miniatura';
+                modalThumbnails.appendChild(thumbnail);
+            }
+        }
+        
+        if (quickViewModal) {
+            quickViewModal.style.display = 'flex';
+        }
+        
+        showNotification('Vista rápida abierta', 'success');
+    } else {
+        console.error('❌ Producto no encontrado en products.json:', productId);
+        showNotification('Error: Producto no encontrado en el catálogo', 'error');
     }
 }
 

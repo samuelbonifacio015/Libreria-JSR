@@ -453,55 +453,6 @@
     <script src="../js/cart.js"></script>
     <script src="../js/mobile.js"></script>
     <script src="../partials/modal.js"></script>
-    <script>
-      // Script para probar el carrito
-      document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("navbarLoaded", function () {
-          console.log("Navbar cargado en catálogo");
-
-          // Debug del carrito después de 2 segundos
-          setTimeout(() => {
-            if (window.debugCart) {
-              window.debugCart();
-            }
-          }, 2000);
-        });
-
-        // Función de prueba para añadir productos
-        window.testAddToCart = function () {
-          const testProduct = {
-            name: "Producto de Prueba",
-            brand: "Marca Test",
-            price: 25.99,
-            image: "/img/products/default.jpg",
-            quantity: 1,
-          };
-
-          console.log("🧪 Probando añadir producto de prueba:", testProduct);
-
-          if (window.addToCart) {
-            window.addToCart(testProduct);
-          } else {
-            console.error("❌ Función addToCart no disponible");
-          }
-        };
-      });
-
-      // Función para cambiar cantidad en el modal
-      function changeQuantity(change) {
-        const quantityInput = document.getElementById("modalQuantity");
-        if (quantityInput) {
-          let currentValue = parseInt(quantityInput.value) || 1;
-          let newValue = currentValue + change;
-
-          // Asegurar que la cantidad no sea menor a 1
-          if (newValue < 1) {
-            newValue = 1;
-          }
-
-          quantityInput.value = newValue;
-        }
-      }
-    </script>
+   
   </body>
 </html>
