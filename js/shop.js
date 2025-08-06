@@ -7,7 +7,7 @@ let currentSort = 'popular';
 
 // Variables para paginación
 let currentPage = 1;
-let productsPerPage = 15;
+let productsPerPage = 20;
 let totalPages = 1;
 let paginatedProducts = [];
 
@@ -224,19 +224,6 @@ function updatePagination() {
     
     paginationContainer.style.display = 'flex';
     
-    // Botón "Anterior"
-    if (currentPage > 1) {
-        const prevButton = document.createElement('a');
-        prevButton.href = '#';
-        prevButton.className = 'pagination-item';
-        prevButton.innerHTML = '<i class="fa-solid fa-angle-left"></i> Anterior';
-        prevButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            goToPage(currentPage - 1);
-        });
-        paginationContainer.appendChild(prevButton);
-    }
-    
     // Números de página
     const maxVisiblePages = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
@@ -301,19 +288,6 @@ function updatePagination() {
             goToPage(totalPages);
         });
         paginationContainer.appendChild(lastPageButton);
-    }
-    
-    // Botón "Siguiente"
-    if (currentPage < totalPages) {
-        const nextButton = document.createElement('a');
-        nextButton.href = '#';
-        nextButton.className = 'pagination-item';
-        nextButton.innerHTML = 'Siguiente <i class="fa-solid fa-angle-right"></i>';
-        nextButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            goToPage(currentPage + 1);
-        });
-        paginationContainer.appendChild(nextButton);
     }
 }
 
