@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Impresiones - JSR</title>
 
-    <link rel="icon" type="image/x-icon" href="/img/JSR.ico" />
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="img/JSR.ico" />
+
+    <link rel="stylesheet" href="/partials/footer.css" />
+    <link rel="stylesheet" href="/partials/navbar.css" />
+    <link rel="stylesheet" href="/partials/headernav.css" />
+
     <link rel="stylesheet" href="/css/impresiones.css" />
 
     <link
@@ -21,12 +25,16 @@
     />
   </head>
   <body>
-    <!--!!!!!!!! CARGA DE PRODUCTOS !!!!!!-->
+    <!--navbar-->
+    <div id="navbar-placeholder"></div>
+
+    <!--headernav-->
+    <div id="headernav-placeholder"></div>
 
     <!--header-->
     <div class="hero-section">
       <div class="hero-content">
-        <img src="/img/banner/jsr-banner-3.png" alt="Impresiones" />
+        <img src="img/banner/jsr-banner-3.png" alt="Impresiones" />
       </div>
     </div>
 
@@ -48,7 +56,7 @@
                 alt="Impresión Digital"
               />
               <div class="service-overlay"></div>
-              <div class="service-icon">🖨️</div>
+              <div class="service-icon"><i class="fas fa-print"></i></div>
             </div>
             <div class="service-content">
               <h3>Impresión Digital</h3>
@@ -67,7 +75,9 @@
             <div class="service-image">
               <img src="src/assets/large-format.jpg" alt="Gran Formato" />
               <div class="service-overlay"></div>
-              <div class="service-icon">📏</div>
+              <div class="service-icon">
+                <i class="fas fa-ruler-combined"></i>
+              </div>
             </div>
             <div class="service-content">
               <h3>Gran Formato</h3>
@@ -86,7 +96,7 @@
             <div class="service-image">
               <img src="src/assets/bookbinding.jpg" alt="Encuadernación" />
               <div class="service-overlay"></div>
-              <div class="service-icon">📚</div>
+              <div class="service-icon"><i class="fas fa-book"></i></div>
             </div>
             <div class="service-content">
               <h3>Encuadernación</h3>
@@ -105,7 +115,7 @@
             <div class="service-image">
               <img src="src/assets/graphic-design.jpg" alt="Diseño Gráfico" />
               <div class="service-overlay"></div>
-              <div class="service-icon">🎨</div>
+              <div class="service-icon"><i class="fas fa-palette"></i></div>
             </div>
             <div class="service-content">
               <h3>Diseño Gráfico</h3>
@@ -124,7 +134,7 @@
             <div class="service-image">
               <img src="src/assets/digital-printing.jpg" alt="Fotocopias" />
               <div class="service-overlay"></div>
-              <div class="service-icon">📄</div>
+              <div class="service-icon"><i class="fas fa-copy"></i></div>
             </div>
             <div class="service-content">
               <h3>Fotocopias</h3>
@@ -143,7 +153,7 @@
             <div class="service-image">
               <img src="src/assets/digital-printing.jpg" alt="Escaneo" />
               <div class="service-overlay"></div>
-              <div class="service-icon">📱</div>
+              <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
             </div>
             <div class="service-content">
               <h3>Escaneo</h3>
@@ -184,7 +194,7 @@
         <div class="contact-grid">
           <div class="contact-form">
             <div class="form-header">
-              <h3>💬 Solicitar Cotización</h3>
+              <h3>Solicitar Cotización</h3>
             </div>
             <form id="contactForm" onsubmit="handleFormSubmit(event)">
               <div class="form-row">
@@ -228,7 +238,7 @@
                 ></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-full">
-                💬 Enviar por WhatsApp
+                Enviar por WhatsApp
               </button>
             </form>
           </div>
@@ -236,21 +246,23 @@
             <div class="info-card">
               <h3>Información de Contacto</h3>
               <div class="info-item">
-                <div class="info-icon">📞</div>
+                <div class="info-icon"><i class="fas fa-phone"></i></div>
                 <div>
                   <h4>Teléfono</h4>
                   <p>WhatsApp: +51 999451887</p>
                 </div>
               </div>
               <div class="info-item">
-                <div class="info-icon">📧</div>
+                <div class="info-icon"><i class="fas fa-envelope"></i></div>
                 <div>
                   <h4>Email</h4>
                   <p>jsrlibrerias@gmail.com</p>
                 </div>
               </div>
               <div class="info-item">
-                <div class="info-icon">📍</div>
+                <div class="info-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
                 <div>
                   <h4>Ubicación</h4>
                   <p>
@@ -261,7 +273,7 @@
                 </div>
               </div>
               <div class="info-item">
-                <div class="info-icon">🕒</div>
+                <div class="info-icon"><i class="fas fa-clock"></i></div>
                 <div>
                   <h4>Horarios</h4>
                   <p>
@@ -276,5 +288,12 @@
       </div>
     </section>
 
+    <!--footer-->
+    <div id="footer-placeholder"></div>
+
+    <!--scripts-->
+    <script src="/js/load-content.js"></script>
+    <script src="/js/dropdown.js"></script>
+    <script src="/js/mobile.js"></script>
   </body>
 </html>
