@@ -318,13 +318,11 @@
                         priceOriginal: product.priceOriginal
                     });
 
-                    // Extraer precio usando solo priceDiscounted
-                    const priceMatch = product.priceDiscounted.match(/(\d+(?:\.\d+)?)/);
-                    const priceDiscounted = priceMatch ? parseFloat(priceMatch[0]) : 0;
+                    // Extraer precio usando el mismo método que funciona en shop.js y getProductPrice
+                    const priceDiscounted = parseFloat(product.priceDiscounted.replace(/[^\d.]/g, '').replace(/^\./, ''));
 
                     // Extraer precio original si es necesario
-                    const originalMatch = product.priceOriginal.match(/(\d+(?:\.\d+)?)/);
-                    const priceOriginal = originalMatch ? parseFloat(originalMatch[0]) : 0;
+                    const priceOriginal = parseFloat(product.priceOriginal.replace(/[^\d.]/g, '').replace(/^\./, ''));
 
                     console.log('JSR Cart: Precios extraídos:', {
                         priceDiscounted: priceDiscounted,
@@ -408,8 +406,8 @@
                         priceText: priceText
                     });
                     
-                    // Extraer solo números y punto decimal
-                    const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+                    // Extraer solo números y punto decimal, eliminando punto inicial si existe
+                    const price = parseFloat(priceText.replace(/[^\d.]/g, '').replace(/^\./, ''));
                     console.log('JSR Cart: Precio extraído del DOM:', price);
                     
                     if (!isNaN(price) && price > 0) return price;
@@ -434,7 +432,7 @@
                         priceText: priceText
                     });
                     
-                    const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+                    const price = parseFloat(priceText.replace(/[^\d.]/g, '').replace(/^\./, ''));
                     console.log('JSR Cart: Precio original extraído del DOM:', price);
                     
                     if (!isNaN(price) && price > 0) return price;
