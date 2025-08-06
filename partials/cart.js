@@ -173,9 +173,10 @@
          * Configurar botones "Añadir al carrito"
          */
         setupAddToCartButtons() {
-            // Usar delegación de eventos para botones dinámicos
+            // Usar delegación de eventos para botones dinámicos, pero excluir el modal
             document.addEventListener('click', (e) => {
-                if (e.target.matches('.add-to-cart, [data-action="add-to-cart"]')) {
+                if (e.target.matches('.add-to-cart, [data-action="add-to-cart"]') && 
+                    !e.target.closest('.modal-right')) {
                     e.preventDefault();
                     this.handleAddToCart(e);
                 }

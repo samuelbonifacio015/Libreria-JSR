@@ -704,6 +704,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target.matches('.modal-right .add-to-cart')) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation(); // Añadir esta línea para evitar propagación
 
                 const modalProductTitle = document.getElementById('modalProductTitle');
                 const modalBrand = document.getElementById('modalBrand');
@@ -757,13 +758,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (product) {
                 console.log('✅ Producto encontrado en JSON:', product);
                 
-                // Extraer precio correctamente usando regex para convertir string a número
-                const priceMatch = product.priceDiscounted.match(/(\d+(?:\.\d+)?)/);
-                const price = priceMatch ? parseFloat(priceMatch[0]) : 0;
+                // Extraer precio correctamente - usar el mismo método que en cart.js
+                const priceText = product.priceDiscounted;
+                const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
 
                 console.log('💰 Modal: Procesando precio:', {
                     original: product.priceDiscounted,
-                    regexMatch: priceMatch,
+                    priceText: priceText,
                     extracted: price,
                     priceType: typeof price,
                     isValid: !isNaN(price) && price > 0
