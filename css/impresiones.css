@@ -360,6 +360,15 @@ body {
   letter-spacing: -0.02em;
 }
 
+.contact-section-header h3 {
+  padding-top: 1rem;
+  font-size: 1rem;
+  color: var(--impresiones-muted-foreground);
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
 .hero-content img {
   width: 100%;
   height: auto;
@@ -696,11 +705,32 @@ body {
   .hero-content {
     min-height: 200px;
   }
-  
+
   .hero-content img {
     max-height: 250px;
   }
-  
+
+  .services-section-header h2 {
+    font-size: 2rem;
+  }
+
+  .services-section-header p {
+    font-size: 1rem;
+  }
+
+  .contact-section-header h2 {
+    font-size: 2rem;
+  }
+
+  .contact-section-header h3 {
+    padding-top: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .contact-section-header p {
+    font-size: 1rem;
+  }
+
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -726,4 +756,23 @@ body {
   .info-item {
     padding: 1.25rem 1.5rem;
   }
+}
+
+/*-----------------------------------*\
+  #FORM MESSAGES
+\*-----------------------------------*/
+
+.form-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.form-message.success {
+  color: #10b981;
+}
+
+.form-message.error {
+  color: #ef4444;
 }

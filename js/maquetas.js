@@ -539,187 +539,27 @@ function setupActionButtons() {
 }
 
 // ========================================
-// FUNCIONES DEL FORMULARIO WHATSAPP
+// INICIALIZACIÓN
 // ========================================
 
 /**
- * Formatea la fecha para mostrar en el mensaje de WhatsApp
- * @param {string} dateString - Fecha en formato YYYY-MM-DD
- * @returns {string} Fecha formateada como DD/MM/YYYY
+ * Inicializa toda la funcionalidad del carousel y modal
  */
-function formatDate(dateString) {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
-}
-
-/**
- * Valida que todos los campos requeridos estén completos
- * @param {Object} formData - Datos del formulario
- * @returns {boolean} true si todos los campos requeridos están completos
- */
-function validateForm(formData) {
-  const requiredFields = ['name', 'email', 'deadline', 'message'];
-  return requiredFields.every(field => formData[field] && formData[field].trim() !== '');
-}
-
-/**
- * Valida el formato del email
- * @param {string} email - Email a validar
- * @returns {boolean} true si el email tiene formato válido
- */
-function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Construye el mensaje para WhatsApp
- * @param {Object} formData - Datos del formulario
- * @returns {string} Mensaje formateado para WhatsApp
- */
-function buildWhatsAppMessage(formData) {
-  const formattedDate = formatDate(formData.deadline);
+function initializeMaquetas() {
+  renderCarousel();
+  setupNavigationListeners();
+  setupActionButtons();
   
-  // Obtener fecha y hora actual
-  const now = new Date();
-  const currentDate = now.toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
-  const currentTime = now.toLocaleTimeString('es-ES', {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  // Manejar redimensionamiento
+  window.addEventListener('resize', handleResize);
   
-  let message = `*Nueva Solicitud de Maqueta - Librería JSR*%0A%0A`;
-  message += `*Nombre:* ${formData.name}%0A`;
-  message += `*Email:* ${formData.email}%0A`;
-  
-  if (formData.phone && formData.phone.trim() !== '') {
-    message += `*Teléfono:* ${formData.phone}%0A`;
-  }
-  
-  message += `*Fecha de Entrega:* ${formattedDate}%0A%0A`;
-  message += `*Descripción del Proyecto:*%0A${formData.message.replace(/\n/g, '%0A')}%0A%0A`;
-  message += `---%0A`;
-  message += `*Enviado desde:* Maquetas - Librería JSR%0A`;
-  message += `*Fecha y hora de envío:* ${currentDate} a las ${currentTime}`;
-  
-  return message;
-}
-
-/**
- * Abre WhatsApp con el mensaje predefinido
- * @param {string} message - Mensaje formateado para WhatsApp
- */
-function openWhatsApp(message) {
-  const phoneNumber = '51999451887';
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-  window.open(whatsappUrl, '_blank');
-}
-
-/**
- * Maneja el envío del formulario
- * @param {Event} e - Evento del formulario
- */
-function handleFormSubmit(e) {
-  e.preventDefault();
-  
-  const form = e.target;
-  const formData = {
-    name: form.name.value.trim(),
-    email: form.email.value.trim(),
-    phone: form.phone.value.trim(),
-    deadline: form.deadline.value,
-    message: form.message.value.trim()
-  };
-  
-  // Validar campos requeridos
-  if (!validateForm(formData)) {
-    showFormMessage('Por favor, completa todos los campos requeridos.', 'error');
-    return;
-  }
-  
-  // Validar formato del email
-  if (!validateEmail(formData.email)) {
-    showFormMessage('Por favor, ingresa un email válido.', 'error');
-    return;
-  }
-  
-  // Construir mensaje para WhatsApp
-  const whatsappMessage = buildWhatsAppMessage(formData);
-  
-  // Mostrar mensaje de confirmación
-  showFormMessage('Redirigiendo a WhatsApp...', 'success');
-  
-  // Abrir WhatsApp después de un breve delay
-  setTimeout(() => {
-    openWhatsApp(whatsappMessage);
-    
-    // Limpiar formulario después de enviar
-    form.reset();
-    showFormMessage('', '');
-  }, 1500);
-}
-
-/**
- * Muestra mensajes en el formulario
- * @param {string} message - Mensaje a mostrar
- * @param {string} type - Tipo de mensaje ('success', 'error', '')
- */
-function showFormMessage(message, type) {
-  const messageElement = document.getElementById('formMessage');
-  if (messageElement) {
-    messageElement.textContent = message;
-    messageElement.className = `form-message ${type}`;
-  }
-}
-
-/**
- * Configura los event listeners del formulario
- */
-function setupFormListeners() {
-  const form = document.getElementById('form');
-  if (form) {
-    form.addEventListener('submit', handleFormSubmit);
-  }
-}
-
-/**
- * Configura todos los event listeners globales
- */
-function setupGlobalEventListeners() {
   // Cerrar modal con Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
     }
   });
-
-  // Manejar redimensionamiento
-  window.addEventListener('resize', handleResize);
-}
-
-// ========================================
-// INICIALIZACIÓN
-// ========================================
-
-/**
- * Inicializa toda la funcionalidad
- */
-function initialize() {
-  renderCarousel();
-  setupNavigationListeners();
-  setupActionButtons();
-  setupGlobalEventListeners();
-  setupFormListeners();
 }
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', initialize);
+document.addEventListener('DOMContentLoaded', initializeMaquetas);
