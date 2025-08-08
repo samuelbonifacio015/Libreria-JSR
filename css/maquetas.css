@@ -1,0 +1,180 @@
+/*-----------------------------------*\
+  #MAQUETAS STYLES
+\*-----------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.floating-cart {
+  display: none !important;
+}
+
+.maquetas-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.maquetas-container > div:first-child {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.maquetas-container .overlay-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.3)
+  );
+}
+
+.maquetas-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.maquetas-content-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.maquetas-content-wrapper .text-container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.maquetas-content-wrapper h1 {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  font-family: "Montserrat", sans-serif;
+}
+
+.maquetas-content-wrapper h1 .text-primary-yellow {
+  color: #facc15;
+}
+
+.maquetas-content-wrapper p {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  color: #f3f4f6;
+  max-width: 48rem;
+  margin: 1rem auto 0;
+  line-height: 1.75;
+  font-family: "Open Sans", sans-serif;
+}
+
+.maquetas-content-wrapper .button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.maquetas-content-wrapper .btn-solicitar {
+  background-color: #facc15;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-family: "Open Sans", sans-serif;
+  border: none;
+}
+
+.maquetas-content-wrapper .btn-solicitar:hover {
+  background-color: #eab308;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.maquetas-content-wrapper .btn-ejemplos {
+  border: 2px solid white;
+  color: white;
+  background-color: transparent;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-family: "Open Sans", sans-serif;
+}
+
+.maquetas-content-wrapper .btn-ejemplos:hover {
+  background-color: white;
+  color: #111827;
+}
+
+.maquetas-content-wrapper .scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  animation: bounce 1s infinite;
+}
+
+.maquetas-content-wrapper .scroll-indicator svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.btn-ejemplos {
+  background-color: #ffffff;
+  color: #111827;
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  width: 14rem;
+  border: none;
+}
+
+@media (max-width: 640px) {
+  .maquetas-content-wrapper .button-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .button-input {
+    width: 100%;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
