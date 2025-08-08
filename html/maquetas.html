@@ -33,7 +33,6 @@
     />
   </head>
   <body>
-
     <!--navbar-->
     <div id="navbar-placeholder"></div>
 
@@ -64,9 +63,7 @@
             <button class="btn-solicitar" type="button">
               Solicitar Mi Maqueta
             </button>
-            <button class="btn-ejemplos" type="button">
-              Ver Ejemplos
-            </button>
+            <button class="btn-ejemplos" type="button">Ver Ejemplos</button>
           </div>
         </div>
       </div>
@@ -75,23 +72,22 @@
     <section class="portfolio-section">
       <div class="portfolio-container">
         <div class="portfolio-header">
-          <h2>Nuestro <span class="highlight">Portafolio</span></h2>
-          <p>
-            Explora algunas de nuestras maquetas más destacadas. Cada proyecto es único 
-            y está diseñado para impresionar a tus profesores y compañeros.
-          </p>
+          <h2>Materias que <span class="highlight">Cubrimos</span></h2>
         </div>
 
         <div class="carousel-wrapper">
-          <button class="carousel-nav prev">&#10094;</button>
+          <button class="carousel-nav prev" aria-label="Anterior">
+            <i class="fas fa-chevron-left"></i>
+          </button>
           <div class="carousel">
             <div class="carousel-track">
               <!-- Items serán inyectados por JS -->
             </div>
           </div>
-          <button class="carousel-nav next">&#10095;</button>
+          <button class="carousel-nav next" aria-label="Siguiente">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
-
 
         <div class="categories-section">
           <h3>Materias que Cubrimos</h3>
@@ -106,7 +102,6 @@
             <span>Tecnología</span>
           </div>
         </div>
-        
       </div>
     </section>
 
@@ -114,9 +109,9 @@
     <div id="footer-placeholder"></div>
 
     <!--scripts-->
+    <script src="/js/maquetas.js"></script>
     <script src="/js/load-content.js"></script>
     <script src="/js/dropdown.js"></script>
     <script src="/js/mobile.js"></script>
-
   </body>
 </html>
