@@ -70,14 +70,14 @@ function openModal(item) {
   modalDescription.textContent = item.description;
 
   modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-active');
 }
 
 function closeModal() {
   const modal = document.querySelector('.modal');
   if (modal) {
     modal.classList.remove('active');
-    document.body.style.overflow = '';
+    document.body.classList.remove('modal-active');
   }
 }
 
