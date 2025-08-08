@@ -370,6 +370,40 @@ body {
   color: white;
 }
 
+/*-----------------------------------*\
+  #MAQUETAS CONTACT
+\*-----------------------------------*/
+
+.contact-section {
+  background: linear-gradient(to bottom right, var(--light-bg), white);
+  padding: 80px 0;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 32px;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contact-header h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.contact-header .highlight {
+  color: var(--primary-yellow);
+}
+
+
+/*-----------------------------------*\
+  #RESPONSIVE
+\*-----------------------------------*/
+
 @media (max-width: 1024px) {
   .carousel-card {
     flex: 0 0 calc(50% - 1rem);

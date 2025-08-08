@@ -39,7 +39,7 @@
     <!--headernav-->
     <div id="headernav-placeholder"></div>
 
-    <!-- Hero Section -->
+    <!-- hero Section -->
     <section class="maquetas-container">
       <div class="maquetas-content">
         <img src="../img/misc/maquetas-hero.jpg" alt="maquetas-hero" />
@@ -69,6 +69,7 @@
       </div>
     </section>
 
+    <!--portfolio section-->
     <section class="portfolio-section">
       <div class="portfolio-container">
         <div class="portfolio-header">
@@ -81,7 +82,7 @@
           </button>
           <div class="carousel">
             <div class="carousel-track">
-              <!-- Items serán inyectados por JS -->
+              <!-- items extraidos desde JS -->
             </div>
           </div>
           <button class="carousel-nav next" aria-label="Siguiente">
@@ -102,6 +103,88 @@
             <span>Tecnología</span>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!--contact section-->
+    <section class="contact-section">
+      <div class="contact-container">
+        <div class="contact-header">
+          <h2>¡Solicita tu <span class="highlight">Maqueta</span> ahora!</h2>
+          <p>
+            Cuéntanos sobre tu proyecto y te ayudaremos a crear la
+            maqueta perfecta para que tus ideas se hagan realidad.
+          </p>
+        </div>
+
+        <!--contact info grid-->
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>Información de Contacto</h3>
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <p class="label">Email:</p>
+              <p class="value">jsrlibrerias@gmail.com</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <p class="label">Teléfono:</p>
+              <p class="value">+51 999 451 887</p>
+            </div>
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <p class="label">Horarios:</p>
+              <p class="value">Lunes - Sábado: 08:30am - 7:30pm</p>
+              <p class="value">Domingos: 09:00am - 7:00pm</p>
+            </div>
+          </div>
+        </div>
+
+        <!--contact card-->
+        <div class="contact-card">
+          <h3>Nuestro Proceso</h3>
+          <ol class="process-steps">
+            <li><span>1</span> Envías tu solicitud con detalles del proyecto</li>
+            <li><span>2</span> Te contactamos para confirmar detalles y precio</li>
+            <li><span>3</span> Creamos tu maqueta con materiales premium</li>
+            <li><span>4</span> Entregamos en tiempo récord a domicilio</li>
+          </ol>
+        </div>
+      </div>
+
+      <!--contact form-->
+      <div class="contact-form">
+        <form id="form">
+          <div class="form-grid">
+            <div>
+              <label for="name">Nombre Completo *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+              <label for="email">Email *</label>
+              <input type="email" id="email" required>
+            </div>
+            <div>
+              <label for="phone">Teléfono</label>
+              <input type="text" id="phone" />
+            </div>
+            <div>
+              <label for="message">Descripción del Proyecto *</label>
+              <textarea id="message" rows="5" required></textarea>
+            </div>
+            <div>
+              <label for="deadline">Fecha Límite *</label>
+              <input type="date" id="deadline" min="2025-08-11" required />
+            </div>
+            <button type="submit" id="submitBtn">Enviar Solicitud</button>
+            <p id="formMessage" class="form-message"></p>
+          </div>
+        </form>
       </div>
     </section>
 
