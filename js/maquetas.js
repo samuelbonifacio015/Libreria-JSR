@@ -33,7 +33,8 @@ const portfolioItems = [
 ];
 
 const track = document.querySelector('.carousel-track');
-let index = 0;
+let currentIndex = 0;
+let isTransitioning = false;
 
 function createModal() {
   const modal = document.createElement('div');
@@ -81,14 +82,26 @@ function closeModal() {
   }
 }
 
+function getItemsPerView() {
+  if (window.innerWidth >= 1024) return 3;
+  if (window.innerWidth >= 768) return 2;
+  return 1;
+}
+
 function renderCarousel() {
+  if (!track) return;
+  
   track.innerHTML = "";
-  portfolioItems.forEach((item, itemIndex) => {
+  
+  // Duplicar elementos para scroll infinito
+  const duplicatedItems = [...portfolioItems, ...portfolioItems, ...portfolioItems];
+  
+  duplicatedItems.forEach((item, itemIndex) => {
     const card = document.createElement('div');
     card.className = 'carousel-card';
     card.innerHTML = `
       <div style="position:relative;">
-        <img src="${item.image}" alt="${item.title}" class="carousel-image" data-index="${itemIndex}">
+        <img src="${item.image}" alt="${item.title}" class="carousel-image" data-index="${itemIndex % portfolioItems.length}">
         <div class="category-tag">${item.category}</div>
       </div>
       <div class="card-content">
@@ -99,36 +112,87 @@ function renderCarousel() {
     track.appendChild(card);
   });
 
+  // Configurar posición inicial
+  const itemsPerView = getItemsPerView();
+  currentIndex = portfolioItems.length;
+  updateCarouselPosition();
+
+  // Agregar event listeners para las imágenes
   const carouselImages = document.querySelectorAll('.carousel-image');
   carouselImages.forEach((img, imgIndex) => {
     img.addEventListener('click', () => {
-      openModal(portfolioItems[imgIndex]);
+      const actualIndex = imgIndex % portfolioItems.length;
+      openModal(portfolioItems[actualIndex]);
     });
   });
 }
 
-function slideCarousel(direction) {
-  const totalItems = portfolioItems.length;
-  const itemsPerView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
-  const maxIndex = Math.max(0, totalItems - itemsPerView);
-
-  index += direction;
-  if (index < 0) index = 0;
-  if (index > maxIndex) index = maxIndex;
-
+function updateCarouselPosition() {
+  if (!track) return;
+  
+  const itemsPerView = getItemsPerView();
   const slideWidth = (100 / itemsPerView) + (2 / itemsPerView);
-  track.style.transform = `translateX(-${index * slideWidth}%)`;
+  const translateX = -(currentIndex * slideWidth);
+  
+  track.style.transform = `translateX(${translateX}%)`;
+}
+
+function slideCarousel(direction) {
+  if (isTransitioning) return;
+  
+  isTransitioning = true;
+  currentIndex += direction;
+  
+  updateCarouselPosition();
+  
+  // Verificar si necesitamos resetear la posición para scroll infinito
+  const itemsPerView = getItemsPerView();
+  const totalItems = portfolioItems.length;
+  
+  setTimeout(() => {
+    if (currentIndex >= totalItems + itemsPerView) {
+      currentIndex = itemsPerView;
+      track.style.transition = 'none';
+      updateCarouselPosition();
+      setTimeout(() => {
+        track.style.transition = 'transform 0.5s ease';
+      }, 10);
+    } else if (currentIndex < itemsPerView) {
+      currentIndex = totalItems + itemsPerView - 1;
+      track.style.transition = 'none';
+      updateCarouselPosition();
+      setTimeout(() => {
+        track.style.transition = 'transform 0.5s ease';
+      }, 10);
+    }
+    isTransitioning = false;
+  }, 500);
+}
+
+function handleResize() {
+  if (!track) return;
+  
+  const itemsPerView = getItemsPerView();
+  currentIndex = Math.max(itemsPerView, currentIndex);
+  updateCarouselPosition();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  const track = document.querySelector('.carousel-track');
-  if (track) {
-    renderCarousel();
-    
-    document.querySelector('.carousel-nav.prev').addEventListener('click', () => slideCarousel(-1));
-    document.querySelector('.carousel-nav.next').addEventListener('click', () => slideCarousel(1));
+  renderCarousel();
+  
+  // Event listeners para navegación
+  const prevBtn = document.querySelector('.carousel-nav.prev');
+  const nextBtn = document.querySelector('.carousel-nav.next');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => slideCarousel(-1));
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => slideCarousel(1));
   }
 
+  // Event listeners para modal
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
       closeModal();
@@ -140,4 +204,10 @@ document.addEventListener('DOMContentLoaded', function() {
       closeModal();
     }
   });
+
+  // Event listener para resize
+  window.addEventListener('resize', handleResize);
+  
+  // Auto-play opcional (comentado por defecto)
+  // setInterval(() => slideCarousel(1), 5000);
 });
