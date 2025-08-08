@@ -106,29 +106,6 @@ body.modal-active {
   font-size: 1rem;
 }
 
-@media (max-width: 768px) {
-  .modal {
-    padding: 0.5rem;
-  }
-
-  .modal-content {
-    max-width: 95vw;
-    max-height: 95vh;
-  }
-
-  .modal-image-container {
-    max-height: 50vh;
-  }
-
-  .modal-info {
-    padding: 1.5rem;
-  }
-
-  .modal-title {
-    font-size: 1.25rem;
-  }
-}
-
 /*-----------------------------------*\
   #MAQUETAS HERO
 \*-----------------------------------*/
@@ -277,16 +254,6 @@ body.modal-active {
   border: none;
 }
 
-@media (max-width: 640px) {
-  .maquetas-content-wrapper .button-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .button-input {
-    width: 100%;
-  }
-}
-
 @keyframes bounce {
   0%,
   100% {
@@ -355,8 +322,24 @@ body.modal-active {
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease;
-  gap: 1.2rem;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  gap: 2rem;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: pan-x pan-y;
+  will-change: transform;
+}
+
+.carousel-track:active {
+  cursor: grabbing;
+}
+
+.carousel-track.dragging {
+  transition: none;
+  cursor: grabbing;
 }
 
 .carousel-card {
@@ -769,29 +752,106 @@ body.modal-active {
   color: #ef4444;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/*-----------------------------------*\
+  #RESPONSIVE
+\*-----------------------------------*/
+
+@media (max-width: 1440px) and (min-width: 1068px) {
+  .contact-container {
+    max-width: 1000px;
+    padding: 0 24px;
   }
 
-  .contact-right {
-    justify-content: stretch;
+  .contact-content {
+    gap: 2.5rem;
   }
 
   .form-card {
-    max-width: none;
+    padding: 2.5rem;
+    max-width: 450px;
+  }
+
+  .contact-info-card,
+  .process-card {
+    padding: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
+  .maquetas-content-wrapper .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .maquetas-content-wrapper .btn-solicitar {
+    width: 100%;
+  }
+
+  .maquetas-content-wrapper .btn-ejemplos {
+    width: 100%;
+  }
+
+  .button-input {
+    width: 100%;
+  }
+
+  .portfolio-header h2 {
+    font-size: 2rem;
+  }
+
+  .portfolio-header p {
+    font-size: 1rem;
+  }
+
+  .modal {
+    padding: 0.5rem;
+  }
+
+  .modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .modal-image-container {
+    max-height: 50vh;
+  }
+
+  .modal-info {
+    padding: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .carousel-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .carousel-nav {
+    display: none;
+  }
+
+  .categories-section h3 {
+    font-size: 1.25rem;
+  }
+
   .contact-container {
     padding: 0 1rem;
   }
 
   .contact-header h2 {
     font-size: 2rem;
+  }
+
+  .contact-header p {
+    font-size: 1rem;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .contact-info-card,
@@ -809,36 +869,148 @@ body.modal-active {
     height: 40px;
     font-size: 1rem;
   }
-}
 
-/*-----------------------------------*\
-  #RESPONSIVE
-\*-----------------------------------*/
-
-@media (max-width: 1024px) {
-  .carousel-card {
-    flex: 0 0 calc(50% - 1rem);
-    max-width: calc(50% - 1rem);
+  .form-card {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 60px 0;
+  }
+
+  .contact-container {
+    padding: 0 0.75rem;
+  }
+
+  .contact-header {
+    margin-bottom: 40px;
+  }
+
+  .contact-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .contact-header p {
+    font-size: 0.875rem;
+    margin: 15px auto 0;
+  }
+
+  .contact-content {
+    gap: 1.5rem;
+  }
+
+  .contact-info-card,
+  .process-card,
+  .form-card {
+    padding: 1.25rem;
+    border-radius: 8px;
+  }
+
+  .contact-info-card h3,
+  .process-card h3,
+  .form-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  .info-items {
+    gap: 1rem;
+  }
+
+  .info-item {
+    gap: 0.5rem;
+  }
+
+  .icon-container {
+    width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+
+  .info-text .label {
+    font-size: 0.75rem;
+  }
+
+  .info-text .value {
+    font-size: 0.75rem;
+  }
+
+  .process-steps li {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .step-text {
+    font-size: 0.75rem;
+  }
+
+  .form-grid {
+    gap: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.625rem;
+    font-size: 0.75rem;
+  }
+
+  .form-group textarea {
+    min-height: 100px;
+  }
+
+  #submitBtn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .maquetas-content-wrapper h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .maquetas-content-wrapper p {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+  }
+
+  .portfolio-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .portfolio-header p {
+    font-size: 0.875rem;
+  }
+
   .carousel-card {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .carousel-nav {
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1rem;
+  .card-content {
+    padding: 1rem;
   }
 
-  .carousel-nav.prev {
-    left: -1.5rem;
+  .card-content h3 {
+    font-size: 1.125rem;
   }
 
-  .carousel-nav.next {
-    right: -1.5rem;
+  .card-content p {
+    font-size: 0.75rem;
+  }
+
+  .categories span {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
   }
 }
