@@ -303,7 +303,6 @@
 
         // Inicializar carrito después de que se cargue
         document.addEventListener('navbarLoaded', function() {
-            console.log('🛒 Navbar cargado, verificando carrito...');
             
             // Dar tiempo para que el carrito se inicialice
             setTimeout(() => {
@@ -321,7 +320,6 @@
 
         // También inicializar cuando el sistema de carrito esté listo
         document.addEventListener('cartSystemReady', function(e) {
-            console.log('✅ Sistema de carrito completamente listo');
             
             // Verificar que el carrito flotante esté visible si hay items
             setTimeout(() => {
@@ -351,50 +349,6 @@
             }
         };
 
-        // Función para probar rápidamente el carrito
-        window.testCartQuick = function() {
-            console.log('🧪 Probando carrito rápidamente...');
-            
-            // Agregar datos de prueba
-            const testItems = [
-                {
-                    id: 'test_quick_1',
-                    name: 'Audifonos Sony WH-1000XM4',
-                    brand: 'Sony',
-                    price: 89.90,
-                    image: '/img/products/audifonos-casco-sony.jpg',
-                    quantity: 1,
-                    addedAt: new Date().toISOString()
-                },
-                {
-                    id: 'test_quick_2',
-                    name: 'Cuaderno Anillado Minerva',
-                    brand: 'Minerva',
-                    price: 12.50,
-                    image: '/img/products/cuaderno-anillado-minerva.jpg',
-                    quantity: 2,
-                    addedAt: new Date().toISOString()
-                }
-            ];
-
-            localStorage.setItem('jsr_cart_items', JSON.stringify(testItems));
-            console.log('✅ Datos de prueba agregados. Recarga la página (F5) para ver el carrito.');
-            
-            // Si el carrito ya está inicializado, reinicializar
-            if (window.JSRCart && window.JSRCart.isInitialized) {
-                window.JSRCart.items = testItems;
-                if (window.updateFloatingCart) {
-                    window.updateFloatingCart();
-                }
-                console.log('🔄 Carrito actualizado inmediatamente.');
-            }
-        };
-
-        // Log para indicar que las funciones están disponibles
-        console.log('🛒 Funciones de carrito disponibles:');
-        console.log('- window.testCartQuick() - Agregar datos de prueba');
-        console.log('- window.debugCart() - Debug del carrito (después de cargarse)');
-        console.log('- window.redirectToCatalog(productId, action) - Redirigir a catálogo');
     </script>
     
   </body>

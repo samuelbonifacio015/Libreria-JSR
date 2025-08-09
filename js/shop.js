@@ -1356,8 +1356,7 @@ function handleAddToCart(e) {
             }
     }
 
-
-
+// Función para abrir vista rápida desde products.json
 function handleQuickView(e) {
     const productCard = e.target.closest('.product-card');
     if (productCard) {
@@ -1474,9 +1473,7 @@ function handleQuickView(e) {
                         }
                     });
                     
-                    console.log('✅ Event listener directo configurado para botón del modal al abrir');
                 } else {
-                    console.log('❌ Botón del modal no encontrado al abrir');
                 }
             }, 100);
             
@@ -1484,14 +1481,12 @@ function handleQuickView(e) {
             setTimeout(() => {
                 const modalAddToCartBtn = quickViewModal.querySelector('.add-to-cart');
                 if (modalAddToCartBtn) {
-                    console.log('✅ Botón del modal encontrado al abrir, configurando event listener');
                     
                     // Remover event listeners anteriores para evitar duplicados
                     const newBtn = modalAddToCartBtn.cloneNode(true);
                     modalAddToCartBtn.parentNode.replaceChild(newBtn, modalAddToCartBtn);
                     
                     newBtn.addEventListener('click', function(e) {
-                        console.log('🎯 Event listener del modal al abrir activado');
                         e.preventDefault();
                         e.stopPropagation();
                         e.stopImmediatePropagation();
@@ -1502,28 +1497,23 @@ function handleQuickView(e) {
                         const modalQuantity = document.getElementById('modalQuantity');
 
                         if (!modalProductTitle || !modalBrand || !modalMainImage) {
-                            console.error('❌ Datos del modal incompletos (event listener al abrir)');
                             return;
                         }
 
                         const productName = modalProductTitle.textContent.trim();
                         const productBrand = modalBrand.textContent.trim();
 
-                        console.log('🔍 Datos extraídos del modal (event listener al abrir):', { productName, productBrand });
-
                         if (!window.productsData) {
-                            console.log('📥 Cargando products.json desde event listener al abrir...');
                             loadProductsData().then(() => {
                                 window.addProductFromModal(productName, productBrand, modalMainImage.src, modalQuantity, quickViewModal);
                             }).catch(error => {
-                                console.error('❌ Error al cargar products.json:', error);
+                                console.error('Error al cargar products.json:', error);
                             });
                         } else {
                             window.addProductFromModal(productName, productBrand, modalMainImage.src, modalQuantity, quickViewModal);
                         }
                     });
                 } else {
-                    console.log('⚠️ Botón del modal no encontrado al abrir');
                 }
             }, 100);
         }
@@ -1949,8 +1939,6 @@ function validateViewStyles(view) {
 
 // Función para forzar la aplicación de estilos si fallan
 function forceApplyViewStyles(view) {
-    console.log('Forzando aplicación de estilos para vista:', view);
-    
     const productsGrid = document.querySelector('.products-grid');
     if (!productsGrid) return;
     
@@ -2010,11 +1998,6 @@ function setupResponsiveFilters() {
     const filterModalClose = document.getElementById('filterModalClose');
     const filterApplyBtn = document.getElementById('filterApplyBtn');
     const filterClearBtn = document.getElementById('filterClearBtn');
-    
-    if (!filterBtn || !filterModal) {
-        console.log('Elementos del modal de filtros no encontrados');
-        return;
-    }
     
     // Abrir modal
     filterBtn.addEventListener('click', function(e) {
