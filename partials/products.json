@@ -414,5 +414,44 @@
     "availability": "Disponible",
     "reviews": "0 reseñas",
     "category": "CRAYONES Y ÓLEOS"
+  },
+  {
+    "id": "acuarelas",
+    "discount": "Ahorra 18%",
+    "img": "/img/products/colores-largos-acuarelables-faber-castell-hexagonal-x12.jpg",
+    "alt": "Acuarelas Faber-Castell",
+    "brand": "FABER-CASTELL",
+    "productName": "LÁPICES ACUARELABLES FABER-CASTELL | SET 12 | PARA ACUARELA",
+    "priceOriginal": "S/. 25.00",
+    "priceDiscounted": "S/. 20.00",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "ARTE Y DISEÑO"
+  },
+  {
+    "id": "silicona",
+    "discount": "Ahorra 20%",
+    "img": "/img/products/silicona-artesco-liquida-x250ml.jpg",
+    "alt": "Silicona Artesco",
+    "brand": "ARTESCO",
+    "productName": "SILICONA LIQUIDA | 250ML | ARTESCO",
+    "priceOriginal": "S/. 8.00",
+    "priceDiscounted": "S/. 5.60",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "ARTE Y DISEÑO"
+  },
+  {
+    "id": "cartuchera",
+    "discount": "Ahorra 15%",
+    "img": "/img/products/cartuchera-brainrot.jpg",
+    "alt": "Cartuchera Brainrot",
+    "brand": "ORIGINAL",
+    "productName": "CARTUCHERA | BRAINROT | ORIGINAL",
+    "priceOriginal": "S/. 6.00",
+    "priceDiscounted": "S/. 4.50",
+    "availability": "Disponible",
+    "reviews": "0 reseñas",
+    "category": "CARTUCHERAS"
   }
 ]
