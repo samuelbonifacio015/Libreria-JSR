@@ -8,11 +8,10 @@
 
     // Configuración del sistema de compra
     const PURCHASE_CONFIG = {
-        shippingCost: 10.00,
-        freeShippingMinimum: 100.00,
         orderPrefix: 'JSR',
         emailPattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        phonePattern: /^[0-9]{9,15}$/
+        phonePattern: /^[0-9]{9,15}$/,
+        whatsappNumber: '51999451887'
     };
 
     // Estado de la aplicación
@@ -91,7 +90,6 @@
                 orderId: generateOrderId(),
                 items: items,
                 subtotal: 0,
-                shipping: 0,
                 total: 0,
                 createdAt: new Date().toISOString()
             };
@@ -220,25 +218,20 @@
         if (!purchaseData) return;
 
         const subtotal = purchaseData.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shipping = subtotal >= PURCHASE_CONFIG.freeShippingMinimum ? 0 : PURCHASE_CONFIG.shippingCost;
-        const total = subtotal + shipping;
+        const total = subtotal; // Sin costo de envío
 
         // Actualizar elementos en el DOM
         updateElement('subtotalAmount', `S/. ${subtotal.toFixed(2)}`);
         updateElement('totalAmount', `S/. ${total.toFixed(2)}`);
         
+        // Ocultar o mostrar envío como GRATIS
         const shippingElement = document.getElementById('shippingAmount');
         if (shippingElement) {
-            if (shipping === 0) {
-                shippingElement.innerHTML = '<span style="color: #27ae60; font-weight: 600;">¡GRATIS!</span>';
-            } else {
-                shippingElement.textContent = `S/. ${shipping.toFixed(2)}`;
-            }
+            shippingElement.innerHTML = '<span style="color: #27ae60; font-weight: 600;">¡GRATIS!</span>';
         }
 
         // Actualizar datos de compra
         purchaseData.subtotal = subtotal;
-        purchaseData.shipping = shipping;
         purchaseData.total = total;
     }
 
@@ -305,6 +298,11 @@
             
             // Limpiar carrito
             clearCart();
+            
+            // Redirigir a WhatsApp después de un breve delay
+            setTimeout(() => {
+                redirectToWhatsApp();
+            }, 2000);
             
         } catch (error) {
             console.error('Error al procesar el pedido:', error);
@@ -390,7 +388,7 @@
                 <strong>Subtotal:</strong> S/. ${purchaseData.subtotal.toFixed(2)}
             </div>
             <div class="final-summary-item">
-                <strong>Envío:</strong> ${purchaseData.shipping === 0 ? 'GRATIS' : `S/. ${purchaseData.shipping.toFixed(2)}`}
+                <strong>Envío:</strong> GRATIS
             </div>
             <div class="final-summary-item total">
                 <strong>Total Final:</strong> S/. ${purchaseData.total.toFixed(2)}
@@ -398,6 +396,92 @@
         `;
 
         container.innerHTML = html;
+    }
+
+    /**
+     * Construir mensaje para WhatsApp
+     */
+    function buildWhatsAppMessage() {
+        if (!purchaseData || !purchaseData.customer) return '';
+
+        const now = new Date();
+        const currentDate = now.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        const currentTime = now.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let message = `*🛒 NUEVA COMPRA - LIBRERÍA JSR*\n\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        
+        // Información del pedido
+        message += `*📋 DETALLES DEL PEDIDO*\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        message += `🆔 *ID del Pedido:* ${purchaseData.orderId}\n`;
+        message += `📅 *Fecha de Compra:* ${currentDate} a las ${currentTime}\n`;
+        message += `🌐 *Sitio Web:* https://libreria-jsr.vercel.app\n\n`;
+        
+        // Datos del cliente
+        message += `*👤 DATOS DEL CLIENTE*\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        message += `• Nombre: ${purchaseData.customer.name} ${purchaseData.customer.lastName}\n`;
+        message += `• Teléfono: ${purchaseData.customer.phone}\n`;
+        
+        if (purchaseData.customer.email && purchaseData.customer.email.trim() !== '') {
+            message += `• Email: ${purchaseData.customer.email}\n`;
+        }
+        
+        if (purchaseData.customer.notes && purchaseData.customer.notes.trim() !== '') {
+            message += `• Mensaje: ${purchaseData.customer.notes.replace(/\n/g, ' ')}\n`;
+        }
+
+        message += `\n*🛍️ PRODUCTOS ADQUIRIDOS*\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        purchaseData.items.forEach((item, index) => {
+            const itemTotal = (item.price * item.quantity).toFixed(2);
+            const itemName = item.name || 'Producto sin nombre';
+            const itemBrand = item.brand || 'Sin marca';
+            message += `${index + 1}. ${itemName} (${itemBrand})\n`;
+            message += `   📦 Cantidad: ${item.quantity}\n`;
+            message += `   💰 Precio: S/. ${itemTotal}\n\n`;
+        });
+
+        message += `*💰 RESUMEN DE COMPRA*\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        message += `• Subtotal: S/. ${purchaseData.subtotal.toFixed(2)}\n`;
+        message += `• Envío: 🎉 GRATIS\n`;
+        message += `• Total Final: S/. ${purchaseData.total.toFixed(2)}\n\n`;
+        
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        message += `*📞 Para consultas:* +51 999 451 887\n`;
+        message += `*🌐 Visítanos:* https://libreria-jsr.vercel.app\n`;
+        message += `*⏰ Enviado:* ${currentDate} a las ${currentTime}\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+        return message;
+    }
+
+    /**
+     * Redirigir a WhatsApp
+     */
+    function redirectToWhatsApp() {
+        const message = buildWhatsAppMessage();
+        if (!message) {
+            console.error('Error al construir mensaje de WhatsApp');
+            return;
+        }
+
+        try {
+            const whatsappUrl = `https://wa.me/${PURCHASE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+            console.log('🔗 Redirigiendo a WhatsApp:', whatsappUrl);
+            window.open(whatsappUrl, '_blank');
+        } catch (error) {
+            console.error('Error al redirigir a WhatsApp:', error);
+        }
     }
 
     /**
