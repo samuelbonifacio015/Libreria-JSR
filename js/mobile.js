@@ -3,8 +3,6 @@
 (function() {
     'use strict';
     
-    console.log('🔧 Iniciando fix del menú móvil...');
-    
     function initializeMobileMenu() {        
         const elements = {
             mobileMenuBtn: document.getElementById('mobileMenuBtn'),
@@ -129,7 +127,6 @@
                 e.stopPropagation();
                 
                 const category = this.textContent.trim();
-                console.log('Categoría móvil seleccionada:', category);
                 
                 navigateToCategory(category);
                 closeMobileMenu();
@@ -144,7 +141,6 @@
                 e.stopPropagation();
                 
                 const category = this.textContent.trim();
-                console.log('Subcategoría móvil seleccionada:', category);
                 
                 navigateToCategory(category);
                 closeMobileMenu();
@@ -154,30 +150,21 @@
     
     // Navegar a categorías 
     function navigateToCategory(category) {
-        console.log('=== NAVEGANDO A CATEGORÍA DESDE MÓVIL ===');
-        console.log('Categoría original:', category);
-        
         // Excepción para "LOS MÁS VENDIDOS" - ir directamente al catálogo
         if (category === 'LOS MÁS VENDIDOS') {
-            console.log('Excepción: LOS MÁS VENDIDOS - redirigiendo directamente al catálogo');
             window.location.href = '/html/catalogo.html';
             return;
         }
         
         // Mapear categorías del dropdown a términos de búsqueda
         const categoryMapping = getCategoryMapping(category);
-        console.log('Categoría mapeada:', categoryMapping);
         
         // Navegar a categorías
         const searchTerm = categoryMapping || category;
-        console.log('Término de búsqueda final:', searchTerm);
-        console.log('window.productSearch disponible:', !!window.productSearch);
         
         if (window.productSearch) {
-            console.log('Usando productSearch.performSearch con:', searchTerm, '(búsqueda exacta por ID)');
             window.productSearch.performSearch(searchTerm, true); // true = búsqueda exacta por ID
         } else {
-            console.log('productSearch no disponible, usando redirectToCatalog con:', searchTerm);
             redirectToCatalog(searchTerm);
         }
     }
@@ -259,8 +246,6 @@
     }
     
     function redirectToCatalog(searchTerm) {
-        console.log('Redirigiendo al catálogo con término:', searchTerm, '(búsqueda exacta por ID)');
-        
         // Guardar término de búsqueda en sessionStorage
         sessionStorage.setItem('searchTerm', searchTerm);
         sessionStorage.setItem('exactIdMatch', 'true');

@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Disparar evento personalizado para notificar que el navbar está listo
                 const navbarLoadedEvent = new CustomEvent('navbarLoaded');
                 document.dispatchEvent(navbarLoadedEvent);
-                console.log('Navbar y carrito cargados, evento disparado');
             }, 100); // Añadir un pequeño delay para asegurar que el DOM esté listo
         })
         .catch(error => console.error('Error cargando navbar:', error));
@@ -43,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     const headernavLoadedEvent = new CustomEvent('headernavLoaded');
                     document.dispatchEvent(headernavLoadedEvent);
-                    console.log('Headernav cargado y evento disparado');
                 }, 100);
             }
         })
@@ -93,7 +91,6 @@ function loadCart() {
                     while (tempDiv.firstChild) {
                         navbarCartContainer.appendChild(tempDiv.firstChild);
                     }
-                    console.log('✅ HTML del carrito dropdown cargado en navbar');
                 } else {
                     console.warn('No se encontró .cart-container en el navbar');
                 }
@@ -130,14 +127,11 @@ function loadCart() {
                 
                 if (footerPlaceholder) {
                     footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
-                    console.log('✅ Carrito flotante insertado en el body');
                 } else if (footerContainer) {
                     footerContainer.insertAdjacentHTML('beforebegin', floatingCartHTML);
-                    console.log('✅ Carrito flotante insertado en el body');
                 } else {
                     // Si no hay footer-placeholder ni footer-container, insertar al final del body
                     document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
-                    console.log('✅ Carrito flotante insertado al final del body');
                 }
             })
             .catch(error => {
@@ -157,8 +151,6 @@ function loadCart() {
             throw error;
         })
     ]).then(() => {
-        console.log('✅ Todos los componentes del carrito cargados');
-        
         // Intentar inicializar el carrito después de cargar todo
         setTimeout(() => {
             if (window.JSRCart && typeof window.JSRCart.init === 'function') {
@@ -185,7 +177,6 @@ function loadCSS(href) {
         link.rel = 'stylesheet';
         link.href = href;
         link.onload = () => {
-            console.log(`✅ CSS cargado: ${href}`);
             resolve();
         };
         link.onerror = () => {
@@ -208,7 +199,6 @@ function loadJS(src) {
         const script = document.createElement('script');
         script.src = src;
         script.onload = () => {
-            console.log(`✅ JS cargado: ${src}`);
             resolve();
         };
         script.onerror = () => {

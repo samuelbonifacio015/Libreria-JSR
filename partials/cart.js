@@ -93,7 +93,6 @@
          */
         async initialize() {
             if (window.JSRCart.isInitialized) {
-                console.log('JSR Cart: Ya está inicializado');
                 return true;
             }
 
@@ -128,7 +127,6 @@
         // Marcar como inicializado
         window.JSRCart.isInitialized = true;
 
-        console.log('✅ JSR Cart System inicializado correctamente');
                 return true;
                 
             } catch (error) {
@@ -160,13 +158,11 @@
             window.addEventListener('resize', this.handleResize);
             window.addEventListener('scroll', this.handleScroll);
 
-        // Prevenir cierre al hacer click dentro del dropdown
+                    // Prevenir cierre al hacer click dentro del dropdown
             const { dropdown } = window.JSRCart.elements;
             if (dropdown) {
                 dropdown.addEventListener('click', (e) => e.stopPropagation());
             }
-
-            console.log('✅ Event listeners configurados');
         }
 
         /**
@@ -181,8 +177,6 @@
                     this.handleAddToCart(e);
                 }
             });
-
-            console.log('✅ Botones add-to-cart configurados');
         }
 
         /**
@@ -195,7 +189,6 @@
             // Mostrar inmediatamente si hay items
             if (window.JSRCart.items.length > 0) {
                 this.showFloatingCart(true);
-                console.log('🛒 Carrito flotante mostrado automáticamente');
             } else {
                 // Mostrar después de un delay para que el usuario vea que está disponible
                 setTimeout(() => {
@@ -237,23 +230,18 @@
                 return null;
             }
 
-            console.log('JSR Cart: Extrayendo datos del producto desde:', productContainer);
-
             // Intentar obtener ID del producto
             const productId = this.getProductId(productContainer);
-            console.log('JSR Cart: ID del producto encontrado:', productId);
             
             // Si tenemos ID, buscar en products.json
             if (productId) {
                 const productData = await this.getProductFromJson(productId, productContainer);
                 if (productData) {
-                    console.log('JSR Cart: Datos extraídos desde JSON:', productData);
                     return productData;
                 }
             }
 
             // Fallback: extraer datos del DOM
-            console.log('JSR Cart: Usando fallback DOM para extraer datos');
             const productData = {
                 name: this.getProductName(productContainer),
                 brand: this.getProductBrand(productContainer),
@@ -261,8 +249,6 @@
                 image: this.getProductImage(productContainer),
                 quantity: parseInt(this.getProductQuantity(productContainer)) || 1
             };
-
-            console.log('JSR Cart: Datos extraídos del DOM:', productData);
 
             // Validar datos mínimos requeridos
             if (!productData.name || productData.price === null || productData.price <= 0) {
@@ -311,23 +297,12 @@
                 );
 
                 if (product) {
-                    console.log('JSR Cart: Producto encontrado en JSON:', {
-                        id: product.id,
-                        name: product.productName,
-                        priceDiscounted: product.priceDiscounted,
-                        priceOriginal: product.priceOriginal
-                    });
 
                     // Extraer precio usando el mismo método que funciona en shop.js y getProductPrice
                     const priceDiscounted = parseFloat(product.priceDiscounted.replace(/[^\d.]/g, '').replace(/^\./, ''));
 
                     // Extraer precio original si es necesario
                     const priceOriginal = parseFloat(product.priceOriginal.replace(/[^\d.]/g, '').replace(/^\./, ''));
-
-                    console.log('JSR Cart: Precios extraídos:', {
-                        priceDiscounted: priceDiscounted,
-                        priceOriginal: priceOriginal
-                    });
 
                     return {
                         name: product.productName,
@@ -401,14 +376,9 @@
                 const element = container.querySelector(selector);
                 if (element) {
                     const priceText = element.textContent.trim() || element.getAttribute('data-product-price');
-                    console.log('JSR Cart: Extrayendo precio del DOM:', {
-                        selector: selector,
-                        priceText: priceText
-                    });
                     
                     // Extraer solo números y punto decimal, eliminando punto inicial si existe
                     const price = parseFloat(priceText.replace(/[^\d.]/g, '').replace(/^\./, ''));
-                    console.log('JSR Cart: Precio extraído del DOM:', price);
                     
                     if (!isNaN(price) && price > 0) return price;
                 }
@@ -427,13 +397,7 @@
                 const element = container.querySelector(selector);
                 if (element) {
                     const priceText = element.textContent.trim();
-                    console.log('JSR Cart: Extrayendo precio original del DOM:', {
-                        selector: selector,
-                        priceText: priceText
-                    });
-                    
                     const price = parseFloat(priceText.replace(/[^\d.]/g, '').replace(/^\./, ''));
-                    console.log('JSR Cart: Precio original extraído del DOM:', price);
                     
                     if (!isNaN(price) && price > 0) return price;
                 }
@@ -648,15 +612,6 @@
          * Añadir producto al carrito
          */
         addToCart(product) {
-            console.log('🛒 Añadiendo producto:', product);
-            console.log('🛒 Debug precio producto:', {
-                price: product.price,
-                priceType: typeof product.price,
-                priceIsNumber: typeof product.price === 'number',
-                priceGreaterThanZero: product.price > 0,
-                productName: product.name,
-                productBrand: product.brand
-            });
 
             if (!this.validateProduct(product)) {
                 console.error('JSR Cart: Producto inválido', product);
@@ -678,7 +633,6 @@
         if (existingItem) {
             // Incrementar cantidad
             existingItem.quantity += (product.quantity || 1);
-                console.log('📈 Cantidad incrementada:', product.name);
         } else {
             // Añadir nuevo producto
             const newItem = {
@@ -692,8 +646,7 @@
             };
             
             window.JSRCart.items.push(newItem);
-                console.log('➕ Producto añadido:', product.name);
-            }
+        }
 
             // Actualizar sistema
             this.saveToStorage();
@@ -705,13 +658,11 @@
 
             // Verificar si estamos en index.html y redirigir a catálogo
             if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-                console.log('🔄 Redirigiendo a catálogo desde index.html...');
                 setTimeout(() => {
                     window.location.href = '/html/catalogo.html';
                 }, 1500);
             }
 
-            console.log('✅ Producto procesado correctamente');
             return true;
         }
 
@@ -755,7 +706,6 @@
             this.updateFloatingCart();
 
             this.showNotification(`${removedItem.name} eliminado del carrito`, 'info');
-            console.log('🗑️ Producto eliminado:', removedItem.name);
             
             return true;
         }
@@ -873,7 +823,6 @@
         showNotification(message, type = 'success') {
             const { notification } = window.JSRCart.elements;
             if (!notification) {
-                console.log(`JSR Cart ${type.toUpperCase()}: ${message}`);
                 return;
             }
 
@@ -931,7 +880,6 @@
                 const savedItems = localStorage.getItem(CART_CONFIG.storageKey);
             if (savedItems) {
                     window.JSRCart.items = JSON.parse(savedItems) || [];
-                console.log('✅ Carrito cargado desde localStorage');
                 } else {
                     window.JSRCart.items = [];
             }
@@ -966,8 +914,6 @@
 
             // Configurar botones del carrito flotante
             this.setupFloatingCartButtons();
-
-            console.log('✅ Carrito flotante configurado');
         }
 
         /**
@@ -1050,7 +996,6 @@
          * Proceder al checkout
          */
         proceedToCheckout() {
-            console.log('Procesando checkout...');
             // Aquí se puede añadir lógica de checkout
         }
 
@@ -1131,12 +1076,6 @@
             if (window.JSRCart.items.length > 0) {
                 // Mostrar todos los productos con funcionalidad completa
                 window.JSRCart.items.forEach(item => {
-                    console.log('JSR Cart: Renderizando item en carrito flotante:', {
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                        subtotal: item.price * item.quantity
-                    });
 
                     const itemElement = document.createElement('div');
                     itemElement.classList.add('floating-cart-item');
@@ -1167,12 +1106,6 @@
 
             // Actualizar total
             floatingCartTotal.textContent = totalPrice.toFixed(2);
-            
-            console.log('JSR Cart: Total del carrito flotante actualizado:', {
-                totalItems: totalItems,
-                totalPrice: totalPrice,
-                itemsCount: window.JSRCart.items.length
-            });
         }
     }
 
@@ -1186,15 +1119,12 @@
      */
     function initializeCartSystem() {
         if (cartInstance) {
-            console.log('JSR Cart: Sistema ya inicializado');
             return cartInstance;
         }
 
         cartInstance = new CartSystem();
         cartInstance.initialize().then(success => {
             if (success) {
-                console.log('✅ JSR Cart System completamente inicializado');
-                
                 // Marcar como completamente funcional
                 window.cartInitialized = true;
                 
@@ -1248,7 +1178,6 @@
         if (cartInstance) {
             cartInstance.hideCartDropdown();
         }
-        console.log('Redirigiendo a carrito completo...');
     };
 
     window.proceedToCheckout = function() {
@@ -1264,22 +1193,6 @@
     };
 
     window.debugCart = function() {
-        console.log('🔍 Debug del carrito refactorizado:');
-        console.log('- CartInstance:', !!cartInstance);
-        console.log('- JSRCart inicializado:', window.JSRCart.isInitialized);
-        console.log('- Items en carrito:', window.JSRCart.items.length);
-        console.log('- Elementos encontrados:', Object.keys(window.JSRCart.elements).filter(key => window.JSRCart.elements[key]));
-        
-        if (window.JSRCart.items.length > 0) {
-            console.log('- Productos en carrito:');
-            window.JSRCart.items.forEach((item, index) => {
-                console.log(`  ${index + 1}. ${item.name} - S/. ${item.price} x ${item.quantity} = S/. ${(item.price * item.quantity).toFixed(2)}`);
-            });
-            
-            const total = window.JSRCart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            console.log(`- Total calculado: S/. ${total.toFixed(2)}`);
-        }
-        
         return {
             cartInstance: !!cartInstance,
             initialized: window.JSRCart.isInitialized,
@@ -1304,7 +1217,6 @@
      * Reinicializar cuando el navbar se carga dinámicamente
      */
     document.addEventListener('navbarLoaded', function() {
-        console.log('🔄 Navbar cargado, reinicializando carrito...');
         setTimeout(initializeCartSystem, 100);
     });
 

@@ -7,7 +7,6 @@ class DropdownNavigation {
 
     init() {
         this.initializeDropdownEvents();
-        console.log('Navegación del dropdown inicializada');
     }
 
     initializeDropdownEvents() {
@@ -24,9 +23,6 @@ class DropdownNavigation {
     setupDropdownEvents() {
         // Obtener todos los elementos del dropdown
         const dropdownItems = document.querySelectorAll('.dropdown-content a');
-        
-        console.log('Elementos del dropdown encontrados:', dropdownItems.length);
-        console.log('Elementos del dropdown:', dropdownItems);
 
         if (dropdownItems.length === 0) {
             console.warn('No se encontraron elementos del dropdown. Reintentando en 500ms...');
@@ -40,7 +36,6 @@ class DropdownNavigation {
                 e.stopPropagation();
                 
                 const category = item.textContent.trim();
-                console.log('Categoría seleccionada:', category);
                 
                 this.navigateToCategory(category);
             });
@@ -48,7 +43,6 @@ class DropdownNavigation {
 
         // También manejar clics en los botones principales del dropdown
         const dropdownButtons = document.querySelectorAll('.dropbtn');
-        console.log('Botones del dropdown encontrados:', dropdownButtons.length);
         
         dropdownButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -57,7 +51,6 @@ class DropdownNavigation {
                 if (!dropdownContent || !dropdownContent.classList.contains('dropdown-content')) {
                     e.preventDefault();
                     const category = button.textContent.trim();
-                    console.log('Categoría principal seleccionada:', category);
                     this.navigateToCategory(category);
                 }
             });
@@ -65,29 +58,20 @@ class DropdownNavigation {
     }
 
     navigateToCategory(category) {
-        console.log('=== NAVEGANDO A CATEGORÍA ===');
-        console.log('Categoría original:', category);
-        
         // Excepción para "LOS MÁS VENDIDOS" - ir directamente al catálogo
         if (category === 'LOS MÁS VENDIDOS') {
-            console.log('Excepción: LOS MÁS VENDIDOS - redirigiendo directamente al catálogo');
             window.location.href = '/html/catalogo.html';
             return;
         }
         
         // Mapear categorías del dropdown a términos de búsqueda
         const categoryMapping = this.getCategoryMapping(category);
-        console.log('Categoría mapeada:', categoryMapping);
         
         const searchTerm = categoryMapping || category;
-        console.log('Término de búsqueda final:', searchTerm);
-        console.log('window.productSearch disponible:', !!window.productSearch);
         
         if (window.productSearch) {
-            console.log('Usando productSearch.performSearch con:', searchTerm, '(búsqueda exacta por ID)');
             window.productSearch.performSearch(searchTerm, true); // true = búsqueda exacta por ID
         } else {
-            console.log('productSearch no disponible, usando redirectToCatalog con:', searchTerm);
             this.redirectToCatalog(searchTerm);
         }
     }
@@ -170,8 +154,6 @@ class DropdownNavigation {
     }
 
     redirectToCatalog(searchTerm) {
-        console.log('Redirigiendo al catálogo con término:', searchTerm, '(búsqueda exacta por ID)');
-        
         // Guardar término de búsqueda en sessionStorage
         sessionStorage.setItem('searchTerm', searchTerm);
         sessionStorage.setItem('exactIdMatch', 'true');
@@ -183,41 +165,32 @@ class DropdownNavigation {
 
     // Método para reinicializar eventos si el DOM se actualiza
     reinitialize() {
-        console.log('Reinicializando eventos del dropdown...');
         this.setupDropdownEvents();
     }
 }
 
 // Inicializar navegación del dropdown cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM cargado, inicializando DropdownNavigation...');
-    
     // Función para inicializar la navegación del dropdown
     function initializeDropdownNavigation() {
         const dropdownNavigation = new DropdownNavigation();
         
         // Hacer disponible globalmente para debugging
         window.dropdownNavigation = dropdownNavigation;
-        
-        console.log('Navegación del dropdown inicializada');
     }
     
     // Si el headernav ya está cargado, inicializar inmediatamente
     if (document.querySelector('.dropdown-content')) {
-        console.log('Elementos del dropdown encontrados, inicializando...');
         initializeDropdownNavigation();
     } else {
         // Esperar a que se dispare el evento de headernav cargado
-        console.log('Esperando a que el headernav se cargue...');
         document.addEventListener('headernavLoaded', function() {
-            console.log('Headernav cargado, inicializando navegación del dropdown...');
             setTimeout(initializeDropdownNavigation, 100);
         });
         
         // Fallback: intentar después de un delay
         setTimeout(() => {
             if (!window.dropdownNavigation) {
-                console.log('Fallback: inicializando navegación del dropdown después de delay...');
                 initializeDropdownNavigation();
             }
         }, 1000);
@@ -226,15 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Función de debugging global
 window.debugDropdown = function() {
-    console.log('=== DEBUG DROPDOWN ===');
-    console.log('window.dropdownNavigation:', window.dropdownNavigation);
-    console.log('Elementos dropdown encontrados:', document.querySelectorAll('.dropdown-content a').length);
-    console.log('Botones dropdown encontrados:', document.querySelectorAll('.dropbtn').length);
-    console.log('Headernav cargado:', document.getElementById('headernav-placeholder')?.innerHTML?.length > 0);
-    console.log('window.productSearch disponible:', !!window.productSearch);
-    
     if (window.dropdownNavigation) {
-        console.log('Reinicializando eventos del dropdown...');
         window.dropdownNavigation.reinitialize();
     }
     
@@ -254,20 +219,15 @@ window.testDropdownMapping = function(category) {
     }
     
     const mapping = window.dropdownNavigation.getCategoryMapping(category);
-    console.log(`=== PROBANDO MAPEO (BÚSQUEDA EXACTA POR ID) ===`);
-    console.log(`Categoría: "${category}"`);
-    console.log(`Mapeo a ID: "${mapping}"`);
     
     if (window.productSearch && window.productSearch.products) {
         const results = window.productSearch.searchProducts(mapping, true); // true = búsqueda exacta por ID
-        console.log(`Productos encontrados con ID exacto "${mapping}": ${results.length}`);
-        results.forEach(p => console.log(`- ${p.productName} (ID: ${p.id})`));
     }
     
     return mapping;
 };
 
-console.log('Función de debugging disponible: window.debugDropdown()');
+
 
 // Exportar para uso en otros módulos
 if (typeof module !== 'undefined' && module.exports) {

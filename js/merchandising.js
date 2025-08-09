@@ -133,7 +133,6 @@ function redirectToCatalog(productId, action) {
     // Si estamos en index.html, redirigir a catalogo.html
     if (currentPage.includes('index.html') || currentPage === '/' || currentPage === '') {
         const catalogUrl = `/html/catalogo.html?product=${productId}&action=${action}`;
-        console.log('🔄 Redirigiendo a catálogo:', catalogUrl);
         window.location.href = catalogUrl;
     } else {
         // Si ya estamos en catalogo.html, manejar la acción directamente
@@ -172,30 +171,22 @@ function initializeProductNavigation() {
     
     backButtons.forEach(button => {
         button.addEventListener('click', function() {
-            console.log('👈 Botón "go back" clickeado');
             const merchandisingSection = this.closest('.merchandising-section');
             const productList = merchandisingSection.querySelector('.product-list');
             if (productList) {
                 const section = productList.id.replace('-products', '');
-                console.log('📋 Sección identificada:', section);
                 scrollProducts(section, -1);
-            } else {
-                console.log('❌ No se encontró product-list en la sección');
             }
         });
     });
     
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
-            console.log('👉 Botón "go next" clickeado');
             const merchandisingSection = this.closest('.merchandising-section');
             const productList = merchandisingSection.querySelector('.product-list');
             if (productList) {
                 const section = productList.id.replace('-products', '');
-                console.log('📋 Sección identificada:', section);
                 scrollProducts(section, 1);
-            } else {
-                console.log('❌ No se encontró product-list en la sección');
             }
         });
     });
@@ -216,14 +207,8 @@ function scrollProducts(section, direction) {
     const productList = document.querySelector(`#${section}-products`);
     
     if (!productList) {
-        console.log('❌ No se encontró el elemento product-list para la sección:', section);
         return;
     }
-
-    console.log('✅ Elemento product-list encontrado:', productList);
-    console.log('📏 Scroll actual:', productList.scrollLeft);
-    console.log('📐 Ancho del elemento:', productList.scrollWidth);
-    console.log('📐 Ancho visible:', productList.clientWidth);
 
     // Obtener el ancho de desplazamiento basado en el tamaño de la pantalla
     let scrollAmount;
@@ -239,18 +224,11 @@ function scrollProducts(section, direction) {
     const currentScroll = productList.scrollLeft;
     const targetScroll = currentScroll + (scrollAmount * direction);
 
-    console.log('🎯 Dirección:', direction);
-    console.log('📏 Scroll actual:', currentScroll);
-    console.log('📏 Scroll objetivo:', targetScroll);
-    console.log('📏 Cantidad de scroll:', scrollAmount);
-
     // Scroll suave
     productList.scrollTo({
         left: targetScroll,
         behavior: 'smooth'
     });
-
-    console.log('✅ Scroll ejecutado');
 
     // Actualizar visibilidad de flechas después del scroll
     setTimeout(() => {

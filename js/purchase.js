@@ -23,8 +23,6 @@
      * Inicializar el sistema de compra
      */
     function initializePurchase() {
-        console.log('🛒 Inicializando sistema de compra...');
-        
         // Verificar si hay productos en el carrito
         if (!hasCartItems()) {
             showError('No hay productos en el carrito. Redirigiendo al inicio...');
@@ -42,8 +40,6 @@
         
         // Renderizar información
         renderOrderSummary();
-        
-        console.log('✅ Sistema de compra inicializado');
     }
 
     /**
@@ -94,7 +90,6 @@
                 createdAt: new Date().toISOString()
             };
 
-            console.log('✅ Datos de compra cargados:', purchaseData);
         } catch (error) {
             console.error('Error al cargar datos de compra:', error);
             showError('Error al cargar los datos. Redirigiendo...');
@@ -477,7 +472,6 @@
 
         try {
             const whatsappUrl = `https://wa.me/${PURCHASE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-            console.log('🔗 Redirigiendo a WhatsApp:', whatsappUrl);
             window.open(whatsappUrl, '_blank');
         } catch (error) {
             console.error('Error al redirigir a WhatsApp:', error);
@@ -588,7 +582,6 @@
         // Guardar pedido (en un caso real, esto se enviaría al servidor)
         localStorage.setItem(`jsr_order_${purchaseData.orderId}`, JSON.stringify(orderData));
         
-        console.log('✅ Pedido procesado:', orderData);
         return orderData;
     }
 

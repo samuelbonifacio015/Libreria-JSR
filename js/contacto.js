@@ -308,21 +308,14 @@ function setupGlobalEventListeners() {
 function initializeContacto() {
   // Configurar formularios según la página
   const currentPath = window.location.pathname;
-  console.log('📍 Ruta actual:', currentPath);
   
   if (currentPath.includes('maquetas.html')) {
-    console.log('🎯 Configurando formulario de maquetas');
     setupMaquetasFormListeners();
   } else if (currentPath.includes('impresiones.html')) {
-    console.log('🎯 Configurando formulario de impresiones');
     setupImpresionesFormListeners();
-  } else {
-    console.log('⚠️ No se detectó ninguna página de contacto');
   }
   
   setupGlobalEventListeners();
-  
-  console.log('✅ Script de contacto inicializado correctamente');
 }
 
 // Inicializar cuando el DOM esté listo

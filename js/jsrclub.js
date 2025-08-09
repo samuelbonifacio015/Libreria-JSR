@@ -342,8 +342,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2000);
         });
     });
-    
-    console.log('🚀 JSR CLUB JavaScript loaded successfully!');
 });
 
 // ===== UTILITY FUNCTIONS =====

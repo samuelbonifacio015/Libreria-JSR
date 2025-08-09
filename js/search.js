@@ -9,7 +9,7 @@ class ProductSearch {
     async init() {
         await this.loadProducts();
         this.initializeSearchEvents();
-        console.log('Búsqueda de productos inicializada');
+
     }
 
     async loadProducts() {
@@ -22,7 +22,7 @@ class ProductSearch {
                 jsonPath = '../partials/products.json';
             }
             
-            console.log('Cargando productos desde:', jsonPath);
+    
             const response = await fetch(jsonPath);
             
             if (!response.ok) {
@@ -30,7 +30,7 @@ class ProductSearch {
             }
             
             this.products = await response.json();
-            console.log('Productos cargados:', this.products.length);
+
         } catch (error) {
             console.error('Error cargando productos:', error);
             // Intentar con la otra ruta como fallback
@@ -38,10 +38,10 @@ class ProductSearch {
                 const fallbackPath = window.location.pathname.includes('/html/') 
                     ? '/partials/products.json' 
                     : '../partials/products.json';
-                console.log('Intentando ruta fallback:', fallbackPath);
+    
                 const response = await fetch(fallbackPath);
                 this.products = await response.json();
-                console.log('Productos cargados con fallback:', this.products.length);
+
             } catch (fallbackError) {
                 console.error('Error con fallback:', fallbackError);
             }
@@ -49,7 +49,7 @@ class ProductSearch {
     }
 
     initializeSearchEvents() {
-        console.log('Inicializando eventos de búsqueda con overlay...');
+
         
         // Elementos del navbar
         const desktopSearchInput = document.querySelector('.search-input-container input');
@@ -63,14 +63,7 @@ class ProductSearch {
         const searchOverlayClose = document.getElementById('searchOverlayClose');
         const searchSuggestionsOverlay = document.getElementById('searchSuggestionsOverlay');
 
-        console.log('Elementos encontrados:', {
-            desktopSearchInput: !!desktopSearchInput,
-            desktopSearchBtn: !!desktopSearchBtn,
-            mobileSearchInput: !!mobileSearchInput,
-            mobileSearchBtn: !!mobileSearchBtn,
-            searchOverlay: !!searchOverlay,
-            searchOverlayInput: !!searchOverlayInput
-        });
+
 
         // Abrir overlay al hacer clic en las barras de búsqueda
         if (desktopSearchInput) {
@@ -191,7 +184,7 @@ class ProductSearch {
         }
 
         const results = this.searchProducts(searchTerm, exactIdMatch);
-        console.log('Resultados encontrados:', results.length);
+
 
         // Guardar término de búsqueda en sessionStorage
         sessionStorage.setItem('searchTerm', searchTerm.trim());
@@ -201,11 +194,11 @@ class ProductSearch {
         // Redirigir a página de catálogo con resultados
         if (window.location.pathname.includes('catalogo.html')) {
             // Si ya estamos en catálogo, recargar con resultados
-            console.log('Mostrando resultados en catálogo actual');
+
             this.displaySearchResults(searchTerm, exactIdMatch);
         } else {
             // Redirigir a catálogo
-            console.log('Redirigiendo al catálogo con resultados');
+
             window.location.href = '/html/catalogo.html?search=' + encodeURIComponent(searchTerm) + '&exact=' + exactIdMatch;
         }
 
@@ -465,7 +458,7 @@ class ProductSearch {
 
 // Inicializar búsqueda cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM cargado, inicializando ProductSearch...');
+
     
     // Función para inicializar la búsqueda
     function initializeSearch() {
@@ -483,39 +476,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Función de prueba global
         window.testSearch = function(term, exactIdMatch = false) {
-            console.log('=== PRUEBA DE BÚSQUEDA ===');
-            console.log('Término:', term);
-            console.log('Búsqueda exacta por ID:', exactIdMatch);
-            console.log('Productos cargados:', productSearch.products.length);
             const results = productSearch.searchProducts(term, exactIdMatch);
-            console.log('Resultados:', results.length);
-            console.log('Productos encontrados:', results);
             return results;
         };
         
-        console.log('Funciones de debugging disponibles:');
-        console.log('- window.testSearch("término", false) - Búsqueda general');
-        console.log('- window.testSearch("id", true) - Búsqueda exacta por ID');
-        console.log('- window.productSearch - Acceso directo al objeto de búsqueda');
+
     }
     
     // Si el navbar ya está cargado, inicializar inmediatamente
     if (document.querySelector('.search-input-container input') || 
         document.querySelector('.mobile-search-container input')) {
-        console.log('Elementos de búsqueda encontrados, inicializando...');
+
         initializeSearch();
     } else {
         // Esperar a que se dispare el evento de navbar cargado
-        console.log('Esperando a que el navbar se cargue...');
+
         document.addEventListener('navbarLoaded', function() {
-            console.log('Navbar cargado, inicializando búsqueda...');
+
             setTimeout(initializeSearch, 100);
         });
         
         // Fallback: intentar después de un delay
         setTimeout(() => {
             if (!window.productSearch) {
-                console.log('Fallback: inicializando búsqueda después de delay...');
+
                 initializeSearch();
             }
         }, 1000);
