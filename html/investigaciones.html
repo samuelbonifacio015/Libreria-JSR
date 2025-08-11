@@ -3,15 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Investigaciones - Librería JSR</title>
+    <title>Investigaciones Académicas - Librería JSR</title>
 
     <link rel="icon" href="../img/JSR.ico" type="image/x-icon" />
 
     <link rel="stylesheet" href="/partials/footer.css" />
     <link rel="stylesheet" href="/partials/navbar.css" />
     <link rel="stylesheet" href="/partials/headernav.css" />
-
     <link rel="stylesheet" href="/css/investigaciones.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
   </head>
   <body>
     <div class="main-wrapper">
@@ -22,79 +26,131 @@
       <div id="headernav-placeholder"></div>
 
       <div class="content-container">
-        <div class="working-notice">
-          <div class="notice-content">
-            <div class="svg-container">
-              <svg
-                class="gear gear-1"
-                viewBox="0 0 100 100"
-                width="80"
-                height="80"
-              >
-                <path
-                  d="M50 0 L60 20 L80 20 L65 35 L70 55 L50 45 L30 55 L35 35 L20 20 L40 20 Z"
-                  fill="#4A90E2"
-                />
-                <circle cx="50" cy="50" r="8" fill="#2C3E50" />
-              </svg>
-              <svg
-                class="gear gear-2"
-                viewBox="0 0 100 100"
-                width="60"
-                height="60"
-              >
-                <path
-                  d="M50 0 L60 20 L80 20 L65 35 L70 55 L50 45 L30 55 L35 35 L20 20 L40 20 Z"
-                  fill="#E74C3C"
-                />
-                <circle cx="50" cy="50" r="6" fill="#2C3E50" />
-              </svg>
-              <svg
-                class="gear gear-3"
-                viewBox="0 0 100 100"
-                width="40"
-                height="40"
-              >
-                <path
-                  d="M50 0 L60 20 L80 20 L65 35 L70 55 L50 45 L30 55 L35 35 L20 20 L40 20 Z"
-                  fill="#F39C12"
-                />
-                <circle cx="50" cy="50" r="4" fill="#2C3E50" />
-              </svg>
-            </div>
-
-            <h1 class="title">¡Estamos Trabajando!</h1>
-            <p class="message">
-              Esta página está en construcción. Nuestro equipo está trabajando
-              para traerte contenido increíble.
-            </p>
-
-            <div class="progress-bar">
-              <div class="progress-fill"></div>
-            </div>
-
-            <div class="status">
-              <span class="status-text">Desarrollo en progreso</span>
-              <div class="dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="hero-container">
+            <div class="hero-content">
+              <h1 class="hero-title">HIGIENE ES SALUDABLE</h1>
+              <p class="hero-subtitle">
+                Lavarse las manos, cepillarse los dientes diariamente
+              </p>
+              <h2 class="main-title">INVESTIGACIONES ACADÉMICAS</h2>
+              <div class="flag-container">
+                <div class="peru-flag-placeholder">
+                  <div class="flag-stripe red"></div>
+                  <div class="flag-stripe white"></div>
+                  <div class="flag-stripe red"></div>
+                </div>
+                <p class="flag-text">
+                  Monografías, infografías, proyectos y trípticos con asesoría
+                  experta.
+                </p>
+              </div>
+              <div class="hero-buttons">
+                <button class="hero-btn">
+                  <i class="fas fa-check-circle"></i>
+                  Acabado Profesional
+                </button>
+                <button class="hero-btn">
+                  <i class="fas fa-files-o"></i>
+                  Variedad de Formatos
+                </button>
               </div>
             </div>
 
-            <div class="features-preview">
-              <h3>Próximamente:</h3>
-              <ul class="features-list">
-                <li>Investigaciones académicas</li>
-                <li>Recursos de estudio</li>
-                <li>Base de datos de tesis</li>
-                <li>Herramientas de investigación</li>
-              </ul>
+            <div class="contact-form">
+              <h3>Solicita tu cotización gratuita</h3>
+              <form>
+                <div class="form-group">
+                  <label for="nombre">Nombre completo*</label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    placeholder="Ingresa tu nombre completo"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email*</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="tu@email.com"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="proyecto">Tipo de proyecto*</label>
+                  <select id="proyecto" required>
+                    <option value="">Selecciona el tipo de proyecto</option>
+                    <option value="monografia">Monografía</option>
+                    <option value="infografia">Infografía</option>
+                    <option value="proyecto">Proyecto</option>
+                    <option value="triptico">Tríptico</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="mensaje">Mensaje*</label>
+                  <textarea
+                    id="mensaje"
+                    placeholder="Ingresa la descripción del proyecto"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                  ¡Comienza Ahora!
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+          <div class="services-header">
+            <h2>Nuestros servicios</h2>
+            <p>
+              Ofrecemos soluciones académicas profesionales con la más alta
+              calidad y compromiso
+            </p>
+          </div>
+
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <h3>Trípticos</h3>
+              <p>
+                Documento informativo o folleto dividido en tres secciones
+                formando un panel plegable.
+              </p>
             </div>
 
-            <a href="../index.html" class="back-button">Volver al Inicio</a>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-book"></i>
+              </div>
+              <h3>Monografías</h3>
+              <p>
+                Documento que trata un tema en particular y dedicado a utilizar
+                diversas fuentes procesadas por uno o por varios autores.
+              </p>
+            </div>
+
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-chart-bar"></i>
+              </div>
+              <h3>Infografías</h3>
+              <p>
+                Representación visual de información que utiliza elementos
+                gráficos como diagramas y texto para explicar conceptos de
+                manera clara y visualmente concisa.
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
 
       <!--footer-->
