@@ -231,6 +231,10 @@ body {
   text-align: center;
 }
 
+.services-header .highlight {
+  color: #6fb640;
+}
+
 .services-header {
   margin-bottom: 60px;
 }
@@ -244,6 +248,7 @@ body {
 
 .services-header p {
   font-size: 1.3rem;
+  font-weight: 500;
   color: #646365;
   max-width: 700px;
   margin: 0 auto;
