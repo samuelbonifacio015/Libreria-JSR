@@ -257,6 +257,88 @@ function handleImpresionesFormSubmit(e) {
 }
 
 // ========================================
+// FUNCIONES PARA INVESTIGACIONES
+// ========================================
+
+/**
+ * Construye el mensaje para WhatsApp - Investigaciones
+ * @param {Object} formData - Datos del formulario
+ * @returns {string} Mensaje formateado para WhatsApp
+ */
+function buildInvestigacionesWhatsAppMessage(formData) {
+  // Obtener fecha y hora actual
+  const now = new Date();
+  const currentDate = now.toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  const currentTime = now.toLocaleTimeString('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  let message = `*Nueva Solicitud de Investigación - Librería JSR*%0A%0A`;
+  message += `*Nombre:* ${formData.nombre}%0A`;
+  message += `*Email:* ${formData.email}%0A`;
+  message += `*Tipo de Proyecto:* ${formData.proyecto}%0A%0A`;
+  
+  if (formData.mensaje && formData.mensaje.trim() !== '') {
+    message += `*Descripción del Proyecto:*%0A${formData.mensaje.replace(/\n/g, '%0A')}%0A%0A`;
+  }
+  
+  message += `---%0A`;
+  message += `*Enviado desde:* Investigaciones - Librería JSR%0A`;
+  message += `*Fecha y hora de envío:* ${currentDate} a las ${currentTime}`;
+  
+  return message;
+}
+
+/**
+ * Maneja el envío del formulario de investigaciones
+ * @param {Event} e - Evento del formulario
+ */
+function handleInvestigacionesFormSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const formData = {
+    nombre: form.nombre.value.trim(),
+    email: form.email.value.trim(),
+    proyecto: form.proyecto.value,
+    mensaje: form.mensaje.value.trim()
+  };
+  
+  // Validar campos requeridos
+  const requiredFields = ['nombre', 'email', 'proyecto', 'mensaje'];
+  if (!validateForm(formData, requiredFields)) {
+    showFormMessage('Por favor, completa todos los campos requeridos.', 'error', 'investigacionesForm');
+    return;
+  }
+  
+  // Validar formato del email
+  if (!validateEmail(formData.email)) {
+    showFormMessage('Por favor, ingresa un email válido.', 'error', 'investigacionesForm');
+    return;
+  }
+  
+  // Construir mensaje para WhatsApp
+  const whatsappMessage = buildInvestigacionesWhatsAppMessage(formData);
+  
+  // Mostrar mensaje de confirmación
+  showFormMessage('Redirigiendo a WhatsApp...', 'success', 'investigacionesForm');
+  
+  // Abrir WhatsApp después de un breve delay
+  setTimeout(() => {
+    openWhatsApp(whatsappMessage);
+    
+    // Limpiar formulario después de enviar
+    form.reset();
+    showFormMessage('', '', 'investigacionesForm');
+  }, 1500);
+}
+
+// ========================================
 // CONFIGURACIÓN DE EVENT LISTENERS
 // ========================================
 
@@ -277,6 +359,16 @@ function setupImpresionesFormListeners() {
   const form = document.getElementById('contactForm');
   if (form) {
     form.addEventListener('submit', handleImpresionesFormSubmit);
+  }
+}
+
+/**
+ * Configura los event listeners para el formulario de investigaciones
+ */
+function setupInvestigacionesFormListeners() {
+  const form = document.querySelector('.contact-form form');
+  if (form) {
+    form.addEventListener('submit', handleInvestigacionesFormSubmit);
   }
 }
 
@@ -313,6 +405,8 @@ function initializeContacto() {
     setupMaquetasFormListeners();
   } else if (currentPath.includes('impresiones.html')) {
     setupImpresionesFormListeners();
+  } else if (currentPath.includes('investigaciones.html')) {
+    setupInvestigacionesFormListeners();
   }
   
   setupGlobalEventListeners();
@@ -325,6 +419,7 @@ document.addEventListener('DOMContentLoaded', initializeContacto);
 window.ContactoJS = {
   handleMaquetasFormSubmit,
   handleImpresionesFormSubmit,
+  handleInvestigacionesFormSubmit,
   openWhatsApp,
   validateEmail,
   formatDate
