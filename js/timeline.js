@@ -11,27 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
         "2005": {
             img: "/img/misc/timeline-1.png",
             title: "GENESIS",
-            text: "Fundación de JSR en Jr. Tacna 3100, Urb. Perú, San Martín de Porres, como negocio de artículos de librería y bazar. (5 de agosto)"
+            text: "Librerías JSR nace como un emprendimiento personal del Sr. Jesus Bonifacio con el objetivo de ofrecer un servicio de calidad a la comunidad y de generar un medio de ingresos."
         },
         "2010": {
             img: "/img/misc/timeline-2.jpg",
             title: "EXPANSION",
-            text: "Expansión de JSR con la apertura de nuevas sucursales en Lima."
+            text: "Con 5 años activo, JSR empieza a ganar terreno como principal librería de la urbanización."
         },
         "2018": {
             img: "/img/misc/timeline-3.jpg",
             title: "CONSOLIDACION",
-            text: "Consolidación como una de las principales librerías del país."
-        },
-        "2019": {
-            img: "/img/misc/timeline-4.jpg",
-            title: "DIGITALIZACION",
-            text: "Lanzamiento de la tienda en línea y ventas por ecommerce."
-        },
-        "2020": {
-            img: "/img/misc/timeline-5.jpg",
-            title: "INNOVACION",
-            text: "Implementación de un sistema de membresía con descuentos exclusivos."
+            text: "En 2018, JSR se consolida como la librería confiable para los vecinos de la urbanización."
         },
         "2025": {
             img: "/img/misc/timeline-6.jpg",
