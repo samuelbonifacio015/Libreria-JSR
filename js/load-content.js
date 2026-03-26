@@ -120,18 +120,21 @@ function loadCart() {
                     </div>
                     <!--floating cart end-->
                 `;
-                
-                // Insertar carrito flotante antes del elemento footer-placeholder o footer-container
-                const footerPlaceholder = document.getElementById('footer-placeholder');
-                const footerContainer = document.getElementById('footer-container');
-                
-                if (footerPlaceholder) {
-                    footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
-                } else if (footerContainer) {
-                    footerContainer.insertAdjacentHTML('beforebegin', floatingCartHTML);
-                } else {
-                    // Si no hay footer-placeholder ni footer-container, insertar al final del body
-                    document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
+
+                // Insertar carrito flotante antes del elemento footer-placeholder o footer-container,
+                // pero evitar duplicados si el HTML ya existe (por ejemplo en catalogo.html).
+                if (!document.getElementById('floatingCart')) {
+                    const footerPlaceholder = document.getElementById('footer-placeholder');
+                    const footerContainer = document.getElementById('footer-container');
+
+                    if (footerPlaceholder) {
+                        footerPlaceholder.insertAdjacentHTML('beforebegin', floatingCartHTML);
+                    } else if (footerContainer) {
+                        footerContainer.insertAdjacentHTML('beforebegin', floatingCartHTML);
+                    } else {
+                        // Si no hay footer-placeholder ni footer-container, insertar al final del body
+                        document.body.insertAdjacentHTML('beforeend', floatingCartHTML);
+                    }
                 }
             })
             .catch(error => {

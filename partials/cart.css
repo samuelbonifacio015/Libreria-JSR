@@ -362,7 +362,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1000;
+  /* Asegurar que el carrito flotante se vea sobre el contenido del home */
+  z-index: 3000;
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0;
   visibility: hidden;
